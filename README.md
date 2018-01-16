@@ -4,31 +4,38 @@ Informatiekunde groep IK02
 
 # Register
 
-See Registercode finance
+def register():
+
+request.method == "POST"
 
 # Login
 
-See Logincode finance
+def login():
+
+request.method == "POST"
 
 # Home with Suggestions 
 
+def index():
 
+# Personalpage:
 
-# Personalpage
-
-
+def personalpage():
 
 # Change Personalpage
 
+def settings():
 
 # Search for Recipies
 
-
-# Page 
-
+def search():
 
 # Page for Favorite Recipies
 
-# Page to share Recipies 
+def favorites():
+
+# Page to share Recipies
+
+def share(): 
 
 
