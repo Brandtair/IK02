@@ -4,20 +4,31 @@ Informatiekunde groep IK02
 
 # Register
 
+See Registercode finance
+
 # Login
 
-# Home with suggestions 
+See Logincode finance
+
+# Home with Suggestions 
+
+
 
 # Personalpage
 
-# Change personalpage
 
-# Search for Recipies 
+
+# Change Personalpage
+
+
+# Search for Recipies
+
+
+# Page 
+
 
 # Page for Favorite Recipies
 
 # Page to share Recipies 
-
-# 
 
 
