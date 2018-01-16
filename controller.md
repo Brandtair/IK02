@@ -8,11 +8,13 @@ from tempfile import mkdtemp
 
 from helpers import *
 
-##Login
+## Login
 Functie ontvangt ingevuld formulier uit view in model(application.py).
-model voert programma uit om in te loggen en hashed het wachtwoord of geeft een foutcode.
+model voert programma uit om in te loggen of geeft een foutcode.
 controller roep hompage of loginpagina met error op van model naar view.
 
-##account
+## account
+Uit view komt er een aanvraag voor pagina account. De controller redirect html template voor aanmaken account.
+
 
 
