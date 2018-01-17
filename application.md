@@ -1,5 +1,5 @@
 # IK02
-Informatiekunde groep IK02
+ComputerScience group IK02
 
 
 # Register
@@ -7,6 +7,20 @@ Informatiekunde groep IK02
 def register():
 
 request.method == "POST"
+  
+  function username
+    check if username is not in already in use.
+    display "username not availble" if username in use.
+  Next-button saves username in variable.
+  
+  function password
+    hash password
+  Next-button saves password in variable.
+  
+  function check password
+    If password is equal to variable
+      save password in dict.
+    send password to database
 
 # Login
 
@@ -14,13 +28,47 @@ def login():
 
 request.method == "POST"
 
-# Home with Suggestions 
+  function username
+    check if valid.
+    request valid usernam if not valid
+  function password
+    check if valid.
+    display "wrong password" if password not valid.
+  Login button sends form.
 
-def index():
+# Homepage
 
-# Personalpage:
+def recepes():
+  render request 4 recepes from database.
+  filter tot naam, bereidingsrijd en afbeelding.
 
-def personalpage():
+# Account
+
+def wijzig_gegevens():
+
+request method == "POST"
+
+
+  function Username():
+    check if valid
+    if not valid apologise "please fill in Username"
+    
+  function Password():
+    check if valid
+    if not valid apologise "Please fill in Password"
+    
+  function NewPassword():
+    check if valid
+    if not valid & equal apologise "please fill in new password"
+    
+  Button "save"
+  
+def wijzig_filter():
+
+  clear.session()
+  
+  function Dieet():
+    add 
 
 # Change Personalpage
 
