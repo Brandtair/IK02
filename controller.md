@@ -21,11 +21,23 @@ Hier kom je bij de view van een registerpagina. Vanuit de registreerpagina kan j
 
 ## index
 
+Vanaf het model van de index pagina stuurt de controller een view van de homepagina.
+Op de homepagina is er een mogelijkheid om naar je eigenpagina te gaan, een mogelijkheid om voorkeuren te zien van recepeten gebaseerd op de voorkeuren vastgesteld in jou persoonlijkepagina, een mogelijkehid om recepten op te zoeken, een mogelijkheid om recepten op te slaan en een mogelijkheid om recepten naar vrienden te sturen.
+
+- Er gaan een link naar de eigenpagina
+- De voorkeuren komenvoort uit een ingaande link vanaf een pagina waar de opgeslagen voorkeuren van de persoonlijkepagina staan opgeslagen. De recepten hebben een link die de gebruiker stuurt naar een view van de desbetreffende pagina van het recept. Vanaf deze html wordt de gebruiker weer redirected naar de indexpagina wanneer de gebruiker het recept wegklikt.
+- De recepten op de homepagina dragen de mogelijkheid om te worden opgeslagen. Het recept heeft een link die verstuurd wordt naar een pagina van opgeslagen recepten. Ook kan er wanneer er op de recepten wordt geklikt een
+- Op de receptenpagina moet een refreshbutton komen om elke keer nieuwe recepten toe te voegen. De controller zorgt ervoor dat er link gaat naar de database van recepten en dan random aan de hand van een ingaande link recepten opnieuw weer geeft.
 
 ## personalpage
 
+Op de persoonlijke pagina moeten er gegevens kunnen worden ingevuld die worden doorgestuurd naar een pagina waar deze zijn opgeslagen zodat ze kunnen worden opgehaald via de controller. Op de persoonlijkepagina kunnen er voorkeuren worden opgeslagen voor recepten. Dit zijn stuk voor stuk links die via de contoller later worden doorgestuurd naar de homepage.
 
-## search
+
+## search 
+
+Op homepage moet er een searchpagina zijn met een link via de contoller naar de database van recepten. 
+
 
 ## favorites
 
