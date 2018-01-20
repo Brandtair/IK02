@@ -12,5 +12,7 @@ print(r.headers['content-type'])
 print(r.encoding)
 print(type(r.text))
 rdict = json.loads(r.text)
-for rec in rdict:
-    print(rdict[rec])
+#print(rdict['hits'][0]['recipe'])
+
+for hit in rdict['hits']:
+    print(hit['recipe']['label'])
