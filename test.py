@@ -7,12 +7,7 @@ payload = {'app_id' : 'abec09cd',
 }
 
 r = requests.get('http://api.edamam.com/search', params=payload)
-print(r.status_code)
-print(r.headers['content-type'])
-print(r.encoding)
-print(type(r.text))
 rdict = json.loads(r.text)
-#print(rdict['hits'][0]['recipe'])
 
 for hit in rdict['hits']:
-    print(hit['recipe']['label'])
+    print(hit['recipe']['image'])

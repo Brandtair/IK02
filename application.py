@@ -3,7 +3,8 @@ from flask import Flask, flash, redirect, render_template, request, session, url
 from flask_session import Session
 from passlib.apps import custom_app_context as pwd_context
 from tempfile import mkdtemp
-
+import requests
+import json
 from helpers import *
 
 # configure application
@@ -27,11 +28,40 @@ Session(app)
 # configure CS50 Library to use SQLite database
 db = SQL("sqlite:///project.db")
 
+# use this code for every query
+"""
+payload = {'app_id' : 'abec09cd',
+            'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
+            'q' : 'chicken'
+}
+
+r = requests.get('http://api.edamam.com/search', params=payload)
+rdict = json.loads(r.text)
+"""
+
+# use this code as an example to get 1 thing out of a recipe
+"""
+for hit in rdict['hits']:
+    print(hit['recipe']['label'])
+    """
 
 @app.route("/")
 @login_required
 def index():
-    return render_template("index.html")
+
+    payload = {'app_id' : 'abec09cd',
+            'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
+            'q' : 'chicken'
+    }
+
+    r = requests.get('http://api.edamam.com/search', params=payload)
+    rdict = json.loads(r.text)
+
+    imglink = []
+    for hit in rdict['hits']:
+        imglink.append(hit['recipe']['image'])
+
+    return render_template("index.html", link = imglink)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
