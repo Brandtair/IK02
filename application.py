@@ -51,7 +51,7 @@ def index():
 
     payload = {'app_id' : 'abec09cd',
             'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
-            'q' : 'chicken'
+            'q' : 'cucumber'
     }
 
     r = requests.get('http://api.edamam.com/search', params=payload)
@@ -61,6 +61,7 @@ def index():
     for hit in rdict['hits']:
         imglink.append(hit['recipe']['image'])
 
+    print(len(imglink))
     return render_template("index.html", link = imglink)
 
 @app.route("/login", methods=["GET", "POST"])
