@@ -51,10 +51,7 @@ def index():
 
     payload = {'app_id' : 'abec09cd',
             'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
-<<<<<<< HEAD
-=======
-            'q' : 'choco'
->>>>>>> 54796a8d434ef86e97d0c31b11a23f999c0a00a7
+            'q' : 'Vegeterian'
     }
 
     r = requests.get('http://api.edamam.com/search', params=payload)
@@ -64,11 +61,8 @@ def index():
     for hit in rdict['hits']:
         imglink.append(hit['recipe']['image'])
 
-<<<<<<< HEAD
     print(len(imglink))
-=======
 
->>>>>>> 54796a8d434ef86e97d0c31b11a23f999c0a00a7
     return render_template("index.html", link = imglink)
 
 @app.route("/login", methods=["GET", "POST"])
@@ -121,7 +115,7 @@ def zoek():
 
         if rows:
             #return render_template("quoted.html", stock=rows)
-
+            print("appel")
     else:
 
         return render_template("zoek.html")
