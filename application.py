@@ -51,12 +51,8 @@ def index():
 
     payload = {'app_id' : 'abec09cd',
             'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
-<<<<<<< HEAD
-=======
-            'q' : 'choco'
->>>>>>> 54796a8d434ef86e97d0c31b11a23f999c0a00a7
-    }
-
+            'q' : request.form.get("symbol")
+}
     r = requests.get('http://api.edamam.com/search', params=payload)
     rdict = json.loads(r.text)
 
@@ -64,12 +60,8 @@ def index():
     for hit in rdict['hits']:
         imglink.append(hit['recipe']['image'])
 
-<<<<<<< HEAD
-    print(len(imglink))
-=======
-
->>>>>>> 54796a8d434ef86e97d0c31b11a23f999c0a00a7
     return render_template("index.html", link = imglink)
+    return requests.get(url).json()
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -114,13 +106,17 @@ def zoek():
 
     #check if symbol excists
     if request.method == "POST":
-        rows = lookup(request.form.get("symbol")) #zoeken naar items die staan in de database
 
-        if not rows:
+        payload = {'app_id' : 'abec09cd',
+            'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
+            'q' : request.form.get("symbol")
+}
+
+        if not payload:
             return apology("Invalid Symbol")
 
-        if rows:
-            #return render_template("quoted.html", stock=rows)
+        if payload:
+            return render_template("zoek.html") # stock=rows)
 
     else:
 
