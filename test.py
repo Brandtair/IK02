@@ -10,4 +10,5 @@ r = requests.get('http://api.edamam.com/search', params=payload)
 rdict = json.loads(r.text)
 
 for hit in rdict['hits']:
-    print(hit['recipe']['image'])
+    print(hit['recipe'])
+

@@ -49,10 +49,7 @@ for hit in rdict['hits']:
 @login_required
 def index():
 
-    payload = {'app_id' : 'abec09cd',
-            'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
-            'q' : request.form.get("symbol")
-}
+
     r = requests.get('http://api.edamam.com/search', params=payload)
     rdict = json.loads(r.text)
 
@@ -116,7 +113,7 @@ def zoek():
             return apology("Invalid Symbol")
 
         if payload:
-            return render_template("zoek.html") # stock=rows)
+            return render_template("zoek.html") # =payload)
 
     else:
 
