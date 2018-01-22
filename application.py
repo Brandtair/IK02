@@ -49,6 +49,10 @@ for hit in rdict['hits']:
 @login_required
 def index():
 
+    payload = {'app_id' : 'abec09cd',
+            'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
+            'q' : 'Vegeterian'
+    }
 
     r = requests.get('http://api.edamam.com/search', params=payload)
     rdict = json.loads(r.text)
@@ -56,6 +60,9 @@ def index():
     imglink = []
     for hit in rdict['hits']:
         imglink.append(hit['recipe']['image'])
+
+
+    print(len(imglink))
 
     return render_template("index.html", link = imglink)
     return requests.get(url).json()
@@ -111,6 +118,11 @@ def zoek():
 
         if not payload:
             return apology("Invalid Symbol")
+
+
+        if rows:
+            #return render_template("quoted.html", stock=rows)
+            print("appel")
 
         if payload:
             return render_template("zoek.html") # =payload)
