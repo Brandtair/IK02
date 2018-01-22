@@ -51,7 +51,10 @@ def index():
 
     payload = {'app_id' : 'abec09cd',
             'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
-            'q' : 'cucumber'
+<<<<<<< HEAD
+=======
+            'q' : 'choco'
+>>>>>>> 54796a8d434ef86e97d0c31b11a23f999c0a00a7
     }
 
     r = requests.get('http://api.edamam.com/search', params=payload)
@@ -61,7 +64,11 @@ def index():
     for hit in rdict['hits']:
         imglink.append(hit['recipe']['image'])
 
+<<<<<<< HEAD
     print(len(imglink))
+=======
+
+>>>>>>> 54796a8d434ef86e97d0c31b11a23f999c0a00a7
     return render_template("index.html", link = imglink)
 
 @app.route("/login", methods=["GET", "POST"])
@@ -99,6 +106,26 @@ def login():
     # else if user reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("login.html")
+
+@app.route("/zoek", methods=["GET", "POST"])
+@login_required
+def zoek():
+    """Get recipe zoek."""
+
+    #check if symbol excists
+    if request.method == "POST":
+        rows = lookup(request.form.get("symbol")) #zoeken naar items die staan in de database
+
+        if not rows:
+            return apology("Invalid Symbol")
+
+        if rows:
+            #return render_template("quoted.html", stock=rows)
+
+    else:
+
+        return render_template("zoek.html")
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
