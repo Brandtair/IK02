@@ -123,7 +123,8 @@ def zoek():
         payload = {'app_id' : 'abec09cd',
             'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
             'q' : request.form.get("symbol")
-}
+        }
+
         r = requests.get('http://api.edamam.com/search', params=payload)
         if not r:
             return apology("that ingedient is not valid")
