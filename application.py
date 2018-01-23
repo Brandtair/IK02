@@ -51,7 +51,7 @@ def index():
 
     payload = {'app_id' : 'abec09cd',
             'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
-            'q' : 'Vegeterian'
+            'q' : 'Low-Fat'
     }
 
     r = requests.get('http://api.edamam.com/search', params=payload)
@@ -65,7 +65,6 @@ def index():
     print(len(imglink))
 
     return render_template("index.html", link = imglink)
-    return requests.get(url).json()
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -115,17 +114,23 @@ def zoek():
             'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
             'q' : request.form.get("symbol")
 }
+        r = requests.get('http://api.edamam.com/search', params=payload)
+        if not r:
+            return apology("that ingedient is not valid")
 
-        if not payload:
-            return apology("Invalid Symbol")
+        rdict = json.loads(r.text)
+
+        imglink = []
+        for hit in rdict['hits']:
+            imglink.append(hit['recipe']['image'])
 
 
-        if rows:
-            #return render_template("quoted.html", stock=rows)
-            print("appel")
+        print(len(imglink))
 
-        if payload:
-            return render_template("zoek.html") # =payload)
+        return render_template("gezocht.html", link = imglink)
+
+
+
 
     else:
 
