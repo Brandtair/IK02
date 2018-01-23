@@ -4,14 +4,16 @@
 {% endblock %}
 
 {% block main %}
+    <link href="{{url_for('static',filename='styles.css')}}" rel="stylesheet"/>
     <p><a href="{{ url_for('register') }}">Register</a></p>
-    <h1> Log in </h1>
+    <h1>Log in</h1>
     <form action="{{ url_for('login') }}" method="post">
-        <fieldset>
             <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"/>
+            <br/>
             <input class="form-control" name="password" placeholder="Password" type="password"/>
-            <button class="btn btn-default" type="submit">Log In</button>
-        </fieldset>
+            <br/>
+            <br/>
+            <button class="RoundSideButton" id= "login">Log In</button>
     </form>
 {% endblock %}
 </html>
