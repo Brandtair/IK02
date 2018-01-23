@@ -1,7 +1,18 @@
 <html>
+        <p><a href="{{ url_for('zoek') }}">Zoek</a></p>
         {% for item in link %}
+        <html>
+        <body>
 
-        <img border="0" alt="W3Schools" src="{{ item }}">
+
+        <p>
+        <a href="https://www.w3schools.com">
+        <img src="{{ item }}" alt="W3Schools" border="0">
+        </a>
+        </p>
+
+</body>
+</html>
 
         {% endfor %}
 </html>
