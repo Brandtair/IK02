@@ -164,6 +164,9 @@ def register():
         rows = db.execute("INSERT INTO user (username, password) VALUES (:username, :password)", \
         username = request.form.get("username"), password = encryptedpassword)
 
+        # preferences
+
+
         return render_template("login.html")
 
     # else if user reached route via GET (as by clicking a link or via redirect)

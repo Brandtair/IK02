@@ -8,40 +8,59 @@
     <h1>Register your account</h1>
     <form action="{{ url_for('register') }}" method="post">
         <fieldset>
-            <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"/>
-            <input class="form-control" name="password" placeholder="Password" type="password"/>
-            <input class="form-control" name="repeat" placeholder="Repeat password" type="password"/>
+            <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"/><br>
+            <input class="form-control" name="password" placeholder="Password" type="password"/><br>
+            <input class="form-control" name="repeat" placeholder="Repeat password" type="password"/><br>
             <button class="btn btn-default" type="submit">Register</button>
         </fieldset>
         <fieldset>
             <h4>Do you have a diet?</h4>
-            <input type="checkbox" name="vegetarian" value="True">Vegetarian<br>
-            <input type="checkbox" name="vegan" value="True">Vegan<br>
-            <input type="checkbox" name="paleo" value="True">Paleo<br>
-            <input type="checkbox" name="high-fiber" value="True">High-Fiber<br>
-            <input type="checkbox" name="high-protein" value="True">High-Protein<br>
-            <input type="checkbox" name="low-carb" value="True">Low-Carb<br>
-            <input type="checkbox" name="low-fat" value="True">Low-Fat<br>
-            <input type="checkbox" name="low-sodium" value="True">Low-Sodium<br>
-            <input type="checkbox" name="low-sugar" value="True">Low-Sugar<br>
-            <input type="checkbox" name="alcohol-free" value="True">Alcohol-Free<br>
-            <input type="checkbox" name="balanced" value="True">Balanced<br>
+            <table>
+                <tr>
+                <td><input type="checkbox" name="vegetarian" value="True">Vegetarian</td>
+                <td><input type="checkbox" name="vegan" value="True">Vegan</td>
+                <td><input type="checkbox" name="paleo" value="True">Paleo</td>
+                </tr>
+                <tr>
+                <td><input type="checkbox" name="high-fiber" value="True">High-Fiber</td>
+                <td><input type="checkbox" name="high-protein" value="True">High-Protein</td>
+                <td><input type="checkbox" name="low-carb" value="True">Low-Carb</td>
+                </tr>
+                <tr>
+                <td><input type="checkbox" name="low-fat" value="True">Low-Fat</td>
+                <td><input type="checkbox" name="low-sodium" value="True">Low-Sodium</td>
+                <td><input type="checkbox" name="low-sugar" value="True">Low-Sugar</td>
+                </tr>
+                <tr>
+                <td><input type="checkbox" name="alcohol-free" value="True">Alcohol-Free</td>
+                <td><input type="checkbox" name="balanced" value="True">Balanced</td>
+                </tr>
+            </table>
         </fieldset>
         <fieldset>
             <h4>Do you have an allergy?</h4>
-            <input type="checkbox" name="gluten" value="True">Gluten<br>
-            <input type="checkbox" name="dairy" value="True">Dairy<br>
-            <input type="checkbox" name="eggs" value="True">Eggs<br>
-            <input type="checkbox" name="soy" value="True">Soy<br>
-            <input type="checkbox" name="wheat" value="True">Wheat<br>
-            <input type="checkbox" name="fish" value="True">Fish<br>
-            <input type="checkbox" name="shellfish" value="True">Shellfish<br>
-            <input type="checkbox" name="treenuts" value="True">Tree Nuts<br>
-            <input type="checkbox" name="peanuts" value="True">Peanuts<br>
+            <table>
+            <tr>
+            <td><input type="checkbox" name="gluten" value="True">Gluten
+            <td><input type="checkbox" name="dairy" value="True">Dairy
+            <td><input type="checkbox" name="eggs" value="True">Eggs
+            </tr>
+            <tr>
+            <td><input type="checkbox" name="soy" value="True">Soy
+            <td><input type="checkbox" name="wheat" value="True">Wheat
+            <td><input type="checkbox" name="fish" value="True">Fish
+            </tr>
+            <tr>
+            <td><input type="checkbox" name="shellfish" value="True">Shellfish
+            <td><input type="checkbox" name="treenuts" value="True">Tree Nuts
+            <td><input type="checkbox" name="peanuts" value="True">Peanuts
+            </tr>
+            </table>
         </fieldset>
         <fieldset>
-            <input autocomplete="off" autofocus name="pref1" placeholder="Preference 1" type="text"/>
-            <input autocomplete="off" autofocus name="pref2" placeholder="Preference 2" type="text"/>
+            <h4> Name 4 ingredients you like most! </h4>
+            <input autocomplete="off" autofocus name="pref1" placeholder="Preference 1" type="text"/><br>
+            <input autocomplete="off" autofocus name="pref2" placeholder="Preference 2" type="text"/><br>
             <input autocomplete="off" autofocus name="pref3" placeholder="Preference 3" type="text"/>
         </fieldset>
     </form>
