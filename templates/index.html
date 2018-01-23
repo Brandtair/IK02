@@ -1,7 +1,14 @@
 <html>
+{% block title %}
+    Homepage
+{% endblock %}
+
+{% block main %}
+        <p><a href="{{ url_for('logout') }}">Loguit</a></p>
+
         <p><a href="{{ url_for('zoek') }}">Zoek</a></p>
         {% for item in link %}
-        <html>
+
         <body>
 
 
@@ -10,9 +17,9 @@
         <img src="{{ item }}" alt="W3Schools" border="0">
         </a>
         </p>
-
-</body>
-</html>
+        </body>
 
         {% endfor %}
+
+{% endblock %}
 </html>

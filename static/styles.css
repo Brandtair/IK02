@@ -3,8 +3,7 @@
     background: linear-gradient(to top, rgb(204,255,204), red);
 }
 #login{
-    background: radial-gradient(red,grey,black);
-    background: linear-gradient(to top, black,red);
+    background: linear-gradient(to top, black,grey);
     color: white;
 }
 .RoundSideButton{
@@ -12,7 +11,7 @@
     border: 1px solid black;
     border-radius: 100px;
     text-align: center;
-    width: 10%;
+    width: 20%;
     font-weight: bold;
     display: inline-block;
 
