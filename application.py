@@ -102,6 +102,16 @@ def login():
     else:
         return render_template("login.html")
 
+@app.route("/logout")
+def logout():
+    """Log user out."""
+
+    # forget any user_id
+    session.clear()
+
+    # redirect user to login form
+    return redirect(url_for("login"))
+
 @app.route("/zoek", methods=["GET", "POST"])
 @login_required
 def zoek():
@@ -113,7 +123,8 @@ def zoek():
         payload = {'app_id' : 'abec09cd',
             'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
             'q' : request.form.get("symbol")
-}
+        }
+
         r = requests.get('http://api.edamam.com/search', params=payload)
         if not r:
             return apology("that ingedient is not valid")
@@ -124,13 +135,7 @@ def zoek():
         for hit in rdict['hits']:
             imglink.append(hit['recipe']['image'])
 
-
-        print(len(imglink))
-
         return render_template("gezocht.html", link = imglink)
-
-
-
 
     else:
 
@@ -169,7 +174,19 @@ def register():
         rows = db.execute("INSERT INTO user (username, password) VALUES (:username, :password)", \
         username = request.form.get("username"), password = encryptedpassword)
 
+        # diet
+        diets = ["vegetarian", "vegan", "paleo", "high-fiber", "high-protein", "low-carb", "low-sodium", "low-sugar", "alcohol-free", "balanced"]
+        diet = [i for i in diets if request.form.get(i) == "True"]
+
+        # allergies
+        allergies = ["gluten", "dairy", "eggs", "soy", "wheat", "fish", "shellfish", "treenuts", "peanuts"]
+        allergy = [i for i in allergies if request.form.get(i) == "True"]
+
         # preferences
+        Pref1 = request.form.get('pref1')
+        Pref2 = request.form.get('pref2')
+        Pref3 = request.form.get('pref3')
+
 
 
         return render_template("login.html")
