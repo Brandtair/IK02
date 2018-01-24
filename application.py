@@ -6,6 +6,13 @@ from tempfile import mkdtemp
 import requests
 import json
 from helpers import *
+import smtplib
+
+
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
+from email.mime.multipart import MIMEMultipart
 
 # configure application
 app = Flask(__name__)
@@ -102,6 +109,25 @@ def login():
     else:
         return render_template("login.html")
 
+@app.route("/mail", methods=["GET", "POST"])
+@login_required
+def mail():
+
+    if request.method == "POST":
+
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.starttls()
+        server.login("MakesRightDiner@gmail.com", "makesdiner")
+
+        msg = request.form.get("msg")
+        server.sendmail("MakesRightDiner@gmail.com", request.form.get("EMAILADDRESSTO"), msg)
+        server.quit()
+
+    else:
+
+        return render_template("mail.html")
+
+
 @app.route("/zoek", methods=["GET", "POST"])
 @login_required
 def zoek():
@@ -124,17 +150,22 @@ def zoek():
         for hit in rdict['hits']:
             imglink.append(hit['recipe']['image'])
 
+        names = []
+        for hit in rdict['hits']:
+            names.append(hit['recipe']['label'])
 
         print(len(imglink))
 
-        return render_template("gezocht.html", link = imglink)
-
+        return render_template("gezocht.html", link = imglink, name = names)
 
 
 
     else:
 
         return render_template("zoek.html")
+
+
+
 
 
 @app.route("/register", methods=["GET", "POST"])
