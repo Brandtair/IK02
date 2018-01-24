@@ -7,6 +7,13 @@ from validate_email import validate_email
 import requests
 import json
 from helpers import *
+import smtplib
+
+
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
+from email.mime.multipart import MIMEMultipart
 
 # configure application
 app = Flask(__name__)
@@ -49,6 +56,10 @@ for hit in rdict['hits']:
 @app.route("/")
 @login_required
 def index():
+
+    prefs = db.execute("SELECT pref1, pref2, pref3 FROM users WHERE user_id == :userid", \
+                        userid = session['user_id'])
+    print(prefs)
 
     payload = {'app_id' : 'abec09cd',
             'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
@@ -102,6 +113,26 @@ def login():
     else:
         return render_template("login.html")
 
+
+@app.route("/mail", methods=["GET", "POST"])
+@login_required
+def mail():
+
+    if request.method == "POST":
+
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.starttls()
+        server.login("MakesRightDiner@gmail.com", "makesdiner")
+
+        msg = request.form.get("msg")
+        server.sendmail("MakesRightDiner@gmail.com", request.form.get("EMAILADDRESSTO"), msg)
+        server.quit()
+
+    else:
+
+        return render_template("mail.html")
+
+
 @app.route("/logout")
 def logout():
     """Log user out."""
@@ -112,6 +143,7 @@ def logout():
     # redirect user to login form
     return redirect(url_for("login"))
 
+
 @app.route("/zoek", methods=["GET", "POST"])
 @login_required
 def zoek():
@@ -120,26 +152,42 @@ def zoek():
     #check if symbol excists
     if request.method == "POST":
 
+        if not request.form.get("symbol"):
+            return apology("Please insert an ingredient/recipe")
+
         payload = {'app_id' : 'abec09cd',
             'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
             'q' : request.form.get("symbol")
         }
 
         r = requests.get('http://api.edamam.com/search', params=payload)
-        if not r:
-            return apology("that ingedient is not valid")
-
         rdict = json.loads(r.text)
+        if not rdict:
+            return apology("that ingedient is not valid")
 
         imglink = []
         for hit in rdict['hits']:
             imglink.append(hit['recipe']['image'])
 
+        names = []
+        for hit in rdict['hits']:
+            names.append(hit['recipe']['label'])
+
+        print(len(imglink))
+
+        return render_template("gezocht.html", link = imglink, name = names)
+
+
+
         return render_template("gezocht.html", link = imglink)
+
 
     else:
 
         return render_template("zoek.html")
+
+
+
 
 
 @app.route("/register", methods=["GET", "POST"])
