@@ -5,21 +5,28 @@
 {% endblock %}
 
 {% block main %}
-    <h1>Register your account</h1>
-    <form action="{{ url_for('register') }}" method="post">
-        <fieldset style="width:350px">
-            <input autocomplete="off" autofocus name="username" placeholder="Username" type="text"/><br>
-            <input name="password" placeholder="Password" type="password"/><br>
-            <input name="repeat" placeholder="Repeat password" type="password"/><br>
-            <input name = "email" placeholder = "E-mail" type="text"/>
-        </fieldset>
-        <fieldset style="width:350px">
-            <h4>Do you have a diet?</h4>
-            <table>
-                <tr>
+    <head>
+        <link href="{{url_for('static',filename='styles.css')}}" rel="stylesheet"/>
+    </head>
+
+    <body>
+        <h1>Register your account</h1>
+            <form action="{{ url_for('login') }}"><button class= "RoundSideButton">Back to login page</button></form>
+            <br/>
+        <form action="{{ url_for('register') }}" method="post">
+            <fieldset style="width:350px">
+                <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"/><br>
+                <input class="form-control" name="password" placeholder="Password" type="password"/><br>
+                <input class="form-control" name="repeat" placeholder="Repeat password" type="password"/><br>
+            </fieldset>
+            <fieldset style="width:350px">
+                <h4>Do you have a diet?</h4>
+                <table>
+                    <tr>
                     <td><input type="checkbox" name="vegetarian" value="True">Vegetarian</td>
                     <td><input type="checkbox" name="vegan" value="True">Vegan</td>
                     <td><input type="checkbox" name="paleo" value="True">Paleo</td>
+<<<<<<< HEAD
                 </tr>
                 <tr>
                     <td><input type="checkbox" name="high_fiber" value="True">High-Fiber</td>
@@ -33,37 +40,53 @@
                 </tr>
                 <tr>
                     <td><input type="checkbox" name="alcohol_free" value="True">Alcohol-Free</td>
+=======
+                    </tr>
+                    <tr>
+                    <td><input type="checkbox" name="high-fiber" value="True">High-Fiber</td>
+                    <td><input type="checkbox" name="high-protein" value="True">High-Protein</td>
+                    <td><input type="checkbox" name="low-carb" value="True">Low-Carb</td>
+                    </tr>
+                    <tr>
+                    <td><input type="checkbox" name="low-fat" value="True">Low-Fat</td>
+                    <td><input type="checkbox" name="low-sodium" value="True">Low-Sodium</td>
+                    <td><input type="checkbox" name="low-sugar" value="True">Low-Sugar</td>
+                    </tr>
+                    <tr>
+                    <td><input type="checkbox" name="alcohol-free" value="True">Alcohol-Free</td>
+>>>>>>> 7410d5a357a2ae5fe007a2455e83cf839e571d3c
                     <td><input type="checkbox" name="balanced" value="True">Balanced</td>
-                </tr>
-            </table>
-        </fieldset>
-        <fieldset style="width:350px">
-            <h4>Do you have an allergy?</h4>
-            <table>
+                    </tr>
+                </table>
+            </fieldset>
+            <fieldset style="width:350px">
+                <h4>Do you have an allergy?</h4>
+                <table>
                 <tr>
-                    <td><input type="checkbox" name="gluten" value="True">Gluten
-                    <td><input type="checkbox" name="dairy" value="True">Dairy
-                    <td><input type="checkbox" name="eggs" value="True">Eggs
-                </tr>
-                <tr>
-                    <td><input type="checkbox" name="soy" value="True">Soy
-                    <td><input type="checkbox" name="wheat" value="True">Wheat
-                    <td><input type="checkbox" name="fish" value="True">Fish
+                <td><input type="checkbox" name="gluten" value="True">Gluten
+                <td><input type="checkbox" name="dairy" value="True">Dairy
+                <td><input type="checkbox" name="eggs" value="True">Eggs
                 </tr>
                 <tr>
-                    <td><input type="checkbox" name="shellfish" value="True">Shellfish
-                    <td><input type="checkbox" name="treenuts" value="True">Tree Nuts
-                    <td><input type="checkbox" name="peanuts" value="True">Peanuts
+                <td><input type="checkbox" name="soy" value="True">Soy
+                <td><input type="checkbox" name="wheat" value="True">Wheat
+                <td><input type="checkbox" name="fish" value="True">Fish
                 </tr>
-            </table>
-        </fieldset>
-        <fieldset style="width:350px">
-            <h4> Name 4 ingredients you like most! </h4>
-            <input autocomplete="off" autofocus name="pref1" placeholder="Preference 1" type="text"/><br>
-            <input autocomplete="off" autofocus name="pref2" placeholder="Preference 2" type="text"/><br>
-            <input autocomplete="off" autofocus name="pref3" placeholder="Preference 3" type="text"/>
-        </fieldset>
-        <button class="btn btn-default" type="submit">Register</button>
-    </form>
+                <tr>
+                <td><input type="checkbox" name="shellfish" value="True">Shellfish
+                <td><input type="checkbox" name="treenuts" value="True">Tree Nuts
+                <td><input type="checkbox" name="peanuts" value="True">Peanuts
+                </tr>
+                </table>
+            </fieldset>
+            <fieldset style="width:350px">
+                <h4> Name 4 ingredients you like most! </h4>
+                <input autocomplete="off" autofocus name="pref1" placeholder="Preference 1" type="text"/><br>
+                <input autocomplete="off" autofocus name="pref2" placeholder="Preference 2" type="text"/><br>
+                <input autocomplete="off" autofocus name="pref3" placeholder="Preference 3" type="text"/>
+            </fieldset>
+            <button class="btn btn-default" type="submit">Register</button>
+        </form>
+    </body>
 {% endblock %}
 </html>
