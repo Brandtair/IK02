@@ -59,7 +59,6 @@ def index():
 
     prefs = db.execute("SELECT pref1, pref2, pref3 FROM users WHERE user_id == :userid", \
                         userid = session['user_id'])
-    print(prefs)
 
     payload = {'app_id' : 'abec09cd',
             'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
