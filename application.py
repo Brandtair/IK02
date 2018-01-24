@@ -3,6 +3,7 @@ from flask import Flask, flash, redirect, render_template, request, session, url
 from flask_session import Session
 from passlib.apps import custom_app_context as pwd_context
 from tempfile import mkdtemp
+from validate_email import validate_email
 import requests
 import json
 from helpers import *
@@ -60,7 +61,6 @@ def index():
     imglink = []
     for hit in rdict['hits']:
         imglink.append(hit['recipe']['image'])
-
 
     print(len(imglink))
 
@@ -171,12 +171,11 @@ def register():
 
         # encrypt the password and insert the new user into the database
         encryptedpassword = pwd_context.hash(request.form.get("password"))
-        rows = db.execute("INSERT INTO user (username, password) VALUES (:username, :password)", \
-        username = request.form.get("username"), password = encryptedpassword)
 
         # diet
-        diets = ["vegetarian", "vegan", "paleo", "high-fiber", "high-protein", "low-carb", "low-sodium", "low-sugar", "alcohol-free", "balanced"]
-        diet = [i for i in diets if request.form.get(i) == "True"]
+        diets = ["vegetarian", "vegan", "paleo", "high-fiber", "high-protein", \
+                "low-carb", "low-fat", "low-sodium", "low-sugar", "alcohol-free", "balanced"]
+        Diet = [i for i in diets if request.form.get(i) == "True"]
 
         # allergies
         allergies = ["gluten", "dairy", "eggs", "soy", "wheat", "fish", "shellfish", "treenuts", "peanuts"]
@@ -187,7 +186,28 @@ def register():
         Pref2 = request.form.get('pref2')
         Pref3 = request.form.get('pref3')
 
+        preflist = [Pref1, Pref2, Pref3]
+        for item in preflist:
+            payload = {'app_id' : 'abec09cd',
+            'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
+            'q' : item
+            }
 
+            r = requests.get('http://api.edamam.com/search', params=payload)
+            if r != None:
+                pass
+            if r == None:
+                return apology("There were no recipes found for one of your preferences")
+
+        Email = request.form.get("email")
+        is_valid = validate_email(Email)
+        if not is_valid:
+            return apology("Please insert a valid e-mail")
+
+        db.execute("INSERT INTO users (username, password, pref1, pref2, pref3, email, diet, allergies) \
+                    VALUES (:username, :password, :pref1, :pref2, :pref3, :email, :diet, :allergies)", \
+                    username = request.form.get("username"), password = encryptedpassword, pref1 = Pref1, \
+                    pref2 = Pref2, pref3 = Pref3, email = Email, diet = Diet, allergies = allergy)
 
         return render_template("login.html")
 
