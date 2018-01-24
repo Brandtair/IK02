@@ -1,9 +1,33 @@
 <html>
+<<<<<<< HEAD
         <p><a href="{{ url_for('zoek') }}">Zoek</a></p>
         <p><a href="{{ url_for('mail') }}">Mail</a></p>
+=======
+{% block title %}
+    Homepage
+{% endblock %}
+
+{% block main %}
+    <head>
+        <link href="{{url_for('static',filename='styles.css')}}" rel="stylesheet"/>
+    </head>
+
+    <body>
+        <!--Uitloggen-->
+        <p><a href="{{ url_for('logout') }}">Loguit</a></p>
+
+        <!--Zoekbalk voor homepage-->
+        <form action="{{ url_for('zoek') }}" method="post">
+            <div class="form-group">
+                <input autocomplete="off" autofocus class="form-control" name="symbol" placeholder="Find a recip" type="text"/>
+            </div>
+            <br/>
+            <div class="form-group">
+                <button class="RoundSideButton" type="submit">Zoek</button>
+            </div>
+    </form>
+>>>>>>> c1083f156ab2662bdc28c59b85a6ee02a571efa9
         {% for item in link %}
-        <html>
-        <body>
 
 
         <p>
@@ -12,8 +36,7 @@
         </a>
         </p>
 
-</body>
-</html>
-
         {% endfor %}
+    </body>
+{% endblock %}
 </html>

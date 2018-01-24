@@ -3,6 +3,7 @@ from flask import Flask, flash, redirect, render_template, request, session, url
 from flask_session import Session
 from passlib.apps import custom_app_context as pwd_context
 from tempfile import mkdtemp
+from validate_email import validate_email
 import requests
 import json
 from helpers import *
@@ -58,7 +59,7 @@ def index():
 
     payload = {'app_id' : 'abec09cd',
             'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
-            'q' : 'Low-Fat'
+            'q' : 'lettuce'
     }
 
     r = requests.get('http://api.edamam.com/search', params=payload)
@@ -67,7 +68,6 @@ def index():
     imglink = []
     for hit in rdict['hits']:
         imglink.append(hit['recipe']['image'])
-
 
     print(len(imglink))
 
@@ -109,6 +109,7 @@ def login():
     else:
         return render_template("login.html")
 
+
 @app.route("/mail", methods=["GET", "POST"])
 @login_required
 def mail():
@@ -128,6 +129,17 @@ def mail():
         return render_template("mail.html")
 
 
+@app.route("/logout")
+def logout():
+    """Log user out."""
+
+    # forget any user_id
+    session.clear()
+
+    # redirect user to login form
+    return redirect(url_for("login"))
+
+
 @app.route("/zoek", methods=["GET", "POST"])
 @login_required
 def zoek():
@@ -139,7 +151,8 @@ def zoek():
         payload = {'app_id' : 'abec09cd',
             'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
             'q' : request.form.get("symbol")
-}
+        }
+
         r = requests.get('http://api.edamam.com/search', params=payload)
         if not r:
             return apology("that ingedient is not valid")
@@ -158,6 +171,9 @@ def zoek():
 
         return render_template("gezocht.html", link = imglink, name = names)
 
+
+
+        return render_template("gezocht.html", link = imglink)
 
 
     else:
@@ -190,18 +206,66 @@ def register():
             return apology("passwords must be equal")
 
         # check if the username is unique
-        exist = db.execute("SELECT username FROM user")
+        exist = db.execute("SELECT username FROM users")
         for name in exist:
             if name['username'] == request.form.get("username"):
                 return apology("That username is already taken")
 
         # encrypt the password and insert the new user into the database
         encryptedpassword = pwd_context.hash(request.form.get("password"))
-        rows = db.execute("INSERT INTO user (username, password) VALUES (:username, :password)", \
-        username = request.form.get("username"), password = encryptedpassword)
+
+        # diet
+        diets = ["vegetarian", "vegan", "paleo", "high_fiber", "high_protein", \
+                "low_carb", "low_fat", "low_sodium", "low_sugar", "alcohol_free", "balanced"]
+        Diet = {i: request.form.get(i) for i in diets}
+
+        # allergies
+        allergies = ["gluten", "dairy", "eggs", "soy", "wheat", "fish", "shellfish", "treenuts", "peanuts"]
+        allergy = {i: request.form.get(i) for i in allergies}
 
         # preferences
+        Pref1 = request.form.get('pref1')
+        Pref2 = request.form.get('pref2')
+        Pref3 = request.form.get('pref3')
 
+        preflist = [Pref1, Pref2, Pref3]
+        for item in preflist:
+            if len(item) == 1:
+                return apology("Please insert a valid ingredient")
+
+            payload = {'app_id' : 'abec09cd',
+            'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
+            'q' : item
+            }
+
+            r = requests.get('http://api.edamam.com/search', params=payload)
+            rdict = json.loads(r.text)
+            if rdict != None:
+                continue
+            elif rdict == None:
+                return apology("There were no recipes found for one of your preferences")
+
+        Email = request.form.get("email")
+        is_valid = validate_email(Email)
+        if not is_valid:
+            return apology("Please insert a valid e-mail")
+
+        db.execute("INSERT INTO users (username, password, pref1, pref2, pref3, email, \
+                    gluten, dairy, eggs, soy, wheat, fish, shellfish, treenuts, peanuts, \
+                    vegetarian, vegan, paleo, high_fiber, high_protein, low_carb, low_fat, \
+                    low_sodium, low_sugar, alcohol_free, balanced) \
+                    VALUES (:username, :password, :pref1, :pref2, :pref3, :email, \
+                    :gluten, :dairy, :eggs, :soy, :wheat, :fish, :shellfish, :treenuts, :peanuts, \
+                    :vegetarian, :vegan, :paleo, :high_fiber, :high_protein, :low_carb, :low_fat, \
+                    :low_sodium, :low_sugar, :alcohol_free, :balanced)", \
+                    username = request.form.get("username"), password = encryptedpassword, pref1 = Pref1, \
+                    pref2 = Pref2, pref3 = Pref3, email = Email, gluten = allergy['gluten'], dairy = allergy['dairy'], \
+                    eggs = allergy['eggs'], soy = allergy['soy'], wheat = allergy['wheat'], fish = allergy['fish'], \
+                    shellfish = allergy['shellfish'], treenuts = allergy['treenuts'], peanuts = allergy['peanuts'], \
+                    vegetarian = Diet['vegetarian'], vegan = Diet['vegan'], paleo = Diet['paleo'], \
+                    high_fiber = Diet['high_fiber'], high_protein = Diet['high_protein'], low_carb = Diet['low_carb'], \
+                    low_fat = Diet['low_fat'], low_sodium = Diet['low_sodium'], low_sugar = Diet['low_sugar'], \
+                    alcohol_free = Diet['alcohol_free'], balanced = Diet['balanced'])
 
         return render_template("login.html")
 
