@@ -1,3 +1,10 @@
+/*ID-Tag*/
+#login{
+    background: linear-gradient(to top, black, white);
+    color: white;
+}
+
+/*Classes*/
 .logout{
     color: white;
     background: linear-gradient(to top, rgb(204,255,204), red);
@@ -7,14 +14,9 @@
     border: 1px solid black;
     border-radius: 100px;
     text-align: center;
-    width: 20%;
+    width: 50%;
     font-weight: bold;
     display: inline-block;
 
     }
 
-/*classes*/
-#login{
-    background: linear-gradient(to top, black,grey);
-    color: white;
-}

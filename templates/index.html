@@ -10,7 +10,13 @@
 
     <body>
         <!--Uitloggen-->
-        <p><a href="{{ url_for('logout') }}">Loguit</a></p>
+        <p><a href="{{ url_for('logout') }}">Logout</a></p>
+        <!--favorieten pagina-->
+        <p><a href="{{ url_for('favorite') }}">Favorite</a></p>
+        <!--deel pagina-->
+        <form action="{{ url_for('share') }}"><button class="RoundSideButton">Share</button></form>
+        <form action="{{ url_for('login') }}"><button class= "RoundSideButton">Back to login page</button></form>
+
 
         <!--Zoekbalk voor homepage-->
         <form action="{{ url_for('zoek') }}" method="post">
