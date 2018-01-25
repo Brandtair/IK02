@@ -16,7 +16,7 @@
                 <input autocomplete="off" autofocus class="form-control" name="EMAILADDRESSTO" placeholder="EMAIL ADDRESS TO" type="text"/>
             </div>
             <div class="form-group">
-                <input autocomplete="off" autofocus class="form-control" name="msg" placeholder="{{(['url'][i])}}" type="text"/>
+                <input autocomplete="off" autofocus class="form-control" name="msg" placeholder="'{{ item.url }}'" type="text"/>
             </div>
             <div class="form-group">
                 <button class="btn btn-default" type="submit">Send</button>
@@ -31,8 +31,7 @@
 <a href="{{ item.url }}">
 <img src="{{ item.img }}" alt="W3Schools" border="0">
 
-</fieldset>
-
+ </fieldset>
 
 
 </a>

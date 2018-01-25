@@ -141,17 +141,9 @@ def mail():
         server.starttls()
         server.login("MakesRightDiner@gmail.com", "makesdiner")
 
-        msg = []
-        for hit in rdict['hits']:
-            msg.append(hit['recipe']['url'])
-        server.sendmail("MakesRightDiner@gmail.com", request.form.get(msg), msg)
+        msg = request.form.get("msg")
+        server.sendmail("MakesRightDiner@gmail.com", request.form.get("EMAILADDRESSTO"), msg)
         server.quit()
-
-        #msg = request.form.get("msg")
-            #for hit in rdict['hits']:
-            #urls.append(hit['recipe']['url'])
-       # server.sendmail("MakesRightDiner@gmail.com", request.form.get("EMAILADDRESSTO"), msg)
-       #  server.quit()
 
     else:
 
