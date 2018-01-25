@@ -1,6 +1,6 @@
 /*ID-Tag*/
 #login{
-    background: linear-gradient(to top, black, white);
+    background: linear-gradient(to top, black, red);
     color: white;
 }
 
@@ -14,7 +14,7 @@
     border: 1px solid black;
     border-radius: 100px;
     text-align: center;
-    width: 50%;
+    width: 10%;
     font-weight: bold;
     display: inline-block;
 

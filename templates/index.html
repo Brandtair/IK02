@@ -1,8 +1,4 @@
 <html>
-<<<<<<< HEAD
-        <p><a href="{{ url_for('zoek') }}">Zoek</a></p>
-        <p><a href="{{ url_for('mail') }}">Mail</a></p>
-=======
 {% block title %}
     Homepage
 {% endblock %}
@@ -14,12 +10,11 @@
 
     <body>
         <!--Uitloggen-->
-        <p><a href="{{ url_for('logout') }}">Logout</a></p>
+        <form action="{{ url_for('logout') }}"><button class= "RoundSideButton">Logout</button></form>
         <!--favorieten pagina-->
-        <p><a href="{{ url_for('favorite') }}">Favorite</a></p>
+        <form action="{{ url_for('favorite') }}"><button class= "RoundSideButton">Favorite</button></form>
         <!--deel pagina-->
-        <form action="{{ url_for('share') }}"><button class="RoundSideButton">Share</button></form>
-        <form action="{{ url_for('login') }}"><button class= "RoundSideButton">Back to login page</button></form>
+        <form action="{{ url_for('mail') }}"><button class="RoundSideButton">Share page</button></form>
 
 
         <!--Zoekbalk voor homepage-->
@@ -32,17 +27,16 @@
                 <button class="RoundSideButton" type="submit">Zoek</button>
             </div>
     </form>
->>>>>>> c1083f156ab2662bdc28c59b85a6ee02a571efa9
         {% for item in link %}
 
 
         <p>
-        <a href="https://www.w3schools.com">
-        <img src="{{ item }}" alt="W3Schools" border="0">
-        </a>
+            <a href="https://www.w3schools.com">
+            <img src="{{ item }}" alt="W3Schools" border="0">
+            </a>
         </p>
 
         {% endfor %}
     </body>
-{% endblock %}
+        {% endblock %}
 </html>
