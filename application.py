@@ -57,6 +57,9 @@ for hit in rdict['hits']:
 @login_required
 def index():
 
+    prefs = db.execute("SELECT pref1, pref2, pref3 FROM users WHERE user_id == :userid", \
+                        userid = session['user_id'])
+
     payload = {'app_id' : 'abec09cd',
             'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
             'q' : 'lettuce'
@@ -174,16 +177,18 @@ def zoek():
     #check if symbol excists
     if request.method == "POST":
 
+        if not request.form.get("symbol"):
+            return apology("Please insert an ingredient/recipe")
+
         payload = {'app_id' : 'abec09cd',
             'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
             'q' : request.form.get("symbol")
         }
 
         r = requests.get('http://api.edamam.com/search', params=payload)
-        if not r:
-            return apology("that ingedient is not valid")
-
         rdict = json.loads(r.text)
+        if not rdict:
+            return apology("that ingedient is not valid")
 
         imglink = []
         for hit in rdict['hits']:
