@@ -16,8 +16,8 @@
         <form action="{{ url_for('favorite') }}"><button class= "RoundSideButton">Favorite</button></form>
         <!--deel pagina-->
         <form action="{{ url_for('mail') }}"><button class="RoundSideButton">Share page</button></form>
-        <!--Zoek-->
-        <form action="{{ url_for('mail') }}"><button class="RoundSideButton">Search</button></form>
+        <!--Zoek
+        <form action="{{ url_for('search') }}"><button class="RoundSideButton">Search</button></form>-->
 
 
         <!--Zoekbalk voor homepage-->
@@ -29,7 +29,7 @@
             <div class="form-group">
                 <button class="RoundSideButton" type="submit">Zoek</button>
             </div>
-    </form>
+        </form>
         {% for item in link %}
 
 
