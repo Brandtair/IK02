@@ -1,5 +1,6 @@
 <html>
 {% block title %}
+% block title %}
     Homepage
 {% endblock %}
 
@@ -15,6 +16,8 @@
         <form action="{{ url_for('favorite') }}"><button class= "RoundSideButton">Favorite</button></form>
         <!--deel pagina-->
         <form action="{{ url_for('mail') }}"><button class="RoundSideButton">Share page</button></form>
+        <!--Zoek-->
+        <form action="{{ url_for('mail') }}"><button class="RoundSideButton">Search</button></form>
 
 
         <!--Zoekbalk voor homepage-->
