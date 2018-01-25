@@ -311,3 +311,8 @@ def register():
     # else if user reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("register.html")
+
+@app.route("/favorite")
+def favorite():
+    if request.method == "POST":
+        return render_template("favorite.html")

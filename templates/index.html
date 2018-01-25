@@ -1,4 +1,5 @@
 <html>
+<<<<<<< HEAD
 
 
     <!--Uitloggen-->
@@ -8,6 +9,9 @@
 
         <p><a href="{{ url_for('zoek') }}">Zoek</a></p>
         <p><a href="{{ url_for('mail') }}">Mail</a></p>
+=======
+{% block title %}
+>>>>>>> f0e89b5ce903eade3514ed795c7c17d57dc88377
 % block title %}
 
     Homepage
@@ -24,6 +28,18 @@
     </head>
 <fieldset>
     <body>
+<<<<<<< HEAD
+=======
+        <!--Uitloggen-->
+        <form action="{{ url_for('logout') }}"><button class= "RoundSideButton">Logout</button></form>
+        <!--favorieten pagina-->
+        <form action="{{ url_for('favorite') }}"><button class= "RoundSideButton">Favorite</button></form>
+        <!--deel pagina-->
+        <form action="{{ url_for('mail') }}"><button class="RoundSideButton">Share page</button></form>
+        <!--Zoek
+        <form action="{{ url_for('search') }}"><button class="RoundSideButton">Search</button></form>-->
+
+>>>>>>> f0e89b5ce903eade3514ed795c7c17d57dc88377
 
         <!--Zoekbalk voor homepage-->
         <form action="{{ url_for('zoek') }}" method="post">
@@ -34,18 +50,22 @@
             <div class="form-group">
                 <button class="RoundSideButton" type="submit">Zoek</button>
             </div>
+<<<<<<< HEAD
     </form>
 
+=======
+        </form>
+>>>>>>> f0e89b5ce903eade3514ed795c7c17d57dc88377
         {% for item in link %}
 
 
         <p>
-        <a href="https://www.w3schools.com">
-        <img src="{{ item }}" alt="W3Schools" border="0">
-        </a>
+            <a href="https://www.w3schools.com">
+            <img src="{{ item }}" alt="W3Schools" border="0">
+            </a>
         </p>
 </fieldset>
         {% endfor %}
     </body>
-{% endblock %}
+        {% endblock %}
 </html>
