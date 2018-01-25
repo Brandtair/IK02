@@ -69,9 +69,27 @@ def index():
     for hit in rdict['hits']:
         imglink.append(hit['recipe']['image'])
 
-    print(len(imglink))
+    names = []
+    for hit in rdict['hits']:
+        names.append(hit['recipe']['label'])
 
-    return render_template("index.html", link = imglink)
+    urls = []
+    for hit in rdict['hits']:
+        urls.append(hit['recipe']['url'])
+
+    reclist = []
+    for i in range(len(imglink)):
+        temp = {}
+        temp['name'] = names[i]
+        temp['img'] = imglink[i]
+        temp['url'] = urls[i]
+        reclist.append(temp)
+
+
+    return render_template("index.html", data = reclist)
+
+
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -120,9 +138,17 @@ def mail():
         server.starttls()
         server.login("MakesRightDiner@gmail.com", "makesdiner")
 
-        msg = request.form.get("msg")
-        server.sendmail("MakesRightDiner@gmail.com", request.form.get("EMAILADDRESSTO"), msg)
+        msg = []
+        for hit in rdict['hits']:
+            msg.append(hit['recipe']['url'])
+        server.sendmail("MakesRightDiner@gmail.com", request.form.get(msg), msg)
         server.quit()
+
+        #msg = request.form.get("msg")
+            #for hit in rdict['hits']:
+            #urls.append(hit['recipe']['url'])
+       # server.sendmail("MakesRightDiner@gmail.com", request.form.get("EMAILADDRESSTO"), msg)
+       #  server.quit()
 
     else:
 
@@ -167,18 +193,26 @@ def zoek():
         for hit in rdict['hits']:
             names.append(hit['recipe']['label'])
 
-        print(len(imglink))
+        urls = []
+        for hit in rdict['hits']:
+            urls.append(hit['recipe']['url'])
 
-        return render_template("gezocht.html", link = imglink, name = names)
+        reclist = []
+        for i in range(len(imglink)):
+            temp = {}
+            temp['name'] = names[i]
+            temp['img'] = imglink[i]
+            temp['url'] = urls[i]
+            reclist.append(temp)
 
 
-
-        return render_template("gezocht.html", link = imglink)
+        return render_template("gezocht.html", data = reclist)
 
 
     else:
 
         return render_template("zoek.html")
+
 
 
 
