@@ -57,15 +57,16 @@ for hit in rdict['hits']:
 @login_required
 def index():
 
+    # get the preferences from the database
     prefs = db.execute("SELECT pref1, pref2, pref3 FROM users WHERE user_id == :userid", \
                         userid = session['user_id'])
 
     prefdict = []
-    print(prefs)
-    # all alone
+
+    # get recipes where one of the ingredients in present
     for d in prefs:
         for v in d.values():
-            print("v = ", v)
+
             payload = {'app_id' : 'abec09cd',
                     'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
                     'q' : v,
@@ -116,15 +117,11 @@ def index():
     prefdict.update(rdict)
     """
 
+    # get three random recipes
     randomrecipes = []
     for i in range(3):
         rand = random.choice(prefdict)
         randomrecipes.append(rand['recipe'])
-
-    #print("randomrecipes = ", randomrecipes)
-    imglink = []
-    for hit in rdict['hits']:
-        imglink.append(hit['recipe']['image'])
 
     return render_template("index.html", recipes = randomrecipes)
 
@@ -287,7 +284,7 @@ def register():
         Diet = {i: request.form.get(i) for i in diets}
 
         # allergies
-        allergies = ["gluten", "dairy", "eggs", "soy", "wheat", "fish", "shellfish", "treenuts", "peanuts"]
+        allergies = ["gluten", "dairy", "eggs", "soy", "wheat", "treenuts", "peanuts"]
         allergy = {i: request.form.get(i) for i in allergies}
 
         # preferences
@@ -301,11 +298,15 @@ def register():
                 return apology("Please insert a valid ingredient")
 
             payload = {'app_id' : 'abec09cd',
-            'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
-            'q' : item
-            }
+                        'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
+                        'q' : item
+                        }
 
-            rdict = requests.get('http://api.edamam.com/search', params=payload).json()
+            try:
+                rdict = requests.get('http://api.edamam.com/search', params=payload).json()
+
+            except:
+                return render_template("apology.html", text = "Too many query's this minute (5/5)")
 
             if rdict != None:
                 continue
@@ -318,17 +319,17 @@ def register():
             return apology("Please insert a valid e-mail")
 
         db.execute("INSERT INTO users (username, password, pref1, pref2, pref3, email, \
-                    gluten, dairy, eggs, soy, wheat, fish, shellfish, treenuts, peanuts, \
+                    glutenfree, dairyfree, eggfree, soyfree, wheatfree, treenutfree, peanutfree, \
                     vegetarian, vegan, paleo, high_fiber, high_protein, low_carb, low_fat, \
                     low_sodium, low_sugar, alcohol_free, balanced) \
                     VALUES (:username, :password, :pref1, :pref2, :pref3, :email, \
-                    :gluten, :dairy, :eggs, :soy, :wheat, :fish, :shellfish, :treenuts, :peanuts, \
+                    :gluten, :dairy, :eggs, :soy, :wheat, :treenuts, :peanuts, \
                     :vegetarian, :vegan, :paleo, :high_fiber, :high_protein, :low_carb, :low_fat, \
                     :low_sodium, :low_sugar, :alcohol_free, :balanced)", \
                     username = request.form.get("username"), password = encryptedpassword, pref1 = Pref1, \
                     pref2 = Pref2, pref3 = Pref3, email = Email, gluten = allergy['gluten'], dairy = allergy['dairy'], \
-                    eggs = allergy['eggs'], soy = allergy['soy'], wheat = allergy['wheat'], fish = allergy['fish'], \
-                    shellfish = allergy['shellfish'], treenuts = allergy['treenuts'], peanuts = allergy['peanuts'], \
+                    eggs = allergy['eggs'], soy = allergy['soy'], wheat = allergy['wheat'], \
+                    treenuts = allergy['treenuts'], peanuts = allergy['peanuts'], \
                     vegetarian = Diet['vegetarian'], vegan = Diet['vegan'], paleo = Diet['paleo'], \
                     high_fiber = Diet['high_fiber'], high_protein = Diet['high_protein'], low_carb = Diet['low_carb'], \
                     low_fat = Diet['low_fat'], low_sodium = Diet['low_sodium'], low_sugar = Diet['low_sugar'], \
