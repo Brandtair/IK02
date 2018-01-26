@@ -222,18 +222,26 @@ def zoek():
         for hit in rdict['hits']:
             names.append(hit['recipe']['label'])
 
-        print(len(imglink))
+        urls = []
+        for hit in rdict['hits']:
+            urls.append(hit['recipe']['url'])
 
-        return render_template("gezocht.html", link = imglink, name = names)
+        reclist = []
+        for i in range(len(imglink)):
+            temp = {}
+            temp['name'] = names[i]
+            temp['img'] = imglink[i]
+            temp['url'] = urls[i]
+            reclist.append(temp)
 
 
-
-        return render_template("gezocht.html", link = imglink)
+        return render_template("gezocht.html", data = reclist)
 
 
     else:
 
         return render_template("zoek.html")
+
 
 
 
@@ -327,3 +335,8 @@ def register():
     # else if user reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("register.html")
+
+@app.route("/favorite")
+def favorite():
+    if request.method == "POST":
+        return render_template("favorite.html")
