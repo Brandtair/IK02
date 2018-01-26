@@ -176,7 +176,9 @@ def mail():
         server.login("MakesRightDiner@gmail.com", "makesdiner")
 
         msg = request.form.get("msg")
-        server.sendmail("MakesRightDiner@gmail.com", request.form.get("EMAILADDRESSTO"), msg)
+        msg = "".join(['<a href="', msg, '">klik hier</a>'])
+        msg = MIMEText(msg, 'html')
+        server.sendmail("MakesRightDiner@gmail.com", request.form.get("EMAILADDRESSTO"), msg.as_string())
         server.quit()
 
     else:
