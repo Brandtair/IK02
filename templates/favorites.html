@@ -6,7 +6,16 @@
 {% endblock %}
 
 {% block main %}
+<head>
+    <link href="{{url_for('static',filename='stylesss.css')}}" rel="stylesheet"/>
+</head>
+<body>
     <h1>Favorites</h1>
+    <br/>
+    <form action="{{ url_for('logout') }}"><button class= "RoundSideButton" id= "logout">Logout</button></form>
+    <form action="{{ url_for('logout') }}"><button class= "RoundSideButton">Logout</button></form>
+    <form action="{{ url_for('logout') }}"><button class= "RoundSideButton">Logout</button></form>
+    <br/>
     <h3>Add them at the index page</h3>
     <table class="table table-striped" style="width:100%">
         <tr>
@@ -26,4 +35,5 @@
             </tr>
         {% endfor %}
     </table>
+</body>
 {% endblock %}
