@@ -72,12 +72,10 @@ def index():
                     'to' : 1000
                     }
 
-            r = requests.get('http://api.edamam.com/search', params=payload)
-            rdict = json.loads(r.text)
+            rdict = requests.get('http://api.edamam.com/search', params=payload).json()
             for item in rdict['hits']:
                 prefdict.append(item)
 
-    print(len(prefdict))
     """
     # three pairs
     payload = {'app_id' : 'abec09cd',
@@ -118,13 +116,17 @@ def index():
     prefdict.update(rdict)
     """
 
-    randomrecipes = random.choice(prefdict)
-    print("randomrecipes = ", randomrecipes)
+    randomrecipes = []
+    for i in range(3):
+        rand = random.choice(prefdict)
+        randomrecipes.append(rand['recipe'])
+
+    #print("randomrecipes = ", randomrecipes)
     imglink = []
     for hit in rdict['hits']:
         imglink.append(hit['recipe']['image'])
 
-    return render_template("index.html", link = imglink)
+    return render_template("index.html", recipes = randomrecipes)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -209,8 +211,8 @@ def zoek():
             'q' : request.form.get("symbol")
         }
 
-        r = requests.get('http://api.edamam.com/search', params=payload)
-        rdict = json.loads(r.text)
+        rdict = requests.get('http://api.edamam.com/search', params=payload).json()
+
         if not rdict:
             return apology("that ingedient is not valid")
 
@@ -301,8 +303,8 @@ def register():
             'q' : item
             }
 
-            r = requests.get('http://api.edamam.com/search', params=payload)
-            rdict = json.loads(r.text)
+            rdict = requests.get('http://api.edamam.com/search', params=payload).json()
+
             if rdict != None:
                 continue
             elif rdict == None:
