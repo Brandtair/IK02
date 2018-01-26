@@ -417,3 +417,5 @@ def fave_remove():
             return redirect(url_for("favorites"))
     else:
         return redirect(url_for("favorites"))
+
+
