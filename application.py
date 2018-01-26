@@ -106,22 +106,24 @@ def login():
 
         # ensure username was submitted
         if not request.form.get("username"):
-            return apology("must provide username")
+            return render_template('apology.html', text = "must provide username")
 
         # ensure password was submitted
         elif not request.form.get("password"):
-            return apology("must provide password")
+            return render_template('apology.html', text = "Must provide password!")
 
         # query database for username
-        rows = db.execute("SELECT * FROM user WHERE username = :username", \
+        rows = db.execute("SELECT * FROM users WHERE username = :username", \
                             username=request.form.get("username"))
 
+        print(rows)
+        print(len(rows))
         # ensure username exists and password is correct
         if len(rows) != 1 or not pwd_context.verify(request.form.get("password"), rows[0]["password"]):
-            return apology("invalid username and/or password")
+            return render_template('apology.html', text = "username or password not valid")
 
         # remember which user has logged in
-        session["user_id"] = rows[0]["userid"]
+        session["user_id"] = rows[0]["user_id"]
 
         # redirect user to home page
         return redirect(url_for("index"))
@@ -312,7 +314,82 @@ def register():
     else:
         return render_template("register.html")
 
-@app.route("/favorite")
-def favorite():
+
+@app.route("/favorites", methods=["GET", "POST"])
+@login_required
+def favorites():
+    """Show stock the user has added to favorites with stats"""
     if request.method == "POST":
-        return render_template("favorite.html")
+
+        # return apology if no stock was given
+        if request.form['submit']:
+
+            stock = str(request.form['submit']).upper()
+
+            # check if the stock is valid
+            stats = lookup(stock)
+            if not stats:
+                return apology("Stock is not valid")
+
+            # calculate the amount of stock the user can buy
+            cash = db.execute("SELECT cash FROM users WHERE id = :userid", userid = session["user_id"])
+            to_buy = int(cash[0]['cash'] / stats['price'])
+
+            # select the amount of stock the user owns
+            stocks = db.execute("SELECT shares FROM portfolio WHERE user_id == :userid AND symbol == :stocksymbol", \
+                                userid = session['user_id'], stocksymbol = stock)
+            if not stocks:
+                shares = 0
+            else:
+                shares = stocks[0]['shares']
+
+            # check if the stock is already in favorites
+            rows = db.execute("SELECT * FROM favorites WHERE name == :name AND user_id == :userid", \
+                                name = stock, userid = session['user_id'])
+
+            # insert the values into favorites if they are not in it
+            if not rows:
+                db.execute("INSERT INTO favorites (name, price, amount, available, user_id) \
+                            VALUES (:name, :price, :amount, :available, :userid)", \
+                            name = str(stock).upper(), price = stats['price'], \
+                            amount = shares, available = to_buy, userid = session['user_id'])
+            else:
+                return apology("That stock is already in your favoriteslist")
+
+            # update portfolio
+            db.execute("UPDATE portfolio SET favorites = 'Yes' WHERE name == :name AND user_id == :userid" , \
+                        name = stock, userid = session['user_id'])
+
+            # return to index
+            return redirect(url_for("index"))
+
+    else:
+        # retrieve the values and give them to favorites.html
+        values = db.execute("SELECT * FROM favorites WHERE user_id == :userid", userid = session['user_id'])
+        return render_template("favorites.html", data = values)
+
+@app.route("/fave_remove", methods=["GET", "POST"])
+@login_required
+def fave_remove():
+    """Remove a stock from favorites"""
+    if request.method == "POST":
+
+        # ensure button was pressed
+        if request.form['submit']:
+
+            stock = str(request.form['submit']).upper()
+
+            # delete the stock from the table
+            db.execute("DELETE FROM favorites WHERE name == :name AND user_id == :userid", \
+                        name = stock, userid = session['user_id'])
+
+            # update portfolio
+            db.execute("UPDATE portfolio SET favorites = 'No' WHERE name == :name AND user_id == :userid" , \
+                        name = stock, userid = session['user_id'])
+
+            return redirect(url_for("favorites"))
+
+        else:
+            return redirect(url_for("favorites"))
+    else:
+        return redirect(url_for("favorites"))

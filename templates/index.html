@@ -29,11 +29,11 @@
                 <button class="RoundSideButton" type="submit">Zoek</button>
             </div>
         </form>
-        {% for item in link %}
+        {% for item in data %}
 
         <p>
-            <a href="https://www.w3schools.com">
-            <img src="{{ item }}" alt="W3Schools" border="0">
+            <a href="{{ item.url }}">
+            <img src="{{ item.img }}" alt= 'Image not available' border="0">
             </a>
         </p>
 
