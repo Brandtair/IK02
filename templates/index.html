@@ -1,11 +1,12 @@
 <html>
+
 {% block title %}
     Homepage
 {% endblock %}
 
 {% block main %}
     <head>
-        <link href="{{url_for('static',filename='styles.css')}}" rel="stylesheet"/>
+        <link href="{{url_for('static',filename='stylesss.css')}}" rel="stylesheet"/>
     </head>
 
     <body>
@@ -29,11 +30,13 @@
                 <button class="RoundSideButton" type="submit">Zoek</button>
             </div>
         </form>
-        {% for item in data %}
+        {% for item in recipes %}
+
 
         <p>
-            <a href="{{ item.url }}" target="_blank">
-            <img src="{{ item.img }}" alt= 'Image not available' border="0">
+            {{ item.label }} <br>
+            <a href="{{ item.url }}" target= '_blank'>
+            <img src="{{ item.image }}" alt="W3Schools" border="0">
             </a>
         </p>
 
