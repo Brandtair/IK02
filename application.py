@@ -66,56 +66,20 @@ def index():
     # get recipes where one of the ingredients in present
     for d in prefs:
         for v in d.values():
-
+            print("v = ", v)
             payload = {'app_id' : 'abec09cd',
                     'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
                     'q' : v,
                     'to' : 1000
                     }
 
-            rdict = requests.get('http://api.edamam.com/search', params=payload).json()
+            try:
+                rdict = requests.get('http://api.edamam.com/search', params=payload).json()
+            except:
+                return render_template("apology.html", text = "Too many query's this minute (5/5)")
+
             for item in rdict['hits']:
                 prefdict.append(item)
-
-    """
-    # three pairs
-    payload = {'app_id' : 'abec09cd',
-                'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
-                'q' : prefs['pref1'] prefs['prefs2']
-                }
-
-    r = requests.get('http://api.edamam.com/search', params=payload)
-    rdict = json.loads(r.text)
-    prefdict.update(rdict)
-
-    payload = {'app_id' : 'abec09cd',
-                'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
-                'q' : prefs['pref2'] prefs['pref3']
-                }
-
-    r = requests.get('http://api.edamam.com/search', params=payload)
-    rdict = json.loads(r.text)
-    prefdict.update(rdict)
-
-    payload = {'app_id' : 'abec09cd',
-                'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
-                'q' : prefs['pref1'] prefs['pref3']
-                }
-
-    r = requests.get('http://api.edamam.com/search', params=payload)
-    rdict = json.loads(r.text)
-    prefdict.update(rdict)
-
-    # all three
-    payload = {'app_id' : 'abec09cd',
-                'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
-                'q' : prefs['pref1'] prefs['pref2'] prefs['pref3']
-        }
-
-    r = requests.get('http://api.edamam.com/search', params=payload)
-    rdict = json.loads(r.text)
-    prefdict.update(rdict)
-    """
 
     # get three random recipes
     randomrecipes = []
@@ -210,7 +174,10 @@ def zoek():
             'q' : request.form.get("symbol")
         }
 
-        rdict = requests.get('http://api.edamam.com/search', params=payload).json()
+        try:
+            rdict = requests.get('http://api.edamam.com/search', params=payload).json()
+        except:
+            return render_template("apology.html", text = "Too many query's this minute (5/5)")
 
         if not rdict:
             return apology("that ingedient is not valid")
@@ -301,10 +268,8 @@ def register():
                         'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
                         'q' : item
                         }
-
             try:
                 rdict = requests.get('http://api.edamam.com/search', params=payload).json()
-
             except:
                 return render_template("apology.html", text = "Too many query's this minute (5/5)")
 
