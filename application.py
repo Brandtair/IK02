@@ -8,7 +8,7 @@ import requests
 import json
 from helpers import *
 import smtplib
-
+import random
 
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
@@ -60,39 +60,71 @@ def index():
     prefs = db.execute("SELECT pref1, pref2, pref3 FROM users WHERE user_id == :userid", \
                         userid = session['user_id'])
 
+    prefdict = []
+    print(prefs)
+    # all alone
+    for d in prefs:
+        for v in d.values():
+            print("v = ", v)
+            payload = {'app_id' : 'abec09cd',
+                    'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
+                    'q' : v,
+                    'to' : 1000
+                    }
+
+            r = requests.get('http://api.edamam.com/search', params=payload)
+            rdict = json.loads(r.text)
+            for item in rdict['hits']:
+                prefdict.append(item)
+
+    print(len(prefdict))
+    """
+    # three pairs
     payload = {'app_id' : 'abec09cd',
-            'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
-            'q' : 'lettuce'
-    }
+                'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
+                'q' : prefs['pref1'] prefs['prefs2']
+                }
 
     r = requests.get('http://api.edamam.com/search', params=payload)
     rdict = json.loads(r.text)
+    prefdict.update(rdict)
 
+    payload = {'app_id' : 'abec09cd',
+                'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
+                'q' : prefs['pref2'] prefs['pref3']
+                }
+
+    r = requests.get('http://api.edamam.com/search', params=payload)
+    rdict = json.loads(r.text)
+    prefdict.update(rdict)
+
+    payload = {'app_id' : 'abec09cd',
+                'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
+                'q' : prefs['pref1'] prefs['pref3']
+                }
+
+    r = requests.get('http://api.edamam.com/search', params=payload)
+    rdict = json.loads(r.text)
+    prefdict.update(rdict)
+
+    # all three
+    payload = {'app_id' : 'abec09cd',
+                'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
+                'q' : prefs['pref1'] prefs['pref2'] prefs['pref3']
+        }
+
+    r = requests.get('http://api.edamam.com/search', params=payload)
+    rdict = json.loads(r.text)
+    prefdict.update(rdict)
+    """
+
+    randomrecipes = random.choice(prefdict)
+    print("randomrecipes = ", randomrecipes)
     imglink = []
     for hit in rdict['hits']:
         imglink.append(hit['recipe']['image'])
 
-    names = []
-    for hit in rdict['hits']:
-        names.append(hit['recipe']['label'])
-
-    urls = []
-    for hit in rdict['hits']:
-        urls.append(hit['recipe']['url'])
-
-    reclist = []
-    for i in range(len(imglink)):
-        temp = {}
-        temp['name'] = names[i]
-        temp['img'] = imglink[i]
-        temp['url'] = urls[i]
-        reclist.append(temp)
-
-
-    return render_template("index.html", data = reclist)
-
-
-
+    return render_template("index.html", link = imglink)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -143,17 +175,9 @@ def mail():
         server.starttls()
         server.login("MakesRightDiner@gmail.com", "makesdiner")
 
-        msg = []
-        for hit in rdict['hits']:
-            msg.append(hit['recipe']['url'])
-        server.sendmail("MakesRightDiner@gmail.com", request.form.get(msg), msg)
+        msg = request.form.get("msg")
+        server.sendmail("MakesRightDiner@gmail.com", request.form.get("EMAILADDRESSTO"), msg)
         server.quit()
-
-        #msg = request.form.get("msg")
-            #for hit in rdict['hits']:
-            #urls.append(hit['recipe']['url'])
-       # server.sendmail("MakesRightDiner@gmail.com", request.form.get("EMAILADDRESSTO"), msg)
-       #  server.quit()
 
     else:
 
