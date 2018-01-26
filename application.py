@@ -8,7 +8,7 @@ import requests
 import json
 from helpers import *
 import smtplib
-
+import random
 
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
@@ -60,19 +60,69 @@ def index():
     prefs = db.execute("SELECT pref1, pref2, pref3 FROM users WHERE user_id == :userid", \
                         userid = session['user_id'])
 
+    prefdict = []
+    print(prefs)
+    # all alone
+    for d in prefs:
+        for v in d.values():
+            print("v = ", v)
+            payload = {'app_id' : 'abec09cd',
+                    'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
+                    'q' : v,
+                    'to' : 1000
+                    }
+
+            r = requests.get('http://api.edamam.com/search', params=payload)
+            rdict = json.loads(r.text)
+            for item in rdict['hits']:
+                prefdict.append(item)
+
+    print(len(prefdict))
+    """
+    # three pairs
     payload = {'app_id' : 'abec09cd',
-            'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
-            'q' : 'lettuce'
-    }
+                'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
+                'q' : prefs['pref1'] prefs['prefs2']
+                }
 
     r = requests.get('http://api.edamam.com/search', params=payload)
     rdict = json.loads(r.text)
+    prefdict.update(rdict)
 
+    payload = {'app_id' : 'abec09cd',
+                'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
+                'q' : prefs['pref2'] prefs['pref3']
+                }
+
+    r = requests.get('http://api.edamam.com/search', params=payload)
+    rdict = json.loads(r.text)
+    prefdict.update(rdict)
+
+    payload = {'app_id' : 'abec09cd',
+                'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
+                'q' : prefs['pref1'] prefs['pref3']
+                }
+
+    r = requests.get('http://api.edamam.com/search', params=payload)
+    rdict = json.loads(r.text)
+    prefdict.update(rdict)
+
+    # all three
+    payload = {'app_id' : 'abec09cd',
+                'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
+                'q' : prefs['pref1'] prefs['pref2'] prefs['pref3']
+        }
+
+    r = requests.get('http://api.edamam.com/search', params=payload)
+    rdict = json.loads(r.text)
+    prefdict.update(rdict)
+    """
+
+    randomrecipes = random.choice(prefdict)
+    print("randomrecipes = ", randomrecipes)
     imglink = []
     for hit in rdict['hits']:
         imglink.append(hit['recipe']['image'])
-
-    print(len(imglink))
 
     return render_template("index.html", link = imglink)
 
@@ -95,7 +145,7 @@ def login():
             return apology("must provide password")
 
         # query database for username
-        rows = db.execute("SELECT * FROM user WHERE username = :username", \
+        rows = db.execute("SELECT * FROM users WHERE username = :username", \
                             username=request.form.get("username"))
 
         # ensure username exists and password is correct
@@ -103,7 +153,7 @@ def login():
             return apology("invalid username and/or password")
 
         # remember which user has logged in
-        session["user_id"] = rows[0]["userid"]
+        session["user_id"] = rows[0]["user_id"]
 
         # redirect user to home page
         return redirect(url_for("index"))
