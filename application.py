@@ -57,12 +57,13 @@ for hit in rdict['hits']:
 @login_required
 def index():
 
+    # get the preferences from the database
     prefs = db.execute("SELECT pref1, pref2, pref3 FROM users WHERE user_id == :userid", \
                         userid = session['user_id'])
 
     prefdict = []
-    print(prefs)
-    # all alone
+
+    # get recipes where one of the ingredients in present
     for d in prefs:
         for v in d.values():
             print("v = ", v)
@@ -72,59 +73,19 @@ def index():
                     'to' : 1000
                     }
 
-            rdict = requests.get('http://api.edamam.com/search', params=payload).json()
+            try:
+                rdict = requests.get('http://api.edamam.com/search', params=payload).json()
+            except:
+                return render_template("apology.html", text = "Too many query's this minute (5/5)")
+
             for item in rdict['hits']:
                 prefdict.append(item)
 
-    """
-    # three pairs
-    payload = {'app_id' : 'abec09cd',
-                'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
-                'q' : prefs['pref1'] prefs['prefs2']
-                }
-
-    r = requests.get('http://api.edamam.com/search', params=payload)
-    rdict = json.loads(r.text)
-    prefdict.update(rdict)
-
-    payload = {'app_id' : 'abec09cd',
-                'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
-                'q' : prefs['pref2'] prefs['pref3']
-                }
-
-    r = requests.get('http://api.edamam.com/search', params=payload)
-    rdict = json.loads(r.text)
-    prefdict.update(rdict)
-
-    payload = {'app_id' : 'abec09cd',
-                'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
-                'q' : prefs['pref1'] prefs['pref3']
-                }
-
-    r = requests.get('http://api.edamam.com/search', params=payload)
-    rdict = json.loads(r.text)
-    prefdict.update(rdict)
-
-    # all three
-    payload = {'app_id' : 'abec09cd',
-                'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
-                'q' : prefs['pref1'] prefs['pref2'] prefs['pref3']
-        }
-
-    r = requests.get('http://api.edamam.com/search', params=payload)
-    rdict = json.loads(r.text)
-    prefdict.update(rdict)
-    """
-
+    # get three random recipes
     randomrecipes = []
     for i in range(3):
         rand = random.choice(prefdict)
         randomrecipes.append(rand['recipe'])
-
-    #print("randomrecipes = ", randomrecipes)
-    imglink = []
-    for hit in rdict['hits']:
-        imglink.append(hit['recipe']['image'])
 
     return render_template("index.html", recipes = randomrecipes)
 
@@ -140,19 +101,29 @@ def login():
 
         # ensure username was submitted
         if not request.form.get("username"):
-            return apology("must provide username")
+            return render_template('apology.html', text = "must provide username")
 
         # ensure password was submitted
         elif not request.form.get("password"):
+<<<<<<< HEAD
             return render_template('apology.html', text = "must provide password")
+=======
+            return render_template('apology.html', text = "Must provide password!")
+>>>>>>> fd06971fe72315e289c7310f9e5e019ac5add20e
 
         # query database for username
         rows = db.execute("SELECT * FROM users WHERE username = :username", \
                             username=request.form.get("username"))
 
+        print(rows)
+        print(len(rows))
         # ensure username exists and password is correct
         if len(rows) != 1 or not pwd_context.verify(request.form.get("password"), rows[0]["password"]):
+<<<<<<< HEAD
             return render_template('apology.html', text = "username does not exists or password is not correct")
+=======
+            return render_template('apology.html', text = "username or password not valid")
+>>>>>>> fd06971fe72315e289c7310f9e5e019ac5add20e
 
         # remember which user has logged in
         session["user_id"] = rows[0]["user_id"]
@@ -213,7 +184,10 @@ def zoek():
             'q' : request.form.get("symbol")
         }
 
-        rdict = requests.get('http://api.edamam.com/search', params=payload).json()
+        try:
+            rdict = requests.get('http://api.edamam.com/search', params=payload).json()
+        except:
+            return render_template("apology.html", text = "Too many query's this minute (5/5)")
 
         if not rdict:
             return apology("that ingedient is not valid")
@@ -287,7 +261,7 @@ def register():
         Diet = {i: request.form.get(i) for i in diets}
 
         # allergies
-        allergies = ["gluten", "dairy", "eggs", "soy", "wheat", "fish", "shellfish", "treenuts", "peanuts"]
+        allergies = ["gluten", "dairy", "eggs", "soy", "wheat", "treenuts", "peanuts"]
         allergy = {i: request.form.get(i) for i in allergies}
 
         # preferences
@@ -301,11 +275,13 @@ def register():
                 return apology("Please insert a valid ingredient")
 
             payload = {'app_id' : 'abec09cd',
-            'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
-            'q' : item
-            }
-
-            rdict = requests.get('http://api.edamam.com/search', params=payload).json()
+                        'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
+                        'q' : item
+                        }
+            try:
+                rdict = requests.get('http://api.edamam.com/search', params=payload).json()
+            except:
+                return render_template("apology.html", text = "Too many query's this minute (5/5)")
 
             if rdict != None:
                 continue
@@ -318,17 +294,17 @@ def register():
             return apology("Please insert a valid e-mail")
 
         db.execute("INSERT INTO users (username, password, pref1, pref2, pref3, email, \
-                    gluten, dairy, eggs, soy, wheat, fish, shellfish, treenuts, peanuts, \
+                    glutenfree, dairyfree, eggfree, soyfree, wheatfree, treenutfree, peanutfree, \
                     vegetarian, vegan, paleo, high_fiber, high_protein, low_carb, low_fat, \
                     low_sodium, low_sugar, alcohol_free, balanced) \
                     VALUES (:username, :password, :pref1, :pref2, :pref3, :email, \
-                    :gluten, :dairy, :eggs, :soy, :wheat, :fish, :shellfish, :treenuts, :peanuts, \
+                    :gluten, :dairy, :eggs, :soy, :wheat, :treenuts, :peanuts, \
                     :vegetarian, :vegan, :paleo, :high_fiber, :high_protein, :low_carb, :low_fat, \
                     :low_sodium, :low_sugar, :alcohol_free, :balanced)", \
                     username = request.form.get("username"), password = encryptedpassword, pref1 = Pref1, \
                     pref2 = Pref2, pref3 = Pref3, email = Email, gluten = allergy['gluten'], dairy = allergy['dairy'], \
-                    eggs = allergy['eggs'], soy = allergy['soy'], wheat = allergy['wheat'], fish = allergy['fish'], \
-                    shellfish = allergy['shellfish'], treenuts = allergy['treenuts'], peanuts = allergy['peanuts'], \
+                    eggs = allergy['eggs'], soy = allergy['soy'], wheat = allergy['wheat'], \
+                    treenuts = allergy['treenuts'], peanuts = allergy['peanuts'], \
                     vegetarian = Diet['vegetarian'], vegan = Diet['vegan'], paleo = Diet['paleo'], \
                     high_fiber = Diet['high_fiber'], high_protein = Diet['high_protein'], low_carb = Diet['low_carb'], \
                     low_fat = Diet['low_fat'], low_sodium = Diet['low_sodium'], low_sugar = Diet['low_sugar'], \
@@ -340,7 +316,84 @@ def register():
     else:
         return render_template("register.html")
 
-@app.route("/favorite")
-def favorite():
+
+@app.route("/favorites", methods=["GET", "POST"])
+@login_required
+def favorites():
+    """Show stock the user has added to favorites with stats"""
     if request.method == "POST":
-        return render_template("favorite.html")
+
+        # return apology if no stock was given
+        if request.form['submit']:
+
+            stock = str(request.form['submit']).upper()
+
+            # check if the stock is valid
+            stats = lookup(stock)
+            if not stats:
+                return apology("Stock is not valid")
+
+            # calculate the amount of stock the user can buy
+            cash = db.execute("SELECT cash FROM users WHERE id = :userid", userid = session["user_id"])
+            to_buy = int(cash[0]['cash'] / stats['price'])
+
+            # select the amount of stock the user owns
+            stocks = db.execute("SELECT shares FROM portfolio WHERE user_id == :userid AND symbol == :stocksymbol", \
+                                userid = session['user_id'], stocksymbol = stock)
+            if not stocks:
+                shares = 0
+            else:
+                shares = stocks[0]['shares']
+
+            # check if the stock is already in favorites
+            rows = db.execute("SELECT * FROM favorites WHERE name == :name AND user_id == :userid", \
+                                name = stock, userid = session['user_id'])
+
+            # insert the values into favorites if they are not in it
+            if not rows:
+                db.execute("INSERT INTO favorites (name, price, amount, available, user_id) \
+                            VALUES (:name, :price, :amount, :available, :userid)", \
+                            name = str(stock).upper(), price = stats['price'], \
+                            amount = shares, available = to_buy, userid = session['user_id'])
+            else:
+                return apology("That stock is already in your favoriteslist")
+
+            # update portfolio
+            db.execute("UPDATE portfolio SET favorites = 'Yes' WHERE name == :name AND user_id == :userid" , \
+                        name = stock, userid = session['user_id'])
+
+            # return to index
+            return redirect(url_for("index"))
+
+    else:
+        # retrieve the values and give them to favorites.html
+        values = db.execute("SELECT * FROM favorites WHERE user_id == :userid", userid = session['user_id'])
+        return render_template("favorites.html", data = values)
+
+@app.route("/fave_remove", methods=["GET", "POST"])
+@login_required
+def fave_remove():
+    """Remove a stock from favorites"""
+    if request.method == "POST":
+
+        # ensure button was pressed
+        if request.form['submit']:
+
+            stock = str(request.form['submit']).upper()
+
+            # delete the stock from the table
+            db.execute("DELETE FROM favorites WHERE name == :name AND user_id == :userid", \
+                        name = stock, userid = session['user_id'])
+
+            # update portfolio
+            db.execute("UPDATE portfolio SET favorites = 'No' WHERE name == :name AND user_id == :userid" , \
+                        name = stock, userid = session['user_id'])
+
+            return redirect(url_for("favorites"))
+
+        else:
+            return redirect(url_for("favorites"))
+    else:
+        return redirect(url_for("favorites"))
+
+
