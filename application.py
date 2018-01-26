@@ -142,7 +142,7 @@ def login():
 
         # ensure password was submitted
         elif not request.form.get("password"):
-            return apology("must provide password")
+            return render_template('apology.html', text = "must provide password")
 
         # query database for username
         rows = db.execute("SELECT * FROM users WHERE username = :username", \
@@ -150,7 +150,7 @@ def login():
 
         # ensure username exists and password is correct
         if len(rows) != 1 or not pwd_context.verify(request.form.get("password"), rows[0]["password"]):
-            return apology("invalid username and/or password")
+            return render_template('apology.html', text = "username does not exists or password is not correct")
 
         # remember which user has logged in
         session["user_id"] = rows[0]["user_id"]
