@@ -3,8 +3,28 @@
     Log In
 {% endblock %}
 
+
 {% block main %}
+<<<<<<< HEAD
+
+    <form action="{{ url_for('zoek') }}" method="post">
+        <fieldset>
+            <div class="form-group">
+                <input autocomplete="off" autofocus class="form-control" name="symbol" placeholder="Find a recipe, dieet, ingredient" type="text"/>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-default" type="submit">Zoek</button>
+            </div>
+        </fieldset>
+    </form>
+{% for item in data %}
+<a href="{{ item.url }}">
+<img src="{{ item.img }}" alt="W3Schools" border="0">
+{% endfor %}
+
+=======
     <head>
+>>>>>>> fd06971fe72315e289c7310f9e5e019ac5add20e
     <link href="{{url_for('static',filename='stylesss.css')}}" rel="stylesheet"/>
     </head>
         <body>

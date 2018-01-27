@@ -105,7 +105,9 @@ def login():
 
         # ensure password was submitted
         elif not request.form.get("password"):
+
             return render_template('apology.html', text = "Must provide password!")
+
 
         # query database for username
         rows = db.execute("SELECT * FROM users WHERE username = :username", \
@@ -115,7 +117,11 @@ def login():
         print(len(rows))
         # ensure username exists and password is correct
         if len(rows) != 1 or not pwd_context.verify(request.form.get("password"), rows[0]["password"]):
+
+            return render_template('apology.html', text = "username does not exists or password is not correct")
+
             return render_template('apology.html', text = "username or password not valid")
+
 
         # remember which user has logged in
         session["user_id"] = rows[0]["user_id"]
@@ -133,13 +139,15 @@ def login():
 def mail():
 
     if request.method == "POST":
-
+        msg['Subject'] = 'Recipe for you!'
         server = smtplib.SMTP('smtp.gmail.com', 587)
         server.starttls()
         server.login("MakesRightDiner@gmail.com", "makesdiner")
 
         msg = request.form.get("msg")
-        server.sendmail("MakesRightDiner@gmail.com", request.form.get("EMAILADDRESSTO"), msg)
+        msg = "".join(['<a href="', msg, '">You might like this reccipe, click here</a>'])
+        msg = MIMEText(msg, 'html')
+        server.sendmail("MakesRightDiner@gmail.com", request.form.get("EMAILADDRESSTO"), msg.as_string())
         server.quit()
 
     else:
