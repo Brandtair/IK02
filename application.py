@@ -66,7 +66,7 @@ def index():
     # get recipes where one of the ingredients in present
     for d in prefs:
         for v in d.values():
-            print("v = ", v)
+
             payload = {'app_id' : 'abec09cd',
                     'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
                     'q' : v,
@@ -316,12 +316,6 @@ def favorites():
         # return apology if no stock was given
         if request.form['submit']:
 
-            stock = str(request.form['submit']).upper()
-
-            # check if the stock is valid
-            stats = lookup(stock)
-            if not stats:
-                return apology("Stock is not valid")
 
             # calculate the amount of stock the user can buy
             cash = db.execute("SELECT cash FROM users WHERE id = :userid", userid = session["user_id"])
