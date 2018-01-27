@@ -325,42 +325,42 @@ def favorites():
         if request.form['submit']:
 
 
-            # calculate the amount of stock the user can buy
-            cash = db.execute("SELECT cash FROM users WHERE id = :userid", userid = session["user_id"])
-            to_buy = int(cash[0]['cash'] / stats['price'])
-
-            # select the amount of stock the user owns
-            stocks = db.execute("SELECT shares FROM portfolio WHERE user_id == :userid AND symbol == :stocksymbol", \
-                                userid = session['user_id'], stocksymbol = stock)
-            if not stocks:
-                shares = 0
-            else:
-                shares = stocks[0]['shares']
-
             # check if the stock is already in favorites
-            rows = db.execute("SELECT * FROM favorites WHERE name == :name AND user_id == :userid", \
-                                name = stock, userid = session['user_id'])
+            rows = db.execute("SELECT * FROM favorite WHERE name == :name AND user_id == :userid", \
+                                name = request.form.get("submit"), userid = session['user_id'])
 
             # insert the values into favorites if they are not in it
             if not rows:
-                db.execute("INSERT INTO favorites (name, price, amount, available, user_id) \
-                            VALUES (:name, :price, :amount, :available, :userid)", \
-                            name = str(stock).upper(), price = stats['price'], \
-                            amount = shares, available = to_buy, userid = session['user_id'])
+                db.execute("INSERT INTO favorite (name, user_id) \
+                            VALUES (:name, :userid)", \
+                            name = request.form.get("submit"), userid = session['user_id'])
             else:
-                return apology("That stock is already in your favoriteslist")
-
-            # update portfolio
-            db.execute("UPDATE portfolio SET favorites = 'Yes' WHERE name == :name AND user_id == :userid" , \
-                        name = stock, userid = session['user_id'])
+                return render_template('apology.html', text = "That recipe is already in your favoriteslist")
 
             # return to index
             return redirect(url_for("index"))
 
     else:
         # retrieve the values and give them to favorites.html
-        values = db.execute("SELECT * FROM favorites WHERE user_id == :userid", userid = session['user_id'])
-        return render_template("favorites.html", data = values)
+        values = db.execute("SELECT * FROM favorite WHERE user_id == :userid", userid = session['user_id'])
+
+        fave_recipes = []
+        for recipe in values:
+            current_recipe = {}
+            payload = {'app_id' : 'abec09cd',
+                        'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
+                        'q' : recipe['name']
+                        }
+            try:
+                rdict = requests.get('http://api.edamam.com/search', params=payload).json()
+            except:
+                return render_template("apology.html", text = "Too many query's this minute (5/5)")
+
+            current_recipe['name'] = rdict['hits'][0]['recipe']['label']
+            current_recipe['image'] = rdict['hits'][0]['recipe']['image']
+            current_recipe['link'] = rdict['hits'][0]['recipe']['url']
+            fave_recipes.append(current_recipe)
+        return render_template("favorites.html", data = fave_recipes)
 
 @app.route("/fave_remove", methods=["GET", "POST"])
 @login_required
@@ -371,15 +371,9 @@ def fave_remove():
         # ensure button was pressed
         if request.form['submit']:
 
-            stock = str(request.form['submit']).upper()
-
             # delete the stock from the table
-            db.execute("DELETE FROM favorites WHERE name == :name AND user_id == :userid", \
-                        name = stock, userid = session['user_id'])
-
-            # update portfolio
-            db.execute("UPDATE portfolio SET favorites = 'No' WHERE name == :name AND user_id == :userid" , \
-                        name = stock, userid = session['user_id'])
+            db.execute("DELETE FROM favorite WHERE name == :name AND user_id == :userid", \
+                        name = request.form.get("stock"), userid = session['user_id'])
 
             return redirect(url_for("favorites"))
 

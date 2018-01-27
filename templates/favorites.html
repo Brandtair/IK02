@@ -1,6 +1,3 @@
-
-{% extends "layout.html" %}
-
 {% block title %}
     Favorites
 {% endblock %}
@@ -8,22 +5,15 @@
 {% block main %}
     <h1>Favorites</h1>
     <h3>Add them at the index page</h3>
-    <table class="table table-striped" style="width:100%">
-        <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>You own:</th>
-            <th>How many you can buy</th>
-            <th>Remove from favorites</th>
-        </tr>
         {% for row in data %}
-            <tr>
-                <td>{{ row.name }}</td>
-                <td>{{ row.price }}</td>
-                <td>{{ row.amount}}</td>
-                <td>{{ row.available }}</td>
-                <td><form action="{{ url_for('fave_remove') }}" method="post"><button name="submit" value="{{ row.name }}">Remove</button></form></td>
-            </tr>
+            <fieldset>
+                <p>
+                    {{ row.name }} <br>
+                    <a href="{{ row.url }}" target= '_blank'>
+                    <img src="{{ row.image }}" alt="W3Schools" border="0">
+                    </a>
+                </p>
+                <form action="{{ url_for('fave_remove') }}" method="post"><button name="submit" value="{{ row.name }}">Remove</button></form>
+            </fieldset>
         {% endfor %}
-    </table>
 {% endblock %}
