@@ -23,13 +23,13 @@
 
 
         <!--Zoekbalk voor homepage-->
-        <form action="{{ url_for('zoek') }}" method="post">
+        <form action="{{ url_for('search') }}" method="post">
             <div class="form-group">
                 <input autocomplete="off" autofocus class="form-control" name="symbol" placeholder="Find a recipe" type="text"/>
             </div>
             <br/>
             <div class="form-group">
-                <button class="RoundSideButton" type="submit">Zoek</button>
+                <button class="RoundSideButton" type="submit">search</button>
             </div>
         </form>
         {% for item in recipes %}

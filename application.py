@@ -216,7 +216,7 @@ def search():
 
     else:
 
-        return render_template("zoek.html")
+        return render_template("search.html")
 
 
 
