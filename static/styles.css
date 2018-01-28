@@ -1,35 +1,93 @@
 /*CSS*/
 
-body{
-    background: linear-gradient(to top, rgb(255, 255, 204), white);
+body {
+    margin: 0;
+    margin-top: 15%;
     height: auto;
-}
+    width: 100%;
+    background-image: url(https://i.imgur.com/yRB2Qpb.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 50% 80%;
+    background-position: right 110px;
+    background-color: black;
 
+}
 
 /*ID-Tag*/
-#login{
-    background: linear-gradient(to top, black, red);
+#Login{
+    background: linear-gradient(to top, rgb(5,0,0), red);
     color: white;
 }
-
-/*Classes*/
-.logout{
+#Logout{
     color: white;
     background: linear-gradient(to top, rgb(204,255,204), red);
 }
+#FavoritesButton{
+    position: right bottom;
+
+}
+
+/*Classes*/
+
+/*All Buttons shapes*/
+
 .RoundSideButton{
-    padding: 5px 20px;
+    padding: 5px 30px;
     border: 1px solid black;
     border-radius: 100px;
     text-align: center;
-    width: 10%;
+    width: auto;
     font-weight: bold;
     display: inline-block;
-
+    background: linear-gradient(to top, darkgrey, white);
+    font-size: 18px;
+    font-family: "Abril Fatface";
+    cursor: pointer;
     }
-.header{
-    height: 20%;
+.SearchBarbutton{
+    border: 1px solid black;
+    border-radius: 2px;
+    text-align: center;
+    width: auto;
+    height: 50%;
+    font-weight: bold;
+    display: inline;
+    background: linear-gradient(white, darkgrey);
+    font-size: 16px;
+    font-family: "Abril Fatface";
+    cursor: pointer;
+
+}
+
+/*All header elements*/
+
+.Header{
+    top: 0;
+    height: 15%;
     width: 100%;
     position: fixed;
-    background-color: linear-gradient(to top, grey, white);
+    background: linear-gradient(to bottom, rgb(0, 40, 0), black);
+}
+
+.SearchBarHeader{
+    margin: auto;
+    text-align: center;
+    width: 60%;
+    height: 60%;
+    font-family: "Abril Fatface";
+    font-size: 16px;
+    border-width: 3px;
+}
+
+/*Page-specific frameworks*/
+
+.LoginFrame{
+    color: White;
+    border: 3px solid black;
+    text-align: center;
+    margin: auto;
+    width: 50%;
+    background: linear-gradient(rgb(0,0,10), rgb(0, 0, 40), rgb(0, 0, 10));
+    font-size: 32px;
 }

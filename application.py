@@ -166,10 +166,10 @@ def logout():
     return redirect(url_for("login"))
 
 
-@app.route("/zoek", methods=["GET", "POST"])
+@app.route("/search", methods=["GET", "POST"])
 @login_required
-def zoek():
-    """Get recipe zoek."""
+def search():
+    """Get recipe search."""
 
     #check if symbol excists
     if request.method == "POST":

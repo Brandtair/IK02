@@ -12,19 +12,17 @@
     <head>
     <link href="{{url_for('static',filename='styles.css')}}" rel="stylesheet"/>
     </head>
-        <body>
-            <form action="{{ url_for('zoek') }}" method="post">
-                <fieldset>
-                    <div class="form-group">
-                        <input autocomplete="off" autofocus class="form-control" name="symbol" placeholder="Find a recipe, dieet, ingredient" type="text"/>
-                    </div>
-                        <div class="form-group">
-                        <button class="btn btn-default" type="submit">Zoek</button>
-                    </div>
-                </fieldset>
-            </form>
-
-        <form action="{{ url_for('register') }}"><button class="RoundSideButton">Register</button></form>
+    <body>
+        <div class= "Header">
+            <form action="{{ url_for('favorites') }}"><button class="RoundSideButton" id= "FavoritesButton">Favorites</button></form>
+            <div class="SearchBarHeader">
+                <form action="{{ url_for('search') }}" method="post">
+                    <input autocomplete="off" class="SearchBarHeader" placeholder="Find a recipe" type="text"/>
+                    <button class="SearchBarButton" type="submit">Zoek</button>
+                </form>
+            </div>
+        </div>
+        <div class="LoginFrame">
         <h1>Log in</h1>
         <form action="{{ url_for('login') }}" method="post">
                 <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"/>
@@ -32,8 +30,10 @@
                 <input class="form-control" name="password" placeholder="Password" type="password"/>
                 <br/>
                 <br/>
-                <button class="RoundSideButton" id= "login">Log In</button>
+                <button class="RoundSideButton" id= "Login">Log In</button>
         </form>
+        <form action="{{ url_for('register') }}"><button class="RoundSideButton">Register</button></form>
+        </div>
     </body>
 {% endblock %}
 </html>
