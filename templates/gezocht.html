@@ -4,22 +4,34 @@
 {% endblock %}
 
 {% block main %}
+    <head>
+        <link href="{{url_for('static',filename='styles.css')}}" rel="stylesheet"/>
+    </head>
+    <body>
+
+        <div class= "Header">
+            <form action="{{ url_for('favorites') }}"><button class="RoundSideButton" id= "FavoritesButton">Favorites</button></form>
+            <div class="SearchBarHeader">
+                <form action="{{ url_for('search') }}" method="post">
+                    <input autocomplete="off" class="SearchBarHeader" placeholder="Find a recipe" type="text"/>
+                    <button class="SearchBarButton" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
        {% for item in data %}
-<fieldset>
-<p>{{ item.name }}</p>
-      <form action="{{ url_for('mail') }}" method="post">
+        <fieldset>
+        <p>{{ item.name }}</p>
+          <form action="{{ url_for('mail') }}" method="post">
             <div class="form-group">
                 <input autocomplete="off" autofocus class="form-control" name="EMAILADDRESSTO" placeholder="EMAIL ADDRESS TO" type="text"/>
             </div>
             <div class="form-group">
                 <input autocomplete="off" autofocus class="form-control" name="msg" value="{{ item.url }}" type="text"/>
             </div>
+            <br/>
             <div class="form-group">
-                <button class="btn btn-default" type="submit">Send</button>
+                <button class="RoundSideButton" type="submit">Send</button>
             </div>
-
-    <body>
-
         <p>
             <a href="{{ item.url }}">
                 <img src="{{ item.img }}" alt="W3Schools" border="0">
@@ -27,17 +39,8 @@
         </p>
         <form action="{{ url_for('favorites') }}" method="post"><button name="submit" value="{{ item.label }}">Add</button></form>
 
-    </body>
-
- </fieldset>
-
-
-</a>
-</p>
-
-</body>
-</html>
-
+        </fieldset>
         {% endfor %}
+    </body>
 {% endblock %}
 </html>

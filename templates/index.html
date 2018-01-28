@@ -6,7 +6,7 @@
 
 {% block main %}
     <head>
-        <link href="{{url_for('static',filename='stylesss.css')}}" rel="stylesheet"/>
+        <link href="{{url_for('static',filename='styles.css')}}" rel="stylesheet"/>
     </head>
 
     <body>
@@ -21,15 +21,25 @@
         <!--Zoek
         <form action="{{ url_for('zoek') }}"><button class="RoundSideButton">Search</button></form>-->
 
+        <div class= "Header">
+            <form action="{{ url_for('favorites') }}"><button class="RoundSideButton" id= "FavoritesButton">Favorites</button></form>
+            <div class="SearchBarHeader">
+                <form action="{{ url_for('search') }}" method="post">
+                    <input autocomplete="off" class="SearchBarHeader" placeholder="Find a recipe" type="text"/>
+                    <button class="SearchBarButton" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+
 
         <!--Zoekbalk voor homepage-->
-        <form action="{{ url_for('zoek') }}" method="post">
+        <form action="{{ url_for('search') }}" method="post">
             <div class="form-group">
                 <input autocomplete="off" autofocus class="form-control" name="symbol" placeholder="Find a recipe" type="text"/>
             </div>
             <br/>
             <div class="form-group">
-                <button class="RoundSideButton" type="submit">Zoek</button>
+                <button class="RoundSideButton" type="submit">search</button>
             </div>
         </form>
         {% for item in recipes %}

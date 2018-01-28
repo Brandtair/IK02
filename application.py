@@ -194,8 +194,6 @@ def login():
         rows = db.execute("SELECT * FROM users WHERE username = :username", \
                             username=request.form.get("username"))
 
-        print(rows)
-        print(len(rows))
         # ensure username exists and password is correct
         if len(rows) != 1 or not pwd_context.verify(request.form.get("password"), rows[0]["password"]):
 
@@ -243,6 +241,55 @@ def mail():
     else:
 
         return render_template("mail.html")
+
+@app.route("/search", methods=["GET", "POST"])
+@login_required
+def search():
+    """Get recipe search."""
+
+    #check if symbol excists
+    if request.method == "POST":
+
+        if not request.form.get("symbol"):
+            return apology("Please insert an ingredient/recipe")
+
+        payload = {'app_id' : 'abec09cd',
+            'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
+            'q' : request.form.get("symbol")
+        }
+
+        try:
+            rdict = requests.get('http://api.edamam.com/search', params=payload).json()
+        except:
+            return render_template("apology.html", text = "Too many query's this minute (5/5)")
+
+        if not rdict:
+            return apology("that ingedient is not valid")
+
+        imglink = []
+        for hit in rdict['hits']:
+            imglink.append(hit['recipe']['image'])
+
+        names = []
+        for hit in rdict['hits']:
+            names.append(hit['recipe']['label'])
+
+        urls = []
+        for hit in rdict['hits']:
+            urls.append(hit['recipe']['url'])
+
+        reclist = []
+        for i in range(len(imglink)):
+            temp = {}
+            temp['name'] = names[i]
+            temp['img'] = imglink[i]
+            temp['url'] = urls[i]
+            reclist.append(temp)
+
+        return render_template("gezocht.html", data = reclist)
+
+    else:
+        return render_template("search.html")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
