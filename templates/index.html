@@ -10,16 +10,15 @@
     </head>
 
     <body>
-        <header>
-        <!--Uitloggen-->
-        <form action="{{ url_for('logout') }}"><button class= "RoundSideButton">Logout</button></form>
-        <!--favorieten pagina-->
-        <form action="{{ url_for('favorites') }}"><button class= "RoundSideButton">Favorites</button></form>
-        <!--deel pagina-->
-        <form action="{{ url_for('mail') }}"><button class="RoundSideButton">Share page</button></form>
-        <!--Zoek
-        <form action="{{ url_for('zoek') }}"><button class="RoundSideButton">Search</button></form>-->
-        </header>
+         <div class= "Header">
+            <form action="{{ url_for('favorites') }}"><button class="RoundSideButton" id= "FavoritesButton">Favorites</button></form>
+            <div class="SearchBarHeader">
+                <form action="{{ url_for('search') }}" method="post">
+                    <input autocomplete="off" class="SearchBarHeader" placeholder="Find a recipe" type="text"/>
+                    <button class="SearchBarButton" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
 
 
         <!--Zoekbalk voor homepage-->

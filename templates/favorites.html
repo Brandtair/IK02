@@ -4,14 +4,21 @@
 
 {% block main %}
 <head>
-    <link href="{{url_for('static',filename='stylesss.css')}}" rel="stylesheet"/>
+    <link href="{{url_for('static',filename='styles.css')}}" rel="stylesheet"/>
 </head>
 <body>
-    <h1>Favorites</h1>
-    <br/>
+
+    <div class= "Header">
+        <h1>Favorites</h1>
+        <form action="{{ url_for('favorites') }}"><button class="RoundSideButton" id= "FavoritesButton">Favorites</button></form>
+        <div class="SearchBarHeader">
+        <form action="{{ url_for('search') }}" method="post">
+            <input autocomplete="off" class="SearchBarHeader" placeholder="Find a recipe" type="text"/>
+            <button class="SearchBarButton" type="submit">Search</button>
+        </form>
+        </div>
+    </div>
     <form action="{{ url_for('logout') }}"><button class= "RoundSideButton" id= "logout">Logout</button></form>
-    <form action="{{ url_for('logout') }}"><button class= "RoundSideButton">Logout</button></form>
-    <form action="{{ url_for('logout') }}"><button class= "RoundSideButton">Logout</button></form>
     <br/>
     <h3>Add them at the index page</h3>
         {% for row in data %}

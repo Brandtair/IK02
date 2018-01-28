@@ -10,7 +10,17 @@
     </head>
 
     <body>
-        <h1>Register your account</h1>
+         <div class= "Header">
+            <h1>Register your account</h1>
+            <form action="{{ url_for('favorites') }}"><button class="RoundSideButton" id= "FavoritesButton">Favorites</button></form>
+            <div class="SearchBarHeader">
+                <form action="{{ url_for('search') }}" method="post">
+                    <input autocomplete="off" class="SearchBarHeader" placeholder="Find a recipe" type="text"/>
+                    <button class="SearchBarButton" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+
             <form action="{{ url_for('login') }}"><button class= "RoundSideButton">Back to login page</button></form>
             <br/>
         <form action="{{ url_for('register') }}" method="post">
