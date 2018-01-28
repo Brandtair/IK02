@@ -5,13 +5,10 @@
 
 {% block main %}
 
-
-
 {% for item in data %}
 <a href="{{ item.url }}">
-<img src="{{ item.img }}" alt="W3Schools" border="0">
+<img src="{{ item.img }}" alt="Image not available" border="0">
 {% endfor %}
-
     <head>
     <link href="{{url_for('static',filename='styles.css')}}" rel="stylesheet"/>
     </head>
