@@ -373,7 +373,7 @@ def fave_remove():
 
             # delete the stock from the table
             db.execute("DELETE FROM favorite WHERE name == :name AND user_id == :userid", \
-                        name = request.form.get("stock"), userid = session['user_id'])
+                        name = request.form.get("submit"), userid = session['user_id'])
 
             return redirect(url_for("favorites"))
 
