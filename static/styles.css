@@ -2,6 +2,7 @@
 
 body{
     background: linear-gradient(to top, rgb(255, 255, 204), white);
+    height: auto;
 }
 
 
@@ -26,4 +27,9 @@ body{
     display: inline-block;
 
     }
-
+.header{
+    height: 20%;
+    width: 100%;
+    position: fixed;
+    background-color: linear-gradient(to top, grey, white);
+}

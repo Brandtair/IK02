@@ -4,39 +4,32 @@
 {% endblock %}
 
 {% block main %}
+    <head>
+        <link href="{{url_for('static',filename='styles.css')}}" rel="stylesheet"/>
+    </head>
+    <body>
        {% for item in data %}
-<fieldset>
-<p>{{ item.name }}</p>
-      <form action="{{ url_for('mail') }}" method="post">
+        <fieldset>
+        <p>{{ item.name }}</p>
+          <form action="{{ url_for('mail') }}" method="post">
             <div class="form-group">
                 <input autocomplete="off" autofocus class="form-control" name="EMAILADDRESSTO" placeholder="EMAIL ADDRESS TO" type="text"/>
             </div>
             <div class="form-group">
                 <input autocomplete="off" autofocus class="form-control" name="msg" placeholder="'{{ item.url }}'" type="text"/>
             </div>
+            <br/>
             <div class="form-group">
-                <button class="btn btn-default" type="submit">Send</button>
+                <button class="RoundSideButton" type="submit">Send</button>
             </div>
-
-    <body>
-
         <p>
             <a href="{{ item.url }}">
                 <img src="{{ item.img }}" alt="W3Schools" border="0">
             </a>
         </p>
 
-    </body>
-
- </fieldset>
-
-
-</a>
-</p>
-
-</body>
-</html>
-
+        </fieldset>
         {% endfor %}
+    </body>
 {% endblock %}
 </html>
