@@ -89,6 +89,87 @@ def index():
 
     return render_template("index.html", recipes = randomrecipes)
 
+@app.route("/favorites", methods=["GET", "POST"])
+@login_required
+def favorites():
+    """Show stock the user has added to favorites with stats"""
+    if request.method == "POST":
+
+        # return apology if no stock was given
+        if request.form['submit']:
+
+
+            # check if the stock is already in favorites
+            rows = db.execute("SELECT * FROM favorite WHERE name == :name AND user_id == :userid", \
+                                name = request.form.get("submit"), userid = session['user_id'])
+
+            # insert the values into favorites if they are not in it
+            if not rows:
+                db.execute("INSERT INTO favorite (name, user_id) \
+                            VALUES (:name, :userid)", \
+                            name = request.form.get("submit"), userid = session['user_id'])
+            else:
+                return render_template('apology.html', text = "That recipe is already in your favoriteslist")
+
+            # return to index
+            return redirect(url_for("index"))
+
+    else:
+        # retrieve the values and give them to favorites.html
+        values = db.execute("SELECT * FROM favorite WHERE user_id == :userid", userid = session['user_id'])
+
+        fave_recipes = []
+        for recipe in values:
+            current_recipe = {}
+            payload = {'app_id' : 'abec09cd',
+                        'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
+                        'q' : recipe['name']
+                        }
+            try:
+                rdict = requests.get('http://api.edamam.com/search', params=payload).json()
+            except:
+                return render_template("apology.html", text = "Too many query's this minute (5/5)")
+
+            current_recipe['name'] = rdict['hits'][0]['recipe']['label']
+            current_recipe['image'] = rdict['hits'][0]['recipe']['image']
+            current_recipe['link'] = rdict['hits'][0]['recipe']['url']
+            fave_recipes.append(current_recipe)
+        return render_template("favorites.html", data = fave_recipes)
+
+@app.route("/fave_remove", methods=["GET", "POST"])
+@login_required
+def fave_remove():
+    """Remove a stock from favorites"""
+    if request.method == "POST":
+
+        # ensure button was pressed
+        if request.form['submit']:
+
+            # delete the stock from the table
+            db.execute("DELETE FROM favorite WHERE name == :name AND user_id == :userid", \
+                        name = request.form.get("submit"), userid = session['user_id'])
+
+            return redirect(url_for("favorites"))
+
+        else:
+            return redirect(url_for("favorites"))
+    else:
+        return redirect(url_for("favorites"))
+
+@app.route("/filter_dish", methods=["GET", "POST"])
+@login_required
+def filter_dish():
+    if request.method == "POST":
+        print("hoi")
+
+    else:
+        return render_template("filtersearch.html")
+
+@app.route("/filter_desert", methods=["POST"])
+@login_required
+def filter_desert():
+    print("hoi")
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in."""
@@ -133,6 +214,15 @@ def login():
     else:
         return render_template("login.html")
 
+@app.route("/logout")
+def logout():
+    """Log user out."""
+
+    # forget any user_id
+    session.clear()
+
+    # redirect user to login form
+    return redirect(url_for("login"))
 
 @app.route("/mail", methods=["GET", "POST"])
 @login_required
@@ -153,75 +243,6 @@ def mail():
     else:
 
         return render_template("mail.html")
-
-
-@app.route("/logout")
-def logout():
-    """Log user out."""
-
-    # forget any user_id
-    session.clear()
-
-    # redirect user to login form
-    return redirect(url_for("login"))
-
-
-@app.route("/zoek", methods=["GET", "POST"])
-@login_required
-def zoek():
-    """Get recipe zoek."""
-
-    #check if symbol excists
-    if request.method == "POST":
-
-        if not request.form.get("symbol"):
-            return apology("Please insert an ingredient/recipe")
-
-        payload = {'app_id' : 'abec09cd',
-            'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
-            'q' : request.form.get("symbol")
-        }
-
-        try:
-            rdict = requests.get('http://api.edamam.com/search', params=payload).json()
-        except:
-            return render_template("apology.html", text = "Too many query's this minute (5/5)")
-
-        if not rdict:
-            return apology("that ingedient is not valid")
-
-        imglink = []
-        for hit in rdict['hits']:
-            imglink.append(hit['recipe']['image'])
-
-        names = []
-        for hit in rdict['hits']:
-            names.append(hit['recipe']['label'])
-
-        urls = []
-        for hit in rdict['hits']:
-            urls.append(hit['recipe']['url'])
-
-        reclist = []
-        for i in range(len(imglink)):
-            temp = {}
-            temp['name'] = names[i]
-            temp['img'] = imglink[i]
-            temp['url'] = urls[i]
-            reclist.append(temp)
-
-
-        return render_template("gezocht.html", data = reclist)
-
-
-    else:
-
-        return render_template("zoek.html")
-
-
-
-
-
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -314,72 +335,51 @@ def register():
     else:
         return render_template("register.html")
 
-
-@app.route("/favorites", methods=["GET", "POST"])
+@app.route("/zoek", methods=["GET", "POST"])
 @login_required
-def favorites():
-    """Show stock the user has added to favorites with stats"""
+def zoek():
+    """Get recipe zoek."""
+
+    #check if symbol excists
     if request.method == "POST":
 
-        # return apology if no stock was given
-        if request.form['submit']:
+        if not request.form.get("symbol"):
+            return apology("Please insert an ingredient/recipe")
 
+        payload = {'app_id' : 'abec09cd',
+            'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
+            'q' : request.form.get("symbol")
+        }
 
-            # check if the stock is already in favorites
-            rows = db.execute("SELECT * FROM favorite WHERE name == :name AND user_id == :userid", \
-                                name = request.form.get("submit"), userid = session['user_id'])
+        try:
+            rdict = requests.get('http://api.edamam.com/search', params=payload).json()
+        except:
+            return render_template("apology.html", text = "Too many query's this minute (5/5)")
 
-            # insert the values into favorites if they are not in it
-            if not rows:
-                db.execute("INSERT INTO favorite (name, user_id) \
-                            VALUES (:name, :userid)", \
-                            name = request.form.get("submit"), userid = session['user_id'])
-            else:
-                return render_template('apology.html', text = "That recipe is already in your favoriteslist")
+        if not rdict:
+            return apology("that ingedient is not valid")
 
-            # return to index
-            return redirect(url_for("index"))
+        imglink = []
+        for hit in rdict['hits']:
+            imglink.append(hit['recipe']['image'])
+
+        names = []
+        for hit in rdict['hits']:
+            names.append(hit['recipe']['label'])
+
+        urls = []
+        for hit in rdict['hits']:
+            urls.append(hit['recipe']['url'])
+
+        reclist = []
+        for i in range(len(imglink)):
+            temp = {}
+            temp['name'] = names[i]
+            temp['img'] = imglink[i]
+            temp['url'] = urls[i]
+            reclist.append(temp)
+
+        return render_template("gezocht.html", data = reclist)
 
     else:
-        # retrieve the values and give them to favorites.html
-        values = db.execute("SELECT * FROM favorite WHERE user_id == :userid", userid = session['user_id'])
-
-        fave_recipes = []
-        for recipe in values:
-            current_recipe = {}
-            payload = {'app_id' : 'abec09cd',
-                        'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
-                        'q' : recipe['name']
-                        }
-            try:
-                rdict = requests.get('http://api.edamam.com/search', params=payload).json()
-            except:
-                return render_template("apology.html", text = "Too many query's this minute (5/5)")
-
-            current_recipe['name'] = rdict['hits'][0]['recipe']['label']
-            current_recipe['image'] = rdict['hits'][0]['recipe']['image']
-            current_recipe['link'] = rdict['hits'][0]['recipe']['url']
-            fave_recipes.append(current_recipe)
-        return render_template("favorites.html", data = fave_recipes)
-
-@app.route("/fave_remove", methods=["GET", "POST"])
-@login_required
-def fave_remove():
-    """Remove a stock from favorites"""
-    if request.method == "POST":
-
-        # ensure button was pressed
-        if request.form['submit']:
-
-            # delete the stock from the table
-            db.execute("DELETE FROM favorite WHERE name == :name AND user_id == :userid", \
-                        name = request.form.get("submit"), userid = session['user_id'])
-
-            return redirect(url_for("favorites"))
-
-        else:
-            return redirect(url_for("favorites"))
-    else:
-        return redirect(url_for("favorites"))
-
-
+        return render_template("zoek.html")
