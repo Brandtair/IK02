@@ -4,22 +4,6 @@ import requests
 from flask import redirect, render_template, request, session
 from functools import wraps
 
-def apology(message, code=400):
-    """Renders message as an apology to user."""
-    def escape(s):
-        """
-        Escape special characters.
-
-        https://github.com/jacebrowning/memegen#special-characters
-        """
-        for old, new in [("-", "--"), (" ", "-"), ("_", "__"), ("?", "~q"),
-                         ("%", "~p"), ("#", "~h"), ("/", "~s"), ("\"", "''")]:
-            s = s.replace(old, new)
-        return s
-    print(message)
-    return render_template("apology.html", top=code, bottom=escape(message)), code
-
-
 def login_required(f):
     """
     Decorate routes to require login.
@@ -34,13 +18,11 @@ def login_required(f):
     return decorated_function
 
 def api_query(terms, length = 1000):
-    print("TERMS ===================== ",terms)
     payload = {'app_id' : 'abec09cd',
             'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
             'q' : terms,
             'to' : length
         }
-
     return requests.get('http://api.edamam.com/search', params=payload).json()
 
 def searchfunction(results):
