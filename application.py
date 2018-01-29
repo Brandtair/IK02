@@ -85,6 +85,112 @@ def index():
 
     return render_template("index.html", recipes = randomrecipes)
 
+@app.route("/changenamepass", methods=["GET", "POST"])
+@login_required
+def changenamepass():
+    """Change a users username and password"""
+
+    if request.method == "POST":
+
+        # ensure username was submitted
+        if not request.form.get("username"):
+            return rendertemplate("apology.html", text = "must provide username")
+
+        # ensure password was submitted
+        elif not request.form.get("password"):
+            return rendertemplate("apology.html", text = "must provide password")
+
+        # ensure password was repeated
+        elif not request.form.get("repeat"):
+            return rendertemplate("apology.html", text = "must repeat password")
+
+        # check if passwords are equal
+        elif request.form.get("password") != request.form.get("repeat"):
+            return rendertemplate("apology.html", text = "passwords must be equal")
+
+        # check if the username is unique
+        exist = db.execute("SELECT username FROM users")
+        for name in exist:
+            if name['username'] == request.form.get("username"):
+                return rendertemplate("apology.html", text = "That username is already taken")
+
+        # encrypt the password
+        encryptedpassword = pwd_context.hash(request.form.get("password"))
+
+        # update the database
+        db.execute("UPDATE users SET username = :username, password = :password WHERE user_id == :userid", \
+                    username = request.form.get("username"), password = encryptedpassword, userid = session['user_id'])
+
+        return redirect(url_for("index"))
+
+    else:
+        return render_template("changenamepass.html")
+
+@app.route("/changemail", methods=["GET", "POST"])
+@login_required
+def changemail():
+    """Change a users email"""
+
+    if request.method == "POST":
+
+        # check if email was given
+        if not request.form.get("email"):
+            return render_template("apology.html", text = "Please give an email")
+
+        # check if the email is valid
+        Email = request.form.get("email")
+        is_valid = validate_email(Email)
+        if not is_valid:
+            return render_template("apology.html", text = "Please insert a valid e-mail")
+
+        # update the database
+        db.execute("UPDATE users SET email = :mail WHERE user_id == :userid", \
+                    mail = Email, userid = session['user_id'])
+
+        return redirect(url_for("index"))
+    else:
+        return render_template("changemail.html")
+
+@app.route("/changepref", methods=["GET", "POST"])
+@login_required
+def changepref():
+    """change a users preferences, diets and allergies"""
+
+    if request.method == "POST":
+
+        if request.form.get('pref1') and request.form.get('pref1') and request.form.get('pref1'):
+            Pref1 = request.form.get('pref1')
+            Pref2 = request.form.get('pref2')
+            Pref3 = request.form.get('pref3')
+
+            # check if the prefered ingredients are valid
+            preflist = [Pref1, Pref2, Pref3]
+            for item in preflist:
+                if len(item) == 1:
+                    return render_template("apology.html", text = "Please insert a valid ingredient")
+
+                try:
+                    results = api_query(item)
+                except:
+                    return render_template("apology.html", text = "Too many query's this minute (5/5)")
+                if not results:
+                    return render_template("apology.html", text = "invalid ingredient(s)")
+
+                if results != None:
+                    continue
+                elif results == None:
+                    return render_template("apology.html", "There were no recipes found for one of your preferences")
+
+            db.execute("UPDATE users SET pref1 = :pref1, pref2 = :pref2, pref3 = :pref3 \
+                        WHERE user_id == :userid", \
+                        pref1 = Pref1, pref2 = Pref2, pref3 = Pref3, userid = session['user_id'])
+
+            return redirect(url_for("index"))
+        else:
+            return render_template("apology.html", text = "Please insert ingredients")
+    else:
+        return render_template("changepref.html")
+
 @app.route("/favorites", methods=["GET", "POST"])
 @login_required
 def favorites():
@@ -343,27 +449,27 @@ def register():
 
         # ensure username was submitted
         if not request.form.get("username"):
-            return apology("must provide username")
+            return rendertemplate("apology.html", text = "must provide username")
 
         # ensure password was submitted
         elif not request.form.get("password"):
-            return apology("must provide password")
+            return rendertemplate("apology.html", text = "must provide password")
 
         # ensure password was repeated
         elif not request.form.get("repeat"):
-            return apology("must repeat password")
+            return rendertemplate("apology.html", text = "must repeat password")
 
         # check if passwords are equal
         elif request.form.get("password") != request.form.get("repeat"):
-            return apology("passwords must be equal")
+            return rendertemplate("apology.html", text = "passwords must be equal")
 
         # check if the username is unique
         exist = db.execute("SELECT username FROM users")
         for name in exist:
             if name['username'] == request.form.get("username"):
-                return apology("That username is already taken")
+                return rendertemplate("apology.html", text = "That username is already taken")
 
-        # encrypt the password and insert the new user into the database
+        # encrypt the password
         encryptedpassword = pwd_context.hash(request.form.get("password"))
 
         # sort the diet
@@ -384,7 +490,7 @@ def register():
         preflist = [Pref1, Pref2, Pref3]
         for item in preflist:
             if len(item) == 1:
-                return apology("Please insert a valid ingredient")
+                return render_template("apology.html", text = "Please insert a valid ingredient")
 
             try:
                 results = api_query(item)
@@ -396,13 +502,17 @@ def register():
             if results != None:
                 continue
             elif results == None:
-                return apology("There were no recipes found for one of your preferences")
+                return render_template("apology.html", "There were no recipes found for one of your preferences")
+
+        # check if email was given
+        if not request.form.get("email"):
+            return render_template("apology.html", text = "Please give an email")
 
         # check if the email is valid
         Email = request.form.get("email")
         is_valid = validate_email(Email)
         if not is_valid:
-            return apology("Please insert a valid e-mail")
+            return render_template("apology.html", text = "Please insert a valid e-mail")
 
         # insert everything into the users database
         db.execute("INSERT INTO users (username, password, pref1, pref2, pref3, email, \

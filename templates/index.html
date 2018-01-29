@@ -9,7 +9,7 @@
         <link href="{{url_for('static',filename='styles.css')}}" rel="stylesheet"/>
     </head>
 
-    <body>
+    <body> 
         <!--Uitloggen-->
         <form action="{{ url_for('logout') }}"><button class= "RoundSideButton">Logout</button></form>
         <!--favorieten pagina-->
@@ -18,6 +18,12 @@
         <form action="{{ url_for('mail') }}"><button class="RoundSideButton">Share page</button></form>
         <!--filtersearch-->
         <form action="{{ url_for('filter_dish') }}"><button class="RoundSideButton">Search recipe through filter</button></form>
+        <!--Naam en ww veranderen-->
+        <form action="{{ url_for('changenamepass') }}"><button>Change username and password</button></form>
+        <!--verander email-->
+        <form action="{{ url_for('changemail') }}"><button>Change mail</button></form>
+        <!--verander preferences-->
+        <form action="{{ url_for('changepref') }}"><button>Change preferences</button></form>
 
         <div class= "Header">
             <form action="{{ url_for('favorites') }}"><button class="RoundSideButton" id= "FavoritesButton">Favorites</button></form>

@@ -1,0 +1,11 @@
+<html>
+    <head>
+        <h1> Change your mail</h1>
+    </head>
+    <body>
+        <form action = "{{ url_for('changemail')}}" method = "post">
+            <input class="form-control" name="email" placeholder="E-mail" type="text"/>
+            <button class="btn btn-default" type="submit">change</button>
+        </form>
+    </body>
+</html>

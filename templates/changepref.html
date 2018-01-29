@@ -1,0 +1,13 @@
+<html>
+    <head>
+        <h1>Change your preferences</h1>
+    </head>
+    <body>
+        <form action = "{{ url_for('changepref')}}", method = "post">
+            <input autocomplete="off" autofocus name="pref1" placeholder="Preference 1" type="text"/><br>
+            <input autocomplete="off" autofocus name="pref2" placeholder="Preference 2" type="text"/><br>
+            <input autocomplete="off" autofocus name="pref3" placeholder="Preference 3" type="text"/>
+            <button class="btn btn-default" type="submit">Change</button>
+        </form>
+    </body>
+</html>
