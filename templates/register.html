@@ -10,9 +10,8 @@
     </head>
 
     <body>
-    <div class = "list">
          <div class= "Header">
-            <h1>Register your account</h1>
+            <h4>Register your account</h4>
             <form action="{{ url_for('favorites') }}"><button class="RoundSideButton" id= "FavoritesButton">Favorites</button></form>
             <div class="SearchBarHeader">
                 <form action="{{ url_for('search') }}" method="post">
@@ -25,16 +24,22 @@
             <form action="{{ url_for('login') }}"><button class= "RoundSideButton">Back to login page</button></form>
             <br/>
         <form action="{{ url_for('register') }}" method="post">
-
+        <div class = "list">
+                <br>
+                <h1>Register:</h1>
+                <br>
+                <br>
                 <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"/><br>
                 <input class="form-control" name="password" placeholder="Password" type="password"/><br>
                 <input class="form-control" name="repeat" placeholder="Repeat password" type="password"/><br>
                 <input class="form-control" name="email" placeholder="E-mail" type="text"/>
 
                 <h4>Do you have a diet?</h4>
+                <h6>Mark the matching boxes.</h6>
+
                 <table>
                     <tr>
-                        <td><input type="checkbox" name="vegetarian" value="vegetarian" class = "list">Vegetarian </td>
+                        <td><input type="checkbox" name="vegetarian" value="vegetarian" >Vegetarian </td>
                         <td><input type="checkbox" name="vegan" value="vegan">Vegan</td>
                         <td><input type="checkbox" name="paleo" value="paleo">Paleo</td>
                     </tr>
@@ -56,6 +61,7 @@
 
 
                 <h4>Do you have an allergy?</h4>
+                <h6>Mark the matching boxes.</h6>
                 <table>
                     <tr>
                         <td><input type="checkbox" name="gluten" value="gluten-free">Gluten
@@ -74,11 +80,15 @@
 
 
                 <h4> Name 4 ingredients you like most! </h4>
+                <h6>Type your preferences in the boxes.</h6>
                 <input autocomplete="off" autofocus name="pref1" placeholder="Preference 1" type="text"/><br>
                 <input autocomplete="off" autofocus name="pref2" placeholder="Preference 2" type="text"/><br>
-                <input autocomplete="off" autofocus name="pref3" placeholder="Preference 3" type="text"/>
-
+                <input autocomplete="off" autofocus name="pref3" placeholder="Preference 3" type="text"/><br>
+                <br>
+                <br>
             <button class="btn btn-default" type="submit">Register</button>
+            <br>
+            <br>
         </form>
         </div>
     </body>

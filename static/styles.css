@@ -106,12 +106,12 @@ h1 {
 }
 
 .list{
-    margin: auto;
-    text-align: right;
+    margin: 30%;
+    text-align: center;
     margin-top: 5%;
     height: auto;
     width: 50%;
 
     background-color: white;
-    color: orange;
+    color: black;
     text-shadow: 2px 2px 3px, orange;
