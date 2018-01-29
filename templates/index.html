@@ -9,6 +9,61 @@
         <link href="{{url_for('static',filename='styles.css')}}" rel="stylesheet"/>
     </head>
 
+<!DOCTYPE html>
+
+<body>
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+li {
+    float: left;
+    border-right:1px solid #bbb;
+}
+
+li:last-child {
+    border-right: none;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: #111;
+}
+
+.active {
+    background-color: #4CAF50;
+}
+</style>
+</head>
+<body>
+
+<ul>
+  <li><a class="active" href="#home">Home</a></li>
+  <li><a href="#Favorites">Favorites</a></li>
+  <li><a href="#Share page">Share page</a></li>
+  <li><a href="#Search repice through filter">Search repice through filter</a></li>
+  <li style="float:right"><a href="#Log out">Log out</a></li>
+</ul>
+
+</body>
     <body>
         <!--Uitloggen-->
         <form action="{{ url_for('logout') }}"><button class= "RoundSideButton">Logout</button></form>

@@ -5,18 +5,17 @@ body {
     margin-top: 15%;
     height: auto;
     width: 100%;
-    background-image: url(https://i.imgur.com/yRB2Qpb.jpg);
+    background-image: url(https://i.imgur.com/UzpJ8Gt.jpg);
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-size: 50% 80%;
-    background-position: right 110px;
+    background-size: 100% 120%;
+    background-position: middle 300px;
     background-color: black;
-
 }
 
 /*ID-Tag*/
 #Login{
-    background: linear-gradient(to top, rgb(5,0,0), red);
+    background: linear-gradient(to top, rgb(120, 0, 0), orange);
     color: white;
 }
 #Logout{
@@ -34,23 +33,21 @@ body {
 
 .RoundSideButton{
     padding: 5px 30px;
-    border: 1px solid black;
+    border: 1px white ;
     border-radius: 100px;
     text-align: center;
     width: auto;
     font-weight: bold;
     display: inline-block;
-    background: linear-gradient(to top, darkgrey, white);
+    background:  white;
     font-size: 18px;
     font-family: "Abril Fatface";
     cursor: pointer;
     }
 .SearchBarbutton{
-    border: 1px solid black;
+    border: 1px white;
     border-radius: 2px;
     text-align: center;
-    width: auto;
-    height: 50%;
     font-weight: bold;
     display: inline;
     background: linear-gradient(white, darkgrey);
@@ -67,31 +64,32 @@ body {
     height: 15%;
     width: 100%;
     position: fixed;
-    background: rgb(0, 40, 0);
+    background: darkorange;
     font-family: "Abril Fatface";
-    font-size: 64px;
+    font-size: 14px;
     text-align: center;
+    color: white;
+    text-shadow: 2px 2px 3px black;
 }
 
 .SearchBarHeader{
     margin: auto;
-    margin-top: 30px;
     text-align: center;
     width: 60%;
-    height: 60%;
+    height: 40%;
     font-family: "Abril Fatface";
-    font-size: 90%;
-    border-width: 5px;
+    border-width: 2px;
+    font: white;
 }
 
 /*Page-specific frameworks*/
 
 .LoginFrame{
     color: White;
-    border: 3px solid black;
     text-align: center;
     margin: auto;
     width: 50%;
-    background: linear-gradient(rgb(0,0,10), rgb(0, 0, 40), rgb(0, 0, 10));
+    background: linear-gradient(rgb(0,0,10), rgb(0, 0, 40), rgb(0, 0, 10), 0.60);
     font-size: 32px;
+    text-shadow: 2px 2px 3px, black;
 }
