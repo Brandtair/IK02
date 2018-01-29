@@ -68,7 +68,7 @@ def index():
         for v in d.values():
 
             try:
-                results = api_query(v)
+                results = api_query(v, 1000)
             except:
                 return render_template("apology.html", text = "Too many query's this minute (5/5)")
             if not results:
@@ -94,21 +94,29 @@ def favorites():
         # return apology if no stock was given
         if request.form['submit']:
 
+            try:
+                results = api_query(request.form.get("submit"))
+            except:
+                return render_template("apology.html", text = "Too many query's this minute (5/5)")
+            if not results:
+                return render_template("apology.html", text = "invalid ingredient(s)")
 
             # check if the stock is already in favorites
             rows = db.execute("SELECT * FROM favorite WHERE name == :name AND user_id == :userid", \
-                                name = request.form.get("submit"), userid = session['user_id'])
+                                name = results['hits'][0]['recipe']['label'], userid = session['user_id'])
 
             # insert the values into favorites if they are not in it
             if not rows:
-                db.execute("INSERT INTO favorite (name, user_id) \
-                            VALUES (:name, :userid)", \
-                            name = request.form.get("submit"), userid = session['user_id'])
+                db.execute("INSERT INTO favorite (name, user_id, image, link) \
+                            VALUES (:name, :userid, :image, :link)", \
+                            name = results['hits'][0]['recipe']['label'], userid = session['user_id'], \
+                            image = results['hits'][0]['recipe']['image'], \
+                            link = results['hits'][0]['recipe']['url'])
             else:
                 return render_template('apology.html', text = "That recipe is already in your favoriteslist")
 
             # return to index
-            return redirect(url_for("index"))
+            return redirect(url_for("favorites"))
 
     else:
         # retrieve the values and give them to favorites.html
@@ -118,16 +126,9 @@ def favorites():
         for recipe in values:
             current_recipe = {}
 
-            try:
-                results = api_query(recipe['name'])
-            except:
-                return render_template("apology.html", text = "Too many query's this minute (5/5)")
-            if not results:
-                return render_template("apology.html", text = "invalid ingredient(s)")
-
-            current_recipe['name'] = results['hits'][0]['recipe']['label']
-            current_recipe['image'] = results['hits'][0]['recipe']['image']
-            current_recipe['link'] = results['hits'][0]['recipe']['url']
+            current_recipe['name'] = recipe['name']
+            current_recipe['image'] = recipe['image']
+            current_recipe['link'] = recipe['link']
             fave_recipes.append(current_recipe)
         return render_template("favorites.html", data = fave_recipes)
 
@@ -274,7 +275,7 @@ def search():
     if request.method == "POST":
 
         if not request.form.get("symbol"):
-            return apology("Please insert an ingredient/recipe")
+            return render_template("apology.html", text = "Please insert an ingredient/recipe")
 
         try:
             results = api_query(request.form.get("symbol"))
@@ -378,28 +379,3 @@ def register():
     # else if user reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("register.html")
-
-@app.route("/zoek", methods=["GET", "POST"])
-@login_required
-def zoek():
-    """Get recipe zoek."""
-
-    #check if symbol excists
-    if request.method == "POST":
-
-        if not request.form.get("symbol"):
-            return apology("Please insert an ingredient/recipe")
-
-        try:
-            results = api_query(request.form.get("symbol"))
-        except:
-            return render_template("apology.html", text = "Too many query's this minute (5/5)")
-        if not results:
-            return render_template("apology.html", text = "invalid ingredient(s)")
-
-        recipes = searchfunction(results)
-
-        return render_template("gezocht.html", data = recipes)
-
-    else:
-        return render_template("zoek.html")

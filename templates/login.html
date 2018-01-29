@@ -23,15 +23,15 @@
             </div>
         </div>
         <div class="LoginFrame">
-        <h1>Log in</h1>
-        <form action="{{ url_for('login') }}" method="post">
-                <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"/>
-                <br/>
-                <input class="form-control" name="password" placeholder="Password" type="password"/>
-                <br/>
-                <br/>
-                <button class="RoundSideButton" id= "Login">Log In</button>
-        </form>
+            <h1>Log in</h1>
+            <form action="{{ url_for('login') }}" method="post">
+                    <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"/>
+                    <br/>
+                    <input class="form-control" name="password" placeholder="Password" type="password"/>
+                    <br/>
+                    <br/>
+                    <button class="RoundSideButton" id= "Login">Log In</button>
+            </form>
         <form action="{{ url_for('register') }}"><button class="RoundSideButton">Register</button></form>
         </div>
     </body>

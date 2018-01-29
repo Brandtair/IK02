@@ -2,7 +2,7 @@
 
 body {
     margin: 0;
-    margin-top: 15%;
+    margin-top: 5%;
     height: auto;
     width: 100%;
     background-image: url(https://i.imgur.com/UzpJ8Gt.jpg);
@@ -11,6 +11,10 @@ body {
     background-size: 100% 120%;
     background-position: middle 300px;
     background-color: black;
+}
+
+h1{
+    text-shadow: 2px 2px 2px black;
 }
 
 /*ID-Tag*/
@@ -69,7 +73,12 @@ body {
     font-family: "Abril Fatface";
     font-size: 14px;
     text-align: center;
+<<<<<<< HEAD
     color: solid black;
+=======
+    color: white;
+    opacity: 60%;
+>>>>>>> e04d9955aecc7313cb966c8b1cde6fe4cf5fbddf
 }
 
 .SearchBarHeader{
@@ -89,7 +98,6 @@ body {
     text-align: center;
     margin: auto;
     width: 50%;
-    background: linear-gradient(rgb(0,0,10), rgb(0, 0, 40), rgb(0, 0, 10), 0.60);
-    font-size: 32px;
+    font-size: 48px;
     text-shadow: 2px 2px 3px, black;
 }
