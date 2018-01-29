@@ -67,18 +67,9 @@ def index():
     for d in prefs:
         for v in d.values():
 
-            payload = {'app_id' : 'abec09cd',
-                    'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
-                    'q' : v,
-                    'to' : 1000
-                    }
-
-            try:
-                rdict = requests.get('http://api.edamam.com/search', params=payload).json()
-            except:
-                return render_template("apology.html", text = "Too many query's this minute (5/5)")
-
-            for item in rdict['hits']:
+            results = api_query(v)
+            print(results)
+            for item in results['hits']:
                 prefdict.append(item)
 
     # get three random recipes
@@ -121,18 +112,12 @@ def favorites():
         fave_recipes = []
         for recipe in values:
             current_recipe = {}
-            payload = {'app_id' : 'abec09cd',
-                        'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
-                        'q' : recipe['name']
-                        }
-            try:
-                rdict = requests.get('http://api.edamam.com/search', params=payload).json()
-            except:
-                return render_template("apology.html", text = "Too many query's this minute (5/5)")
 
-            current_recipe['name'] = rdict['hits'][0]['recipe']['label']
-            current_recipe['image'] = rdict['hits'][0]['recipe']['image']
-            current_recipe['link'] = rdict['hits'][0]['recipe']['url']
+            results = api_query(recipe['name'])
+
+            current_recipe['name'] = results['hits'][0]['recipe']['label']
+            current_recipe['image'] = results['hits'][0]['recipe']['image']
+            current_recipe['link'] = results['hits'][0]['recipe']['url']
             fave_recipes.append(current_recipe)
         return render_template("favorites.html", data = fave_recipes)
 
@@ -160,7 +145,11 @@ def fave_remove():
 @login_required
 def filter_dish():
     if request.method == "POST":
-        print("hoi")
+        dish_ingredients = ["chicken", "beef", "pork", "lettuce", "cucumber", "carrot", \
+                            "brocolli", "beans", "potatoes"]
+        query = [request.form.get(i) for i in dish_ingredients]
+
+
 
     else:
         return render_template("filtersearch.html")
@@ -168,7 +157,9 @@ def filter_dish():
 @app.route("/filter_desert", methods=["POST"])
 @login_required
 def filter_desert():
-    print("hoi")
+    desert_ingredients = ["vanilla", "choco", "coconut", "apple", "orange", "pineapple"]
+    query = [request.form.get(i) for i in desert_ingredients]
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -253,29 +244,18 @@ def search():
         if not request.form.get("symbol"):
             return apology("Please insert an ingredient/recipe")
 
-        payload = {'app_id' : 'abec09cd',
-            'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
-            'q' : request.form.get("symbol")
-        }
-
-        try:
-            rdict = requests.get('http://api.edamam.com/search', params=payload).json()
-        except:
-            return render_template("apology.html", text = "Too many query's this minute (5/5)")
-
-        if not rdict:
-            return apology("that ingedient is not valid")
+        results = api_query(request.form.get("symbol"))
 
         imglink = []
-        for hit in rdict['hits']:
+        for hit in results['hits']:
             imglink.append(hit['recipe']['image'])
 
         names = []
-        for hit in rdict['hits']:
+        for hit in results['hits']:
             names.append(hit['recipe']['label'])
 
         urls = []
-        for hit in rdict['hits']:
+        for hit in results['hits']:
             urls.append(hit['recipe']['url'])
 
         reclist = []
@@ -340,18 +320,11 @@ def register():
             if len(item) == 1:
                 return apology("Please insert a valid ingredient")
 
-            payload = {'app_id' : 'abec09cd',
-                        'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
-                        'q' : item
-                        }
-            try:
-                rdict = requests.get('http://api.edamam.com/search', params=payload).json()
-            except:
-                return render_template("apology.html", text = "Too many query's this minute (5/5)")
+            results = api_query(item)
 
-            if rdict != None:
+            if results != None:
                 continue
-            elif rdict == None:
+            elif results == None:
                 return apology("There were no recipes found for one of your preferences")
 
         Email = request.form.get("email")
@@ -393,29 +366,18 @@ def zoek():
         if not request.form.get("symbol"):
             return apology("Please insert an ingredient/recipe")
 
-        payload = {'app_id' : 'abec09cd',
-            'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
-            'q' : request.form.get("symbol")
-        }
-
-        try:
-            rdict = requests.get('http://api.edamam.com/search', params=payload).json()
-        except:
-            return render_template("apology.html", text = "Too many query's this minute (5/5)")
-
-        if not rdict:
-            return apology("that ingedient is not valid")
+        results = api_query(request.form.get("symbol"))
 
         imglink = []
-        for hit in rdict['hits']:
+        for hit in results['hits']:
             imglink.append(hit['recipe']['image'])
 
         names = []
-        for hit in rdict['hits']:
+        for hit in results['hits']:
             names.append(hit['recipe']['label'])
 
         urls = []
-        for hit in rdict['hits']:
+        for hit in results['hits']:
             urls.append(hit['recipe']['url'])
 
         reclist = []
