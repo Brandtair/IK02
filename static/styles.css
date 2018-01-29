@@ -21,6 +21,7 @@ h1 {
     font-size: 100px;
     text-shadow: 2px 2px 2px black;
     margin: 15%;
+    line-height: normal;
 }
 
 
@@ -85,11 +86,11 @@ h1 {
 
 }
 
-.SearchBarHeader{
+.SearchBar{
     margin: auto;
     text-align: center;
-    width: 60%;
-    height: 40%;
+    width: 50%;
+    height: 50%;
     font-family: "Abril Fatface";
     border-width: 2px;
     font: white;
@@ -102,6 +103,7 @@ h1 {
     text-align: center;
     margin: auto;
     width: 50%;
+    line-height: 10px;
     font-size: 64px;
     text-shadow: 2px 2px 3px black;
     font-family: "Abril Fatface";
