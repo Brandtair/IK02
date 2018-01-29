@@ -5,7 +5,7 @@ body {
     margin-top: 7%;
     height: auto;
     width: 100%;
-    background-image: url(https://i.imgur.com/UzpJ8Gt.jpg);
+    background-image: url(https://i.imgur.com/RmOdDzo.jpg);
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: 100% 100%;
@@ -75,12 +75,14 @@ h1 {
     height: 15%;
     width: 100%;
     position: fixed;
-    background: darkorange;
+    background: white
+    opacity: 0.5;
     font-family: "Abril Fatface";
     font-size: 14px;
     text-align: center;
     color: white;
     opacity: 60%;
+
 }
 
 .SearchBarHeader{
@@ -103,4 +105,16 @@ h1 {
     font-size: 64px;
     text-shadow: 2px 2px 3px black;
     font-family: "Abril Fatface";
+}
+
+.list{
+    margin: auto;
+    text-align: center;
+    margin-top: 5%;
+    height: auto;
+    width: 50%;
+    border: 1px;
+    background-color: black;
+    color: white;
+    text-shadow: 2px 2px 3px, white;
 }
