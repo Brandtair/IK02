@@ -34,18 +34,10 @@ def login_required(f):
     return decorated_function
 
 def api_query(terms):
-
+    print("TERMS ===================== ",terms)
     payload = {'app_id' : 'abec09cd',
             'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
             'q' : terms
         }
 
-    try:
-        rdict = requests.get('http://api.edamam.com/search', params=payload).json()
-    except:
-        return render_template("apology.html", text = "Too many query's this minute (5/5)")
-
-    if not rdict:
-        return render_template("apology.hmtl", text = "invalid ingredient(s)")
-
-    return rdict
+    return requests.get('http://api.edamam.com/search', params=payload).json()
