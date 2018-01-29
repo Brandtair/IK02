@@ -1,4 +1,4 @@
-<html>
+<!DOCTYPE html>
 
 {% block main %}
 
@@ -11,12 +11,10 @@
     </head>
     <body>
         <title>Login</title>
-            <div class= "SearchBar">
-                <form action="{{ url_for('search') }}" method="post">
-                    <input placeholder="Find a recipe" type="text"/>
-                    <button class="SearchBarButton" type="submit">Search</button>
-                </form>
-            </div>
+        <form action="{{ url_for('search') }}" method="post">
+            <input placeholder="Find a recipe" type="text"/>
+            <button type="submit">Search</button>
+        </form>
         <div class="LoginFrame">
             <h1>Makes Right Diner</h1>
             <h3>Login</h3>
@@ -32,4 +30,3 @@
         </div>
     </body>
 {% endblock %}
-</html>
