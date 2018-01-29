@@ -33,11 +33,12 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-def api_query(terms):
+def api_query(terms, length = 1000):
     print("TERMS ===================== ",terms)
     payload = {'app_id' : 'abec09cd',
             'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
-            'q' : terms
+            'q' : terms,
+            'to' : length
         }
 
     return requests.get('http://api.edamam.com/search', params=payload).json()
