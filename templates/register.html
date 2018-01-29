@@ -10,6 +10,7 @@
     </head>
 
     <body>
+    <div class = "list">
          <div class= "Header">
             <h1>Register your account</h1>
             <form action="{{ url_for('favorites') }}"><button class="RoundSideButton" id= "FavoritesButton">Favorites</button></form>
@@ -24,13 +25,12 @@
             <form action="{{ url_for('login') }}"><button class= "RoundSideButton">Back to login page</button></form>
             <br/>
         <form action="{{ url_for('register') }}" method="post">
-            <fieldset style="width:350px">
+
                 <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"/><br>
                 <input class="form-control" name="password" placeholder="Password" type="password"/><br>
                 <input class="form-control" name="repeat" placeholder="Repeat password" type="password"/><br>
                 <input class="form-control" name="email" placeholder="E-mail" type="text"/>
-            </fieldset>
-            <fieldset style="width:350px">
+
                 <h4>Do you have a diet?</h4>
                 <table>
                     <tr>
@@ -53,8 +53,8 @@
                         <td><input type="checkbox" name="balanced" value="True">Balanced</td>
                     </tr>
                 </table>
-            </fieldset>
-            <fieldset style="width:350px">
+
+
                 <h4>Do you have an allergy?</h4>
                 <table>
                     <tr>
@@ -71,15 +71,16 @@
                         <td><input type="checkbox" name="peanuts" value="peanut-free">Peanuts
                     </tr>
                 </table>
-            </fieldset>
-            <fieldset style="width:350px">
+
+
                 <h4> Name 4 ingredients you like most! </h4>
                 <input autocomplete="off" autofocus name="pref1" placeholder="Preference 1" type="text"/><br>
                 <input autocomplete="off" autofocus name="pref2" placeholder="Preference 2" type="text"/><br>
                 <input autocomplete="off" autofocus name="pref3" placeholder="Preference 3" type="text"/>
-            </fieldset>
+
             <button class="btn btn-default" type="submit">Register</button>
         </form>
+    </div>
     </body>
 {% endblock %}
 </html>
