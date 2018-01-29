@@ -5,18 +5,18 @@ body {
     margin-top: 15%;
     height: auto;
     width: 100%;
-    background-image: url(https://i.imgur.com/yRB2Qpb.jpg);
+    background-image: url(https://i.imgur.com/UzpJ8Gt.jpg);
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-size: 50% 80%;
-    background-position: right 110px;
+    background-size: 100% 110%;
+    background-position: middle 300px;
     background-color: black;
 
 }
 
 /*ID-Tag*/
 #Login{
-    background: linear-gradient(to top, rgb(5,0,0), red);
+    background: linear-gradient(to top, rgb(120, 0, 0), orange);
     color: white;
 }
 #Logout{
@@ -40,7 +40,7 @@ body {
     width: auto;
     font-weight: bold;
     display: inline-block;
-    background: linear-gradient(to top, darkgrey, white);
+    background:  white;
     font-size: 18px;
     font-family: "Abril Fatface";
     cursor: pointer;
@@ -67,7 +67,7 @@ body {
     height: 15%;
     width: 100%;
     position: fixed;
-    background: linear-gradient(to bottom, rgb(0, 40, 0), black);
+    background: linear-gradient( rgb(0, 0, 0), white);
 }
 
 .SearchBarHeader{
@@ -84,10 +84,10 @@ body {
 
 .LoginFrame{
     color: White;
-    border: 3px solid black;
     text-align: center;
     margin: auto;
     width: 50%;
-    background: linear-gradient(rgb(0,0,10), rgb(0, 0, 40), rgb(0, 0, 10));
+    background: linear-gradient(rgb(0,0,10), rgb(0, 0, 40), rgb(0, 0, 10), 0.60);
     font-size: 32px;
+    text-shadow: 20px 20px 30px, black;
 }
