@@ -67,8 +67,13 @@ def index():
     for d in prefs:
         for v in d.values():
 
-            results = api_query(v)
-            print(results)
+            try:
+                results = api_query(v)
+            except:
+                return render_template("apology.html", text = "Too many query's this minute (5/5)")
+            if not results:
+                return render_template("apology.html", text = "invalid ingredient(s)")
+
             for item in results['hits']:
                 prefdict.append(item)
 
@@ -113,7 +118,12 @@ def favorites():
         for recipe in values:
             current_recipe = {}
 
-            results = api_query(recipe['name'])
+            try:
+                results = api_query(recipe['name'])
+            except:
+                return render_template("apology.html", text = "Too many query's this minute (5/5)")
+            if not results:
+                return render_template("apology.html", text = "invalid ingredient(s)")
 
             current_recipe['name'] = results['hits'][0]['recipe']['label']
             current_recipe['image'] = results['hits'][0]['recipe']['image']
@@ -244,7 +254,12 @@ def search():
         if not request.form.get("symbol"):
             return apology("Please insert an ingredient/recipe")
 
-        results = api_query(request.form.get("symbol"))
+        try:
+            results = api_query(request.form.get("symbol"))
+        except:
+            return render_template("apology.html", text = "Too many query's this minute (5/5)")
+        if not results:
+            return render_template("apology.html", text = "invalid ingredient(s)")
 
         imglink = []
         for hit in results['hits']:
@@ -320,7 +335,12 @@ def register():
             if len(item) == 1:
                 return apology("Please insert a valid ingredient")
 
-            results = api_query(item)
+            try:
+                results = api_query(item)
+            except:
+                return render_template("apology.html", text = "Too many query's this minute (5/5)")
+            if not results:
+                return render_template("apology.html", text = "invalid ingredient(s)")
 
             if results != None:
                 continue
@@ -366,7 +386,12 @@ def zoek():
         if not request.form.get("symbol"):
             return apology("Please insert an ingredient/recipe")
 
-        results = api_query(request.form.get("symbol"))
+        try:
+            results = api_query(request.form.get("symbol"))
+        except:
+            return render_template("apology.html", text = "Too many query's this minute (5/5)")
+        if not results:
+            return render_template("apology.html", text = "invalid ingredient(s)")
 
         imglink = []
         for hit in results['hits']:
