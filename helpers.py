@@ -41,3 +41,26 @@ def api_query(terms):
         }
 
     return requests.get('http://api.edamam.com/search', params=payload).json()
+
+def searchfunction(results):
+    imglink = []
+    for hit in results['hits']:
+        imglink.append(hit['recipe']['image'])
+
+    names = []
+    for hit in results['hits']:
+        names.append(hit['recipe']['label'])
+
+    urls = []
+    for hit in results['hits']:
+        urls.append(hit['recipe']['url'])
+
+    reclist = []
+    for i in range(len(imglink)):
+        temp = {}
+        temp['name'] = names[i]
+        temp['img'] = imglink[i]
+        temp['url'] = urls[i]
+        reclist.append(temp)
+
+    return reclist

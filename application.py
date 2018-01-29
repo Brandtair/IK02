@@ -157,19 +157,41 @@ def filter_dish():
     if request.method == "POST":
         dish_ingredients = ["chicken", "beef", "pork", "lettuce", "cucumber", "carrot", \
                             "brocolli", "beans", "potatoes"]
-        query = [request.form.get(i) for i in dish_ingredients]
+        query = [request.form.get(i) for i in dish_ingredients if request.form.get(i) != None]
+        query = ' '.join(e for e in query)
 
+        try:
+            results = api_query(query)
+        except:
+            return render_template("apology.html", text = "Too many query's this minute (5/5)")
+        if not results:
+            return render_template("apology.html", text = "invalid ingredient(s)")
 
+        print(results)
+        recipes = searchfunction(results)
+
+        return render_template("gezocht.html", data = recipes)
 
     else:
         return render_template("filtersearch.html")
 
-@app.route("/filter_desert", methods=["POST"])
+@app.route("/filter_dessert", methods=["POST"])
 @login_required
-def filter_desert():
-    desert_ingredients = ["vanilla", "choco", "coconut", "apple", "orange", "pineapple"]
-    query = [request.form.get(i) for i in desert_ingredients]
+def filter_dessert():
+    dessert_ingredients = ["vanilla", "choco", "coconut", "apple", "orange", "pineapple"]
+    query = [request.form.get(i) for i in dessert_ingredients if request.form.get(i) != None]
+    query = ' '.join(e for e in query)
 
+    try:
+        results = api_query(query)
+    except:
+        return render_template("apology.html", text = "Too many query's this minute (5/5)")
+    if not results:
+        return render_template("apology.html", text = "invalid ingredient(s)")
+    print(results)
+    recipes = searchfunction(results)
+
+    return render_template("gezocht.html", data = recipes)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -261,27 +283,9 @@ def search():
         if not results:
             return render_template("apology.html", text = "invalid ingredient(s)")
 
-        imglink = []
-        for hit in results['hits']:
-            imglink.append(hit['recipe']['image'])
+        recipes = searchfunction(results)
 
-        names = []
-        for hit in results['hits']:
-            names.append(hit['recipe']['label'])
-
-        urls = []
-        for hit in results['hits']:
-            urls.append(hit['recipe']['url'])
-
-        reclist = []
-        for i in range(len(imglink)):
-            temp = {}
-            temp['name'] = names[i]
-            temp['img'] = imglink[i]
-            temp['url'] = urls[i]
-            reclist.append(temp)
-
-        return render_template("gezocht.html", data = reclist)
+        return render_template("gezocht.html", data = recipes)
 
     else:
         return render_template("search.html")
@@ -393,27 +397,9 @@ def zoek():
         if not results:
             return render_template("apology.html", text = "invalid ingredient(s)")
 
-        imglink = []
-        for hit in results['hits']:
-            imglink.append(hit['recipe']['image'])
+        recipes = searchfunction(results)
 
-        names = []
-        for hit in results['hits']:
-            names.append(hit['recipe']['label'])
-
-        urls = []
-        for hit in results['hits']:
-            urls.append(hit['recipe']['url'])
-
-        reclist = []
-        for i in range(len(imglink)):
-            temp = {}
-            temp['name'] = names[i]
-            temp['img'] = imglink[i]
-            temp['url'] = urls[i]
-            reclist.append(temp)
-
-        return render_template("gezocht.html", data = reclist)
+        return render_template("gezocht.html", data = recipes)
 
     else:
         return render_template("zoek.html")
