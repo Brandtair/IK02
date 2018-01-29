@@ -34,7 +34,7 @@ body {
 
 .RoundSideButton{
     padding: 5px 30px;
-    border: 1px solid black;
+    border: 1px white ;
     border-radius: 100px;
     text-align: center;
     width: auto;
@@ -46,7 +46,7 @@ body {
     cursor: pointer;
     }
 .SearchBarbutton{
-    border: 1px solid black;
+    border: 1px white;
     border-radius: 2px;
     text-align: center;
     font-weight: bold;
@@ -65,6 +65,7 @@ body {
     height: 15%;
     width: 100%;
     position: fixed;
+
     background: linear-gradient( rgb(0, 0, 0), white);
     font-family: "Abril Fatface";
     font-size: 64px;
