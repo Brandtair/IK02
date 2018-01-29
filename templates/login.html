@@ -11,17 +11,19 @@
     </head>
     <body>
         <title>Login</title>
-        <form action="{{ url_for('search') }}" method="post">
-            <input placeholder="Find a recipe" type="text"/>
-            <button type="submit">Search</button>
-        </form>
-        <div class="LoginFrame">
+        <div class="LoginFrame" id= "Title">
             <h1>Makes Right Diner</h1>
+        </div>
+            <div class="LoginFrame">
+            <form action="{{ url_for('search') }}" method="post">
+            <input class= "RoundSideButton" placeholder="Find a recipe" type="text"/>
+            <button class= "RoundSideButton" type="submit">Search</button>
+            </form>
             <h3>Login</h3>
             <form action="{{ url_for('login') }}" method="post">
-                    <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"/>
+                    <input autocomplete="off" autofocus class= "RoundSideButton" name="username" placeholder="Username" type="text"/>
                     <br/>
-                    <input class="form-control" name="password" placeholder="Password" type="password"/>
+                    <input class= "RoundSideButton" name="password" placeholder="Password" type="password"/>
                     <br/>
                     <br/>
                     <button class="RoundSideButton" id= "Login">Log In</button>
