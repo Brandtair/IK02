@@ -1,6 +1,3 @@
-{% block title %}
-    Log In
-{% endblock %}
 <html>
 
 {% block main %}
@@ -13,7 +10,8 @@
     <link href="{{url_for('static',filename='styles.css')}}" rel="stylesheet"/>
     </head>
     <body>
-        <div class= "Header">
+        <title>Login</title>
+        <!--<div class= "Header">
             <h1>Makes Right Diner</h1>
             <div class="SearchBarHeader">
                 <form action="{{ url_for('search') }}" method="post">
@@ -21,9 +19,10 @@
                     <button class="SearchBarButton" type="submit">Search</button>
                 </form>
             </div>
-        </div>
+        </div>-->
         <div class="LoginFrame">
-            <h1>Log in</h1>
+            <h1>Makes Right Diner</h1>
+            <h3>Login</h3>
             <form action="{{ url_for('login') }}" method="post">
                     <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"/>
                     <br/>
