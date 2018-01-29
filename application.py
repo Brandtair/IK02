@@ -36,51 +36,51 @@ Session(app)
 # configure CS50 Library to use SQLite database
 db = SQL("sqlite:///project.db")
 
-# use this code for every query
-"""
-payload = {'app_id' : 'abec09cd',
-            'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
-            'q' : 'chicken'
-}
-
-r = requests.get('http://api.edamam.com/search', params=payload)
-rdict = json.loads(r.text)
-"""
-
-# use this code as an example to get 1 thing out of a recipe
-"""
-for hit in rdict['hits']:
-    print(hit['recipe']['label'])
-    """
-
 @app.route("/")
 @login_required
 def index():
+    """Show the users personal homepage"""
 
     # get the preferences from the database
     prefs = db.execute("SELECT pref1, pref2, pref3 FROM users WHERE user_id == :userid", \
                         userid = session['user_id'])
 
-    prefdict = []
+    preflist = []
+
+    # get the allergies and diets from the user and store them in a list
+    rows = db.execute("SELECT vegetarian, vegan, paleo, high_fiber, high_protein, low_carb, low_fat, \
+                                low_sodium, low_sugar, alcohol_free, balanced, glutenfree, dairyfree, eggfree, soyfree, \
+                                wheatfree, treenutfree, peanutfree FROM users WHERE user_id == :userid", \
+                                userid = session['user_id'])
+    for item in rows:
+        limitations = [i for i in item.values() if i is not None]
 
     # get recipes where one of the ingredients in present
     for d in prefs:
         for v in d.values():
 
+            # combine the limitations and the preference in one query
+            limitations.append(v)
+            query = ' '.join(e for e in limitations)
+
+            # execute the query
             try:
-                results = api_query(v, 1000)
+                results = api_query(query, 1000)
             except:
                 return render_template("apology.html", text = "Too many query's this minute (5/5)")
             if not results:
                 return render_template("apology.html", text = "invalid ingredient(s)")
 
             for item in results['hits']:
-                prefdict.append(item)
+                preflist.append(item)
+
+            # get the preference out of the querylist
+            limitations = [i for i in limitations if i != v]
 
     # get three random recipes
     randomrecipes = []
     for i in range(3):
-        rand = random.choice(prefdict)
+        rand = random.choice(preflist)
         randomrecipes.append(rand['recipe'])
 
     return render_template("index.html", recipes = randomrecipes)
@@ -88,12 +88,14 @@ def index():
 @app.route("/favorites", methods=["GET", "POST"])
 @login_required
 def favorites():
-    """Show stock the user has added to favorites with stats"""
+    """Show favorites the user has added"""
+
     if request.method == "POST":
 
-        # return apology if no stock was given
+        # check if button was pressed
         if request.form['submit']:
 
+            # execute the query
             try:
                 results = api_query(request.form.get("submit"))
             except:
@@ -101,7 +103,7 @@ def favorites():
             if not results:
                 return render_template("apology.html", text = "invalid ingredient(s)")
 
-            # check if the stock is already in favorites
+            # check if the recipe is already in favorites
             rows = db.execute("SELECT * FROM favorite WHERE name == :name AND user_id == :userid", \
                                 name = results['hits'][0]['recipe']['label'], userid = session['user_id'])
 
@@ -119,9 +121,10 @@ def favorites():
             return redirect(url_for("favorites"))
 
     else:
-        # retrieve the values and give them to favorites.html
+        # retrieve the values from the database
         values = db.execute("SELECT * FROM favorite WHERE user_id == :userid", userid = session['user_id'])
 
+        # store the values in a dict and give them to favorites.html
         fave_recipes = []
         for recipe in values:
             current_recipe = {}
@@ -135,13 +138,13 @@ def favorites():
 @app.route("/fave_remove", methods=["GET", "POST"])
 @login_required
 def fave_remove():
-    """Remove a stock from favorites"""
+    """Remove a recipe from favorites"""
     if request.method == "POST":
 
         # ensure button was pressed
         if request.form['submit']:
 
-            # delete the stock from the table
+            # delete the recipe from the table
             db.execute("DELETE FROM favorite WHERE name == :name AND user_id == :userid", \
                         name = request.form.get("submit"), userid = session['user_id'])
 
@@ -155,12 +158,27 @@ def fave_remove():
 @app.route("/filter_dish", methods=["GET", "POST"])
 @login_required
 def filter_dish():
+    """Get random dishes with the ingredients the user asked for"""
+
     if request.method == "POST":
+
+        # put the ingredients the user has pressed in a list for the query
         dish_ingredients = ["chicken", "beef", "pork", "lettuce", "cucumber", "carrot", \
                             "brocolli", "beans", "potatoes"]
         query = [request.form.get(i) for i in dish_ingredients if request.form.get(i) != None]
+
+        # get the diets and allergies from the user and add them to the query
+        rows = db.execute("SELECT vegetarian, vegan, paleo, high_fiber, high_protein, low_carb, low_fat, \
+                                low_sodium, low_sugar, alcohol_free, balanced, glutenfree, dairyfree, eggfree, soyfree, \
+                                wheatfree, treenutfree, peanutfree FROM users WHERE user_id == :userid", \
+                                userid = session['user_id'])
+        for item in rows:
+            limitations = [i for i in item.values() if i is not None]
+
+        query += limitations
         query = ' '.join(e for e in query)
 
+        # execute the query
         try:
             results = api_query(query)
         except:
@@ -168,7 +186,7 @@ def filter_dish():
         if not results:
             return render_template("apology.html", text = "invalid ingredient(s)")
 
-        print(results)
+        # get the recipes from the searchfunction
         recipes = searchfunction(results)
 
         return render_template("gezocht.html", data = recipes)
@@ -179,17 +197,32 @@ def filter_dish():
 @app.route("/filter_dessert", methods=["POST"])
 @login_required
 def filter_dessert():
+    """Get random desserts with the ingredients the user has given"""
+
+    # get the ingredients the user has pressed in a list for the query
     dessert_ingredients = ["vanilla", "choco", "coconut", "apple", "orange", "pineapple"]
     query = [request.form.get(i) for i in dessert_ingredients if request.form.get(i) != None]
+
+    # get the diets and allergies from the user and add them to the query
+    rows = db.execute("SELECT vegetarian, vegan, paleo, high_fiber, high_protein, low_carb, low_fat, \
+                                low_sodium, low_sugar, alcohol_free, balanced, glutenfree, dairyfree, eggfree, soyfree, \
+                                wheatfree, treenutfree, peanutfree FROM users WHERE user_id == :userid", \
+                                userid = session['user_id'])
+    for item in rows:
+        limitations = [i for i in item.values() if i is not None]
+
+    query += limitations
     query = ' '.join(e for e in query)
 
+    # execute the query
     try:
         results = api_query(query)
     except:
         return render_template("apology.html", text = "Too many query's this minute (5/5)")
     if not results:
         return render_template("apology.html", text = "invalid ingredient(s)")
-    print(results)
+
+    # get the recipes from the searchfunction
     recipes = searchfunction(results)
 
     return render_template("gezocht.html", data = recipes)
@@ -220,11 +253,7 @@ def login():
 
         # ensure username exists and password is correct
         if len(rows) != 1 or not pwd_context.verify(request.form.get("password"), rows[0]["password"]):
-
             return render_template('apology.html', text = "username does not exists or password is not correct")
-
-            return render_template('apology.html', text = "username or password not valid")
-
 
         # remember which user has logged in
         session["user_id"] = rows[0]["user_id"]
@@ -263,27 +292,43 @@ def mail():
         server.quit()
 
     else:
-
         return render_template("mail.html")
 
 @app.route("/search", methods=["GET", "POST"])
 @login_required
 def search():
-    """Get recipe search."""
+    """Search for a recipe"""
 
-    #check if symbol excists
     if request.method == "POST":
 
+        # check if ingredient exists
         if not request.form.get("symbol"):
             return render_template("apology.html", text = "Please insert an ingredient/recipe")
 
+        query = [request.form.get("symbol")]
+
+        # if the user searches while logged in, also retrieve their allergies and diets
+        if session['user_id']:
+            rows = db.execute("SELECT vegetarian, vegan, paleo, high_fiber, high_protein, low_carb, low_fat, \
+                                low_sodium, low_sugar, alcohol_free, balanced, glutenfree, dairyfree, eggfree, soyfree, \
+                                wheatfree, treenutfree, peanutfree FROM users WHERE user_id == :userid", \
+                                userid = session['user_id'])
+            for item in rows:
+                limitations = [i for i in item.values() if i is not None]
+
+            # add them to the query
+            limitations.append(request.form.get("symbol"))
+            query = ' '.join(e for e in limitations)
+
+        # execute the query
         try:
-            results = api_query(request.form.get("symbol"))
+            results = api_query(query)
         except:
             return render_template("apology.html", text = "Too many query's this minute (5/5)")
         if not results:
             return render_template("apology.html", text = "invalid ingredient(s)")
 
+        # get the recipes
         recipes = searchfunction(results)
 
         return render_template("gezocht.html", data = recipes)
@@ -321,12 +366,12 @@ def register():
         # encrypt the password and insert the new user into the database
         encryptedpassword = pwd_context.hash(request.form.get("password"))
 
-        # diet
+        # sort the diet
         diets = ["vegetarian", "vegan", "paleo", "high_fiber", "high_protein", \
                 "low_carb", "low_fat", "low_sodium", "low_sugar", "alcohol_free", "balanced"]
         Diet = {i: request.form.get(i) for i in diets}
 
-        # allergies
+        # sort the allergies
         allergies = ["gluten", "dairy", "eggs", "soy", "wheat", "treenuts", "peanuts"]
         allergy = {i: request.form.get(i) for i in allergies}
 
@@ -335,6 +380,7 @@ def register():
         Pref2 = request.form.get('pref2')
         Pref3 = request.form.get('pref3')
 
+        # check if the prefered ingredients are valid
         preflist = [Pref1, Pref2, Pref3]
         for item in preflist:
             if len(item) == 1:
@@ -352,11 +398,13 @@ def register():
             elif results == None:
                 return apology("There were no recipes found for one of your preferences")
 
+        # check if the email is valid
         Email = request.form.get("email")
         is_valid = validate_email(Email)
         if not is_valid:
             return apology("Please insert a valid e-mail")
 
+        # insert everything into the users database
         db.execute("INSERT INTO users (username, password, pref1, pref2, pref3, email, \
                     glutenfree, dairyfree, eggfree, soyfree, wheatfree, treenutfree, peanutfree, \
                     vegetarian, vegan, paleo, high_fiber, high_protein, low_carb, low_fat, \
