@@ -68,13 +68,11 @@ h1{
     height: 15%;
     width: 100%;
     position: fixed;
-    background: white
-    opacity: 0.5;
+    background: white;
     font-family: "Abril Fatface";
     font-size: 14px;
     text-align: center;
     color: white;
-    opacity: 60%;
 
 }
 
@@ -101,12 +99,13 @@ h1{
 
 .list{
     margin: auto;
-    text-align: center;
+    text-align: right;
     margin-top: 5%;
     height: auto;
     width: 50%;
-    border: ;
-    background-color: black;
-    color: white;
-    text-shadow: 2px 2px 3px, white;
+    background-color: white;
+    color: orange;
+    text-shadow: 2px 2px 3px, orange;
+
 }
+
