@@ -2,13 +2,13 @@
 
 body {
     margin: 0;
-    margin-top: 20%;
+    margin-top: 15%;
     height: auto;
     width: 100%;
     background-image: url(https://i.imgur.com/UzpJ8Gt.jpg);
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-size: 100% 110%;
+    background-size: 100% 120%;
     background-position: middle 300px;
     background-color: black;
 }
@@ -61,10 +61,10 @@ body {
 
 .Header{
     top: 0;
-    height: 20%;
+    height: 15%;
     width: 100%;
     position: fixed;
-    background: linear-gradient( rgb(0, 0, 0), white);
+    background: darkorange;
     font-family: "Abril Fatface";
     font-size: 14px;
     text-align: center;
