@@ -34,18 +34,33 @@ def login_required(f):
     return decorated_function
 
 def api_query(terms):
-
+    print("TERMS ===================== ",terms)
     payload = {'app_id' : 'abec09cd',
             'app_key' : '66cc31dcd04ab364bff95bd62fe527c8',
             'q' : terms
         }
 
-    try:
-        rdict = requests.get('http://api.edamam.com/search', params=payload).json()
-    except:
-        return render_template("apology.html", text = "Too many query's this minute (5/5)")
+    return requests.get('http://api.edamam.com/search', params=payload).json()
 
-    if not rdict:
-        return render_template("apology.hmtl", text = "invalid ingredient(s)")
+def searchfunction(results):
+    imglink = []
+    for hit in results['hits']:
+        imglink.append(hit['recipe']['image'])
 
-    return rdict
+    names = []
+    for hit in results['hits']:
+        names.append(hit['recipe']['label'])
+
+    urls = []
+    for hit in results['hits']:
+        urls.append(hit['recipe']['url'])
+
+    reclist = []
+    for i in range(len(imglink)):
+        temp = {}
+        temp['name'] = names[i]
+        temp['img'] = imglink[i]
+        temp['url'] = urls[i]
+        reclist.append(temp)
+
+    return reclist

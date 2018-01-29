@@ -67,8 +67,13 @@ def index():
     for d in prefs:
         for v in d.values():
 
-            results = api_query(v)
-            print(results)
+            try:
+                results = api_query(v)
+            except:
+                return render_template("apology.html", text = "Too many query's this minute (5/5)")
+            if not results:
+                return render_template("apology.html", text = "invalid ingredient(s)")
+
             for item in results['hits']:
                 prefdict.append(item)
 
@@ -113,7 +118,12 @@ def favorites():
         for recipe in values:
             current_recipe = {}
 
-            results = api_query(recipe['name'])
+            try:
+                results = api_query(recipe['name'])
+            except:
+                return render_template("apology.html", text = "Too many query's this minute (5/5)")
+            if not results:
+                return render_template("apology.html", text = "invalid ingredient(s)")
 
             current_recipe['name'] = results['hits'][0]['recipe']['label']
             current_recipe['image'] = results['hits'][0]['recipe']['image']
@@ -147,19 +157,41 @@ def filter_dish():
     if request.method == "POST":
         dish_ingredients = ["chicken", "beef", "pork", "lettuce", "cucumber", "carrot", \
                             "brocolli", "beans", "potatoes"]
-        query = [request.form.get(i) for i in dish_ingredients]
+        query = [request.form.get(i) for i in dish_ingredients if request.form.get(i) != None]
+        query = ' '.join(e for e in query)
 
+        try:
+            results = api_query(query)
+        except:
+            return render_template("apology.html", text = "Too many query's this minute (5/5)")
+        if not results:
+            return render_template("apology.html", text = "invalid ingredient(s)")
 
+        print(results)
+        recipes = searchfunction(results)
+
+        return render_template("gezocht.html", data = recipes)
 
     else:
         return render_template("filtersearch.html")
 
-@app.route("/filter_desert", methods=["POST"])
+@app.route("/filter_dessert", methods=["POST"])
 @login_required
-def filter_desert():
-    desert_ingredients = ["vanilla", "choco", "coconut", "apple", "orange", "pineapple"]
-    query = [request.form.get(i) for i in desert_ingredients]
+def filter_dessert():
+    dessert_ingredients = ["vanilla", "choco", "coconut", "apple", "orange", "pineapple"]
+    query = [request.form.get(i) for i in dessert_ingredients if request.form.get(i) != None]
+    query = ' '.join(e for e in query)
 
+    try:
+        results = api_query(query)
+    except:
+        return render_template("apology.html", text = "Too many query's this minute (5/5)")
+    if not results:
+        return render_template("apology.html", text = "invalid ingredient(s)")
+    print(results)
+    recipes = searchfunction(results)
+
+    return render_template("gezocht.html", data = recipes)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -244,29 +276,16 @@ def search():
         if not request.form.get("symbol"):
             return apology("Please insert an ingredient/recipe")
 
-        results = api_query(request.form.get("symbol"))
+        try:
+            results = api_query(request.form.get("symbol"))
+        except:
+            return render_template("apology.html", text = "Too many query's this minute (5/5)")
+        if not results:
+            return render_template("apology.html", text = "invalid ingredient(s)")
 
-        imglink = []
-        for hit in results['hits']:
-            imglink.append(hit['recipe']['image'])
+        recipes = searchfunction(results)
 
-        names = []
-        for hit in results['hits']:
-            names.append(hit['recipe']['label'])
-
-        urls = []
-        for hit in results['hits']:
-            urls.append(hit['recipe']['url'])
-
-        reclist = []
-        for i in range(len(imglink)):
-            temp = {}
-            temp['name'] = names[i]
-            temp['img'] = imglink[i]
-            temp['url'] = urls[i]
-            reclist.append(temp)
-
-        return render_template("gezocht.html", data = reclist)
+        return render_template("gezocht.html", data = recipes)
 
     else:
         return render_template("search.html")
@@ -320,7 +339,12 @@ def register():
             if len(item) == 1:
                 return apology("Please insert a valid ingredient")
 
-            results = api_query(item)
+            try:
+                results = api_query(item)
+            except:
+                return render_template("apology.html", text = "Too many query's this minute (5/5)")
+            if not results:
+                return render_template("apology.html", text = "invalid ingredient(s)")
 
             if results != None:
                 continue
@@ -366,29 +390,16 @@ def zoek():
         if not request.form.get("symbol"):
             return apology("Please insert an ingredient/recipe")
 
-        results = api_query(request.form.get("symbol"))
+        try:
+            results = api_query(request.form.get("symbol"))
+        except:
+            return render_template("apology.html", text = "Too many query's this minute (5/5)")
+        if not results:
+            return render_template("apology.html", text = "invalid ingredient(s)")
 
-        imglink = []
-        for hit in results['hits']:
-            imglink.append(hit['recipe']['image'])
+        recipes = searchfunction(results)
 
-        names = []
-        for hit in results['hits']:
-            names.append(hit['recipe']['label'])
-
-        urls = []
-        for hit in results['hits']:
-            urls.append(hit['recipe']['url'])
-
-        reclist = []
-        for i in range(len(imglink)):
-            temp = {}
-            temp['name'] = names[i]
-            temp['img'] = imglink[i]
-            temp['url'] = urls[i]
-            reclist.append(temp)
-
-        return render_template("gezocht.html", data = reclist)
+        return render_template("gezocht.html", data = recipes)
 
     else:
         return render_template("zoek.html")
