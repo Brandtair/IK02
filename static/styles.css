@@ -20,7 +20,6 @@ h3 {
 h1 {
     font-size: 100px;
     text-shadow: 2px 2px 2px black;
-    margin: 15%;
     line-height: normal;
     margin-bottom: 1%;
     text-align: center;
@@ -32,11 +31,20 @@ h1 {
 #Login{
     background: linear-gradient(to top, rgb(120, 0, 0), orange);
     color: white;
-    height: 100%;
+    margin: auto;
+    margin-top: 0%;
+    text-shadow: 2px 2px 3px black;
+    font-family: "Abril Fatface";
+    line-height: 20px;
+    text-align: center;
+    position : relative;
+    left : 46.5%;
 }
+
 #Logout{
     color: white;
     background: linear-gradient(to top, rgb(204,255,204), red);
+
 }
 
 
