@@ -1,65 +1,93 @@
 <hmtl>
     <link href="{{url_for('static',filename='styles.css')}}" rel="stylesheet"/>
+     <div class="stylefiltersearch">
     <head>
-        <title> Search for a recipe with filters! (results not guaranteed) </title>
-        <h2> We will automaticly merge your diet and allergies into the results, so no need to fill those in!</h3>
+        <title> Search for a recipe with filters! (results not guaranteed)</title><br>
+        <h2>______________ Search for a recipe with filters! ______________</h2><br>
+        <br>
+        <br>
+        <h3.5> We will automaticly merge your diet and allergies into the results,<br> so no need to fill those in!</h3.5> <br>
+                         <br>
+                         <br>
     </head>
     <body>
         <ul>
             <li>
-                <h3>Do you want a dish?</h3>
-                <fieldset>
+                <br>
+                <h2>______________ Maindish ______________</h2>
+                <br>
                     <form action="{{ url_for('filter_dish') }}" method="post">
-                        <h4>What meat do you want? (leave unchecked if you want random meat)</h4>
-                        <h6>If you have a vegetarian or vegan diet, you will get no results with meat.</h6>
-                        <table>
-                            <tr>
+                        <h4>What meat do you want?</h4> <br>
+                        <h9.5>(leave unchecked if you want random meat)</h9.5><br>
+                        <br>
+                        <tr>
                                 <td><input type="checkbox" name="chicken" value="chicken">Chicken</td>
                                 <td><input type="checkbox" name="beef" value="beef">Beef</td>
                                 <td><input type="checkbox" name="pork" value="pork">Pork</td>
-                            </tr>
-                        </table>
-                        <h4>What vegetables do you want? (leave unchecked if you want random vegetables)</h4>
-                        <table>
+                        <br>
+                         <br>
+                         <br>
+                         <br>
+                        </tr>
+
+                        <h4>What vegetables do you want?</h4> <br>
+                        <h9.5>(leave unchecked if you want random vegetables)</h9.5><br>
+                            <br>
                             <tr>
                                 <td><input type="checkbox" name="lettuce" value="lettuce">Lettuce</td>
                                 <td><input type="checkbox" name="cucumber" value="cucumber">Cucumber</td>
                                 <td><input type="checkbox" name="carrot" value="carrot">Carrot</td>
-                            </tr>
-                            <tr>
                                 <td><input type="checkbox" name="brocolli" value="brocolli">Brocolli</td>
                                 <td><input type="checkbox" name="beans" value="beans">Beans</td>
                                 <td><input type="checkbox" name="potatoes" value="potatoes">Potatoes</td>
                             </tr>
-                        </table>
-                        <button type="submit">Go!</button>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        <button type="submit">Go!</button> <br>
+                         <br>
+                         <br>
+                         <br>
+                         <br>
+                         <br>
                     </form>
-                </fieldset>
+
             </li>
             <li>
-                <h3>Do you want a dessert?</h3>
-                <fieldset>
+                <h2>______________ Dessert ______________</h2>
+                    <br>
                     <form action = "{{ url_for('filter_dessert') }}" method = "post">
-                        <h4>What flavours do you want?</h4>
-                        <table>
+                        <h4>What flavours do you want?</h4><br>
+
                             <tr>
                                 <td><input type="checkbox" name="vanilla" value="vanilla">Vanilla</td>
                                 <td><input type="checkbox" name="choco" value="choco">Choco</td>
                                 <td><input type="checkbox" name="coconut" value="coconut">Coconut</td>
+                                <br>
+                                <br>
                             </tr>
-                        </table>
-                        <h4>Do you want any fruit in it?</h4>
-                        <table>
+
+                        <h4>Do you want any fruit in it?</h4><br>
+
                             <tr>
                                 <td><input type="checkbox" name="apple" value="apple">Apple</td>
                                 <td><input type="checkbox" name="orange" value="orange">Orange</td>
                                 <td><input type="checkbox" name="pineapple" value="pineapple">Pineapple</td>
+                             <br>
+                             <br>
+                             <br>
+                             <br>
                             </tr>
-                        </table>
+
                         <button type="submit">Go!</button>
+                         <br>
+                         <br>
+                         <br>
+                         <br>
                     </form>
-                </fieldset>
             </li>
         </ul>
     </body>
+    </div>
 </hmtl>

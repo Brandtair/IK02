@@ -1,6 +1,6 @@
 <html>
 {% block title %}
-    Recipe
+.
 {% endblock %}
 
 {% block main %}
@@ -13,7 +13,7 @@
             <form action="{{ url_for('favorites') }}"><button class="RoundSideButton" id= "FavoritesButton">Favorites</button></form>
             <div class="SearchBarHeader">
                 <form action="{{ url_for('search') }}" method="post">
-                    <input autocomplete="off" class="SearchBarHeader" placeholder="Find a recipe" type="text"/>
+                    <input autocomplete="off" name= "ingredient" class="SearchBarHeader" placeholder="Find a recipe" type="text"/>
                     <button class="SearchBarButton" type="submit">Search</button>
                 </form>
             </div>

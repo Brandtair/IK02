@@ -388,17 +388,16 @@ def logout():
 def mail():
 
     if request.method == "POST":
-        msg['Subject'] = 'Recipe for you!'
         server = smtplib.SMTP('smtp.gmail.com', 587)
         server.starttls()
-        server.login("MakesRightDiner@gmail.com", "makesdiner")
+        server.login("MakesRightDiner@gmail.com", "Phisingisstommm")
 
         msg = request.form.get("msg")
         msg = "".join(['<a href="', msg, '">You might like this reccipe, click here</a>'])
         msg = MIMEText(msg, 'html')
         server.sendmail("MakesRightDiner@gmail.com", request.form.get("EMAILADDRESSTO"), msg.as_string())
         server.quit()
-
+        return render_template("index.html")
     else:
         return render_template("mail.html")
 
