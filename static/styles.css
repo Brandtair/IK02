@@ -65,7 +65,7 @@ h1 {
     height: 15%;
     width: 100%;
     position: fixed;
-    background: white;
+    background: darkorange;
     opacity: 0.6;
     font-family: "Abril Fatface";
     font-size: 14px;
@@ -90,13 +90,11 @@ h1 {
 }
 
 .list{
-    margin: 30%;
+    margin: auto;
     text-align: center;
-    margin-top: 5%;
     height: auto;
     width: 50%;
 
-    background-color: white;
     color: black;
     text-shadow: 2px 2px 3px, orange;
 }
@@ -138,4 +136,15 @@ h1 {
 
 .dropdown:hover .dropbtn {
     background-color: #3e8e41;
+
+.IndexFrame{
+    margin-top: 15%;
+    color: white;
+    margin: center;
+    width: auto;
+    font-family: "Abril Fatface";
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }

@@ -7,7 +7,7 @@
 
     <body>
         <title>Homepage</title>
-        <div class= "header">
+        <div class= "Header">
         <!--Uitloggen-->
         <form action="{{ url_for('logout') }}"><button class= "RoundSideButton">Logout</button></form>
         <!--favorieten pagina-->
@@ -16,7 +16,6 @@
         <form action="{{ url_for('mail') }}"><button class="RoundSideButton">Share page</button></form>
         <!--filtersearch-->
         <form action="{{ url_for('filter_dish') }}"><button class="RoundSideButton">Search recipe through filter</button></form>
-            <form action="{{ url_for('favorites') }}"><button class="RoundSideButton" id= "FavoritesButton">Favorites</button></form>
             <div class="SearchBarHeader">
                 <form action="{{ url_for('search') }}" method="post">
                     <input autocomplete="off" class="SearchBarHeader" name = "ingredient" placeholder="Find a recipe" type="text"/>
@@ -37,7 +36,7 @@
 
         </div>
 
-        <!--Zoekbalk voor homepage-->
+        <!--Zoekbalk voor homepage
         <form action="{{ url_for('search') }}" method="post">
             <div class= "form-group">
                 <input autocomplete="off" autofocus class="form-control" name="ingredient" placeholder="Find a recipe" type="text"/>
@@ -46,19 +45,19 @@
             <div class="form-group">
                 <button class="RoundSideButton" type="submit">search</button>
             </div>
-        </form>
+        </form>-->
+        </div>
         {% for item in recipes %}
 
-
-        <p>
+        <div class= "IndexFrame">
             {{ item.label }} <br>
             <a href="{{ item.url }}" target= '_blank'>
             <img src="{{ item.image }}" alt="W3Schools" border="0">
             </a>
-        </p>
         <form action="{{ url_for('favorites') }}" method="post"><button name="submit" value="{{ item.label }}">Add</button></form>
 
         {% endfor %}
+        </div>
     </body>
         {% endblock %}
 </html>
