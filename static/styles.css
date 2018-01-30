@@ -32,6 +32,7 @@ h1 {
 #Login{
     background: linear-gradient(to top, rgb(120, 0, 0), orange);
     color: white;
+    height: 100%;
 }
 #Logout{
     color: white;
