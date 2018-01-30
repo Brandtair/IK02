@@ -294,21 +294,20 @@ def mail():
     else:
         return render_template("mail.html")
 
-@app.route("/search", methods=["GET", "POST"])
-@login_required
+@app.route("/search", methods=["POST"])
 def search():
     """Search for a recipe"""
 
     if request.method == "POST":
 
         # check if ingredient exists
-        if not request.form.get("symbol"):
+        if not request.form.get("ingredient"):
             return render_template("apology.html", text = "Please insert an ingredient/recipe")
 
-        query = [request.form.get("symbol")]
+        query = [request.form.get("ingredient")]
 
         # if the user searches while logged in, also retrieve their allergies and diets
-        if session['user_id']:
+        if session.get('user_id'):
             rows = db.execute("SELECT vegetarian, vegan, paleo, high_fiber, high_protein, low_carb, low_fat, \
                                 low_sodium, low_sugar, alcohol_free, balanced, glutenfree, dairyfree, eggfree, soyfree, \
                                 wheatfree, treenutfree, peanutfree FROM users WHERE user_id == :userid", \
@@ -317,9 +316,10 @@ def search():
                 limitations = [i for i in item.values() if i is not None]
 
             # add them to the query
-            limitations.append(request.form.get("symbol"))
+            limitations.append(request.form.get("ingredient"))
             query = ' '.join(e for e in limitations)
 
+        print(query)
         # execute the query
         try:
             results = api_query(query)
@@ -332,9 +332,6 @@ def search():
         recipes = searchfunction(results)
 
         return render_template("gezocht.html", data = recipes)
-
-    else:
-        return render_template("search.html")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
