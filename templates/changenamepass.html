@@ -1,8 +1,9 @@
 <html>
     <head>
-        <h1>Change your name and password</h1>
+        <link href="{{url_for('static',filename='styles.css')}}" rel="stylesheet"/>
     </head>
     <body>
+        <h1>Change your name and password</h1>
         <form action="{{ url_for('changenamepass') }}" method="post">
             <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"/><br>
             <input class="form-control" name="password" placeholder="Password" type="password"/><br>
