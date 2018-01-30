@@ -95,8 +95,33 @@ h1 {
     margin-top: 5%;
     height: auto;
     width: 50%;
-
+    border: darkorange ;
     background-color: white;
     color: black;
     text-shadow: 2px 2px 3px, orange;
+}
+
+.stylefavorites{
+    margin: 0%;
+    text-align: center;
+    margin-top: 5%;
+    height: auto;
+    width: 40%;
+    background-color: white;
+    color: black;
+    text-shadow: 2px 2px 3px, orange;
+}
+
+.stylefiltersearch{
+    margin: 30%;
+    text-align: center;
+    margin-top: 5%;
+    height: auto;
+    width: 50%;
+    background-color: white;
+    color: black;
+    text-shadow: 2px 2px 3px, orange;
+    line-height: normal;
+    border: darkorange ;
+
 }

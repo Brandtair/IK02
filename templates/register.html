@@ -1,7 +1,7 @@
 <html>
 
 {% block title %}
-    Register
+.
 {% endblock %}
 
 {% block main %}
@@ -10,16 +10,7 @@
     </head>
 
     <body>
-         <div class= "Header">
-            <h4>Register your account</h4>
-            <form action="{{ url_for('favorites') }}"><button class="RoundSideButton" id= "FavoritesButton">Favorites</button></form>
-            <div class="SearchBarHeader">
-                <form action="{{ url_for('search') }}" method="post">
-                    <input autocomplete="off" class="SearchBarHeader" placeholder="Find a recipe" type="text"/>
-                    <button class="SearchBarButton" type="submit">Search</button>
-                </form>
-            </div>
-        </div>
+
 
             <form action="{{ url_for('login') }}"><button class= "RoundSideButton">Back to login page</button></form>
             <br/>
@@ -40,34 +31,34 @@
                 <h4.5>Do you have a diet?</h4.5> <br>
                 <h9>Mark the matching boxes.</h9> <br>
                  <br>
-
-                <table>
+                <br>
                     <tr>
                         <td><input type="checkbox" name="vegetarian" value="vegetarian" >Vegetarian </td>
                         <td><input type="checkbox" name="vegan" value="vegan">Vegan</td>
-                        <td><input type="checkbox" name="paleo" value="paleo">Paleo</td>
+                        <td><input type="checkbox" name="paleo" value="paleo">Paleo</td><br>
                     </tr>
                     <tr>
                         <td><input type="checkbox" name="high_fiber" value="high-fiber">High-Fiber</td>
                         <td><input type="checkbox" name="high_protein" value="high-protein">High-Protein</td>
-                        <td><input type="checkbox" name="low_carb" value="low-carb">Low-Carb</td>
+                        <td><input type="checkbox" name="low_carb" value="low-carb">Low-Carb</td><br>
                     </tr>
                     <tr>
                         <td><input type="checkbox" name="low_fat" value="low-fat">Low-Fat</td>
                         <td><input type="checkbox" name="low_sodium" value="low-sodium">Low-Sodium</td>
-                        <td><input type="checkbox" name="low_sugar" value="low-sugar">Low-Sugar</td>
+                        <td><input type="checkbox" name="low_sugar" value="low-sugar">Low-Sugar</td><br>
                     </tr>
                     <tr>
                         <td><input type="checkbox" name="alcohol_free" value="alcohol-free">Alcohol-Free</td>
                         <td><input type="checkbox" name="balanced" value="True">Balanced</td>
                     </tr>
-                </table>
+                 <br>
+                <br>
                  <br>
                 <br>
                 <h4.5>Do you have an allergy?</h4.5>  <br>
                 <h9>Mark the matching boxes.</h9>  <br>
                   <br>
-                <table>
+                    <br>
                     <tr>
                         <td><input type="checkbox" name="gluten" value="gluten-free">Gluten
                         <td><input type="checkbox" name="dairy" value="dairyfree">Dairy
@@ -81,11 +72,13 @@
                     <tr>
                         <td><input type="checkbox" name="peanuts" value="peanut-free">Peanuts
                     </tr>
-                </table>
+                 <br>
+                <br>
                  <br>
                   <br>
                 <h4.5> Name 3 ingredients you like most! </h4.5> <br>
                 <h9>Type your preferences in the boxes.</h9>  <br>
+                <br>
                 <br>
                 <input autocomplete="off" autofocus name="pref1" placeholder="Preference 1" type="text"/><br>
                 <input autocomplete="off" autofocus name="pref2" placeholder="Preference 2" type="text"/><br>
@@ -93,6 +86,8 @@
                 <br>
                 <br>
             <button class="btn btn-default" type="submit">Register</button>
+            <br>
+            <br>
             <br>
             <br>
         </form>
