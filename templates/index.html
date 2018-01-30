@@ -46,10 +46,9 @@
             <a href="{{ item.url }}" target= '_blank'>
             <img src="{{ item.image }}" alt="Image not available" border="0">
             </a>
-            <br/>
         <form action="{{ url_for('favorites') }}" method="post" class= "RoundSideButton"><button name="submit" value="{{ item.label }}">Add to favorites</button></form>
         </div>
-        <br/>
+
         {% endfor %}
     </body>
         {% endblock %}
