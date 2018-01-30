@@ -49,6 +49,7 @@
             <br/>
         <form action="{{ url_for('favorites') }}" method="post" class= "RoundSideButton"><button name="submit" value="{{ item.label }}">Add to favorites</button></form>
         </div>
+        <br/>
         {% endfor %}
     </body>
         {% endblock %}

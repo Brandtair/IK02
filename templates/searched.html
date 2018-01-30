@@ -8,7 +8,7 @@
         <link href="{{url_for('static',filename='styles.css')}}" rel="stylesheet"/>
     </head>
     <body>
-
+        <title>Searched</title>
         <div class= "Header">
             <form action="{{ url_for('favorites') }}"><button class="RoundSideButton" id= "FavoritesButton">Favorites</button></form>
             <div class="SearchBarHeader">
@@ -19,8 +19,8 @@
             </div>
         </div>
        {% for item in data %}
-        <fieldset>
-        <p>{{ item.name }}</p>
+       <div class= "SearchedFrame">
+        {{ item.name }}
           <form action="{{ url_for('mail') }}" method="post">
             <div class="form-group">
                 <input autocomplete="off" autofocus class="form-control" name="EMAILADDRESSTO" placeholder="EMAIL ADDRESS TO" type="text"/>
@@ -38,8 +38,7 @@
             </a>
         </p>
         <form action="{{ url_for('favorites') }}" method="post"><button name="submit" value="{{ item.label }}">Add</button></form>
-
-        </fieldset>
+        </div>
         {% endfor %}
     </body>
 {% endblock %}

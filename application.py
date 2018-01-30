@@ -297,7 +297,7 @@ def filter_dish():
         # get the recipes from the searchfunction
         recipes = searchfunction(results)
 
-        return render_template("gezocht.html", data = recipes)
+        return render_template("searched.html", data = recipes)
 
     else:
         return render_template("filtersearch.html")
@@ -333,7 +333,7 @@ def filter_dessert():
     # get the recipes from the searchfunction
     recipes = searchfunction(results)
 
-    return render_template("gezocht.html", data = recipes)
+    return render_template("searched.html", data = recipes)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -439,7 +439,7 @@ def search():
         # get the recipes
         recipes = searchfunction(results)
 
-        return render_template("gezocht.html", data = recipes)
+        return render_template("searched.html", data = recipes)
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
