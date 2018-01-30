@@ -15,7 +15,7 @@ body {
 
 h3 {
     font-size: 32px;
-    text-shadow: 1px 1px 1px white;
+    text-shadow: 1px 1px 1px black;
 }
 h1 {
     font-size: 100px;
@@ -43,10 +43,18 @@ h1 {
 
 #Logout{
     color: white;
-    background: linear-gradient(to top, rgb(204,255,204), red);
+    background: darkblue;
 
 }
-
+#leftPosition{
+    float: left;
+}
+#RightPosition{
+    float:right;
+}
+#SearchBar{
+    text-align: center;
+}
 
 /*Classes*/
 
@@ -107,15 +115,19 @@ h1 {
 }
 
 .dropbtn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
+    background-color: white;
+    color: black;
+    height: 100%;
+    width: 10%;
+    font-size: 20px;
+    border: 2px black;
+    float: right;
 }
 
 .dropdown {
-    display: inline-block;
+    display: block;
+    font-family: "Abril Fatface";
+
 }
 
 .dropdown-content {
@@ -168,9 +180,11 @@ h1 {
     background-color: white;
     border: 3px solid black;
 }
-.SearchedOuterFrame{
-    margin: auto;
-    width: 60%;
-    display: inline;
-    border: 3px solid black;
+.HeaderButtonFrame{
+    margin-top: 50%;
+    width: auto;
+    height: 30%;
+    /*display: inline-block;*/
+    margin: 10px;
+    float: right;
 }
