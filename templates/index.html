@@ -19,7 +19,7 @@
             <form action="{{ url_for('favorites') }}"><button class="RoundSideButton" id= "FavoritesButton">Favorites</button></form>
             <div class="SearchBarHeader">
                 <form action="{{ url_for('search') }}" method="post">
-                    <input autocomplete="off" class="SearchBarHeader" placeholder="Find a recipe" type="text"/>
+                    <input autocomplete="off" class="SearchBarHeader" name = "ingredient" placeholder="Find a recipe" type="text"/>
                     <button class="SearchBarButton" type="submit">Search</button>
                 </form>
             </div>
@@ -31,7 +31,7 @@
         <!--Zoekbalk voor homepage-->
         <form action="{{ url_for('search') }}" method="post">
             <div class= "form-group">
-                <input autocomplete="off" autofocus class="form-control" name="symbol" placeholder="Find a recipe" type="text"/>
+                <input autocomplete="off" autofocus class="form-control" name="ingredient" placeholder="Find a recipe" type="text"/>
             </div>
             <br/>
             <div class="form-group">

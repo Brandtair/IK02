@@ -14,8 +14,10 @@
             <h1>Makes <br/> Right Diner</h1>
         <div class="LoginFrame">
             <form action="{{ url_for('search') }}" method="post">
-                <input class= "RoundSideButton" placeholder="Find a recipe" type="text"/>
-                <button class= "RoundSideButton" type="submit">Search</button>
+
+            <input class= "RoundSideButton" name = "ingredient" placeholder="Find a recipe" type="text"/>
+            <button class= "RoundSideButton" type="submit">Search</button>
+
             </form>
         </div>
         <div class="LoginFrame">

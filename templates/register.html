@@ -10,9 +10,8 @@
     </head>
 
     <body>
-    <div class = "list">
          <div class= "Header">
-            <h1>Register your account</h1>
+            <h4>Register your account</h4>
             <form action="{{ url_for('favorites') }}"><button class="RoundSideButton" id= "FavoritesButton">Favorites</button></form>
             <div class="SearchBarHeader">
                 <form action="{{ url_for('search') }}" method="post">
@@ -25,16 +24,26 @@
             <form action="{{ url_for('login') }}"><button class= "RoundSideButton">Back to login page</button></form>
             <br/>
         <form action="{{ url_for('register') }}" method="post">
-
+        <div class = "list">
+                <br>
+                <h2>Register:</h2>
+                <br>
+                <br>
                 <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"/><br>
                 <input class="form-control" name="password" placeholder="Password" type="password"/><br>
                 <input class="form-control" name="repeat" placeholder="Repeat password" type="password"/><br>
                 <input class="form-control" name="email" placeholder="E-mail" type="text"/>
+                 <br>
+                 <br>
+                  <br>
 
-                <h4>Do you have a diet?</h4>
+                <h4.5>Do you have a diet?</h4.5> <br>
+                <h9>Mark the matching boxes.</h9> <br>
+                 <br>
+
                 <table>
                     <tr>
-                        <td><input type="checkbox" name="vegetarian" value="vegetarian">Vegetarian</td>
+                        <td><input type="checkbox" name="vegetarian" value="vegetarian" >Vegetarian </td>
                         <td><input type="checkbox" name="vegan" value="vegan">Vegan</td>
                         <td><input type="checkbox" name="paleo" value="paleo">Paleo</td>
                     </tr>
@@ -53,9 +62,11 @@
                         <td><input type="checkbox" name="balanced" value="True">Balanced</td>
                     </tr>
                 </table>
-
-
-                <h4>Do you have an allergy?</h4>
+                 <br>
+                <br>
+                <h4.5>Do you have an allergy?</h4.5>  <br>
+                <h9>Mark the matching boxes.</h9>  <br>
+                  <br>
                 <table>
                     <tr>
                         <td><input type="checkbox" name="gluten" value="gluten-free">Gluten
@@ -71,16 +82,22 @@
                         <td><input type="checkbox" name="peanuts" value="peanut-free">Peanuts
                     </tr>
                 </table>
-
-
-                <h4> Name 4 ingredients you like most! </h4>
+                 <br>
+                  <br>
+                <h4.5> Name 3 ingredients you like most! </h4.5> <br>
+                <h9>Type your preferences in the boxes.</h9>  <br>
+                <br>
                 <input autocomplete="off" autofocus name="pref1" placeholder="Preference 1" type="text"/><br>
                 <input autocomplete="off" autofocus name="pref2" placeholder="Preference 2" type="text"/><br>
-                <input autocomplete="off" autofocus name="pref3" placeholder="Preference 3" type="text"/>
-
+                <input autocomplete="off" autofocus name="pref3" placeholder="Preference 3" type="text"/><br>
+                <br>
+                <br>
             <button class="btn btn-default" type="submit">Register</button>
+            <br>
+            <br>
         </form>
-    </div>
+        </div>
     </body>
+
 {% endblock %}
 </html>

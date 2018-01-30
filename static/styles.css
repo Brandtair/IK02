@@ -74,6 +74,7 @@ h1 {
 
 }
 
+
 /*Page-specific frameworks*/
 
 .LoginFrame{
@@ -89,13 +90,13 @@ h1 {
 }
 
 .list{
-    margin: auto;
+    margin: 30%;
     text-align: center;
     margin-top: 5%;
     height: auto;
     width: 50%;
-    border: 1px;
-    background-color: black;
-    color: white;
-    text-shadow: 2px 2px 3px, white;
+
+    background-color: white;
+    color: black;
+    text-shadow: 2px 2px 3px, orange;
 }
