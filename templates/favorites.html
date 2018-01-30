@@ -7,7 +7,7 @@
     <link href="{{url_for('static',filename='styles.css')}}" rel="stylesheet"/>
 </head>
 <body>
-
+    <div class="stylefavorites">
     <div class= "Header">
         <h1>Favorites</h1>
         <form action="{{ url_for('favorites') }}"><button class="RoundSideButton" id= "FavoritesButton">Favorites</button></form>
@@ -33,6 +33,7 @@
             </fieldset>
         {% endfor %}
     </table>
+    </div>
 </body>
 
 {% endblock %}
