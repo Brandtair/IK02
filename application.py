@@ -94,25 +94,25 @@ def changenamepass():
 
         # ensure username was submitted
         if not request.form.get("username"):
-            return rendertemplate("apology.html", text = "must provide username")
+            return render_template("apology.html", text = "must provide username")
 
         # ensure password was submitted
         elif not request.form.get("password"):
-            return rendertemplate("apology.html", text = "must provide password")
+            return render_template("apology.html", text = "must provide password")
 
         # ensure password was repeated
         elif not request.form.get("repeat"):
-            return rendertemplate("apology.html", text = "must repeat password")
+            return render_template("apology.html", text = "must repeat password")
 
         # check if passwords are equal
         elif request.form.get("password") != request.form.get("repeat"):
-            return rendertemplate("apology.html", text = "passwords must be equal")
+            return render_template("apology.html", text = "passwords must be equal")
 
         # check if the username is unique
         exist = db.execute("SELECT username FROM users")
         for name in exist:
             if name['username'] == request.form.get("username"):
-                return rendertemplate("apology.html", text = "That username is already taken")
+                return render_template("apology.html", text = "That username is already taken")
 
         # encrypt the password
         encryptedpassword = pwd_context.hash(request.form.get("password"))
@@ -388,17 +388,16 @@ def logout():
 def mail():
 
     if request.method == "POST":
-        msg['Subject'] = 'Recipe for you!'
         server = smtplib.SMTP('smtp.gmail.com', 587)
         server.starttls()
-        server.login("MakesRightDiner@gmail.com", "makesdiner")
+        server.login("MakesRightDiner@gmail.com", "Phisingisstommm")
 
         msg = request.form.get("msg")
         msg = "".join(['<a href="', msg, '">You might like this reccipe, click here</a>'])
         msg = MIMEText(msg, 'html')
         server.sendmail("MakesRightDiner@gmail.com", request.form.get("EMAILADDRESSTO"), msg.as_string())
         server.quit()
-
+        return render_template("index.html")
     else:
         return render_template("mail.html")
 
@@ -448,25 +447,25 @@ def register():
 
         # ensure username was submitted
         if not request.form.get("username"):
-            return rendertemplate("apology.html", text = "must provide username")
+            return render_template("apology.html", text = "must provide username")
 
         # ensure password was submitted
         elif not request.form.get("password"):
-            return rendertemplate("apology.html", text = "must provide password")
+            return render_template("apology.html", text = "must provide password")
 
         # ensure password was repeated
         elif not request.form.get("repeat"):
-            return rendertemplate("apology.html", text = "must repeat password")
+            return render_template("apology.html", text = "must repeat password")
 
         # check if passwords are equal
         elif request.form.get("password") != request.form.get("repeat"):
-            return rendertemplate("apology.html", text = "passwords must be equal")
+            return render_template("apology.html", text = "passwords must be equal")
 
         # check if the username is unique
         exist = db.execute("SELECT username FROM users")
         for name in exist:
             if name['username'] == request.form.get("username"):
-                return rendertemplate("apology.html", text = "That username is already taken")
+                return render_template("apology.html", text = "That username is already taken")
 
         # encrypt the password
         encryptedpassword = pwd_context.hash(request.form.get("password"))
