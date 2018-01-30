@@ -158,6 +158,7 @@ def changepref():
 
     if request.method == "POST":
 
+        # check if the user gave values
         if request.form.get('pref1') and request.form.get('pref1') and request.form.get('pref1'):
             Pref1 = request.form.get('pref1')
             Pref2 = request.form.get('pref2')
@@ -181,6 +182,7 @@ def changepref():
                 elif results == None:
                     return render_template("apology.html", "There were no recipes found for one of your preferences")
 
+            # insert them into the database
             db.execute("UPDATE users SET pref1 = :pref1, pref2 = :pref2, pref3 = :pref3 \
                         WHERE user_id == :userid", \
                         pref1 = Pref1, pref2 = Pref2, pref3 = Pref3, userid = session['user_id'])
