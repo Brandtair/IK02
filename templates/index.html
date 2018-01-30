@@ -37,11 +37,11 @@
         {% for item in recipes %}
 
         <div class= "IndexFrame">
-            {{ item.label }} <br>
+            {{ item.label }}<br/>
             <a href="{{ item.url }}" target= '_blank'>
             <img src="{{ item.image }}" alt="W3Schools" border="0">
             </a>
-        <form action="{{ url_for('favorites') }}" method="post"><button name="submit" value="{{ item.label }}">Add</button></form>
+        <form action="{{ url_for('favorites') }}" method="post" class= "RoundSideButton"><button name="submit" value="{{ item.label }}">Add</button></form>
 
         {% endfor %}
         </div>
