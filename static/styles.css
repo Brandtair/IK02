@@ -36,6 +36,7 @@ h1 {
 }
 #Title{
     line-height: normal;
+    margin-top: 7%;
 }
 
 /*Classes*/
@@ -54,6 +55,7 @@ h1 {
     font-family: "Abril Fatface";
     cursor: pointer;
     box-shadow: 1px 1px 1px black;
+    margin:0 auto;
     }
 
 /*All header elements*/
@@ -78,12 +80,12 @@ h1 {
     color: White;
     text-align: center;
     margin: auto;
-    margin-top: 0%;
+    margin-top: -7%;
     width: 50%;
     font-size: 64px;
     text-shadow: 2px 2px 3px black;
     font-family: "Abril Fatface";
-    line-height: 10px;
+    line-height: 20px;
 }
 
 .list{
