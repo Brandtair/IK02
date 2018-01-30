@@ -1,15 +1,13 @@
 <html>
 
-{% block title %}
-    Homepage
-{% endblock %}
-
 {% block main %}
     <head>
         <link href="{{url_for('static',filename='styles.css')}}" rel="stylesheet"/>
     </head>
 
     <body>
+        <title>Homepage</title>
+        <div class= "header">
         <!--Uitloggen-->
         <form action="{{ url_for('logout') }}"><button class= "RoundSideButton">Logout</button></form>
         <!--favorieten pagina-->
@@ -18,8 +16,6 @@
         <form action="{{ url_for('mail') }}"><button class="RoundSideButton">Share page</button></form>
         <!--filtersearch-->
         <form action="{{ url_for('filter_dish') }}"><button class="RoundSideButton">Search recipe through filter</button></form>
-
-        <div class= "Header">
             <form action="{{ url_for('favorites') }}"><button class="RoundSideButton" id= "FavoritesButton">Favorites</button></form>
             <div class="SearchBarHeader">
                 <form action="{{ url_for('search') }}" method="post">
