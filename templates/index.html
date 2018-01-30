@@ -23,6 +23,15 @@
                     <button class="SearchBarButton" type="submit">Search</button>
                 </form>
             </div>
+            <!--Dropdown voor gegevens wijzigen-->
+            <div class="dropdown">
+                <button class="dropbtn">Change your personal information</button>
+                <div class="dropdown-content">
+                    <a href="{{ url_for('changenamepass') }}">Change your username and password</a>
+                    <a href="{{ url_for('changemail') }}">Change your email</a>
+                    <a href="{{ url_for('changepref') }}">Change your preferences</a>
+                </div>
+            </div>
         </div>
         <div class="List">
 
