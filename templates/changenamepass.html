@@ -3,12 +3,37 @@
         <link href="{{url_for('static',filename='styles.css')}}" rel="stylesheet"/>
     </head>
     <body>
+        <title>Change name and password</title>
+        <div class= "Header">
+        <!--Uitloggen-->
+        <form action="{{ url_for('logout') }}"><button class= "RoundSideButton">Logout</button></form>
+
+        <form action="{{ url_for('filter_dish') }}"><button class="RoundSideButton">Search recipe through filter</button></form>
+            <div class="SearchBarHeader">
+                <form action="{{ url_for('search') }}" method="post">
+                    <input autocomplete="off" class="SearchBarHeader" name = "ingredient" placeholder="Find a recipe" type="text"/>
+                    <button class="SearchBarButton" type="submit">Search</button>
+                </form>
+            </div>
+            <!--Dropdown voor gegevens wijzigen-->
+            <div class="dropdown">
+                <button class="dropbtn">Change your personal information</button>
+                <div class="dropdown-content">
+                    <a href="{{ url_for('changenamepass') }}">Change your username and password</a>
+                    <a href="{{ url_for('changemail') }}">Change your email</a>
+                    <a href="{{ url_for('changepref') }}">Change your preferences</a>
+                </div>
+            </div>
+        </div>
+
         <h1>Change your name and password</h1>
         <form action="{{ url_for('changenamepass') }}" method="post">
-            <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"/><br>
-            <input class="form-control" name="password" placeholder="Password" type="password"/><br>
-            <input class="form-control" name="repeat" placeholder="Repeat password" type="password"/><br>
-            <button class="btn btn-default" type="submit">Change</button>
+            <div class = "list">
+            <input autocomplete="off" autofocus name="username" placeholder="Username" type="text"/><br>
+            <input name="password" placeholder="Password" type="password"/><br>
+            <input name="repeat" placeholder="Repeat password" type="password"/><br>
+            <button type="submit">Change</button>
+            </div>
         </form>
     </body>
 </html>
