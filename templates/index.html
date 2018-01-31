@@ -41,9 +41,8 @@
             </div>
         </div>
         {% for item in recipes %}
-
         <div class= "IndexFrame">
-            {{ item.label }}
+        {{ item.label }}
             <form action="{{ url_for('mail') }}" method="post">
             <div class="form-group">
                 <input autocomplete="off" autofocus class="form-control" name="EMAILADDRESSTO" placeholder="EMAIL ADDRESS TO" type="text"/>
@@ -55,13 +54,14 @@
             <div class="form-group">
                 <button class="RoundSideButton" type="submit">Send</button>
             </div>
+        <p>
             <a href="{{ item.url }}" target= '_blank'>
-            <img src="{{ item.image }}" alt="Image not available" border="0">
+                <img src="{{ item.image }}" alt="Image not available" border="0">
             </a>
+        </p>
         <form action="{{ url_for('favorites') }}" method="post" class= "RoundSideButton"><button name="submit" value="{{ item.label }}">Add to favorites</button></form>
         </div>
-
         {% endfor %}
     </body>
-        {% endblock %}
+{% endblock %}
 </html>
