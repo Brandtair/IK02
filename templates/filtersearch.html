@@ -1,5 +1,4 @@
 <hmtl>
-    <form action="{{ url_for('index') }}"><button class= "RoundSideButton">Back to index</button></form>
     <link href="{{url_for('static',filename='styles.css')}}" rel="stylesheet"/>
 
     <head>
@@ -20,7 +19,7 @@
             </div>
             <!--Dropdown voor gegevens wijzigen-->
             <div class="dropdown">
-                <button class="dropbtn">Change your personal information</button>
+                <button class="dropbtn">Settings</button>
                 <div class="dropdown-content">
                     <a href="{{ url_for('changenamepass') }}">Change your username and password</a>
                     <a href="{{ url_for('changemail') }}">Change your email</a>
@@ -35,7 +34,7 @@
             </div>
         </div>
         <div class="stylefiltersearch">
-        <h1> Search for a recipe with filters! (results not guaranteed)</h1>
+        <h3> Search for a recipe with filters!<br>(results not guaranteed)</h3>
         <br>
         <h2>______________ Search for a recipe with filters! ______________</h2><br>
         <br>
@@ -77,7 +76,7 @@
                             <br>
                             <br>
                             <br>
-                        <button type="submit">Go!</button> <br>
+                        <button type="submit" class= "RoundSideButton">Go!</button> <br>
                          <br>
                          <br>
                          <br>
@@ -112,7 +111,7 @@
                              <br>
                             </tr>
 
-                        <button type="submit">Go!</button>
+                        <button type="submit" class= "RoundSideButton">Go!</button>
                          <br>
                          <br>
                          <br>

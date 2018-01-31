@@ -1,39 +1,18 @@
 <html>
-<<<<<<< HEAD
-=======
-{% block title %}
-.
-{% endblock %}
-.
-{% block main %}
->>>>>>> d4a0dbea107ccf38f024dc50bae58873e0bfc1e9
+
     <head>
         <link href="{{url_for('static',filename='styles.css')}}" rel="stylesheet"/>
     </head>
     <body>
-<<<<<<< HEAD
         {% if session.user_id %}
         <title>Searched</title>
         <div class= "Header">
-=======
-            <div class= "Header">
->>>>>>> d4a0dbea107ccf38f024dc50bae58873e0bfc1e9
             <!--Logout button-->
             <div class= "HeaderButtonFrame" id= "leftPosition">
                 <form action="{{ url_for('logout') }}"><button class= "RoundSideButton" id= "Logout">Logout</button></form>
             </div>
             <!--Search by a filter-->
             <div class= "HeaderButtonFrame" id= "LeftPosition">
-<<<<<<< HEAD
-                <form action="{{ url_for('filter_dish') }}"><button class="RoundSideButton">Recipe filters</button></form>
-            </div>
-            <div class= "HeaderButtonFrame" id= "LeftPosition">
-                <form action="{{ url_for('favorites') }}"><button class="RoundSideButton">Favorites</button></form>
-            </div>
-            <!--Dropdown voor gegevens wijzigen-->
-            <div class="dropdown">
-                <button class="dropbtn">Settings</button>
-=======
                 <form action="{{ url_for('index') }}"><button class="RoundSideButton">Back to index</button></form>
             </div>
              <div class= "HeaderButtonFrame" id= "SearchBar" >
@@ -45,13 +24,12 @@
             <!--Dropdown voor gegevens wijzigen-->
             <div class="dropdown">
                 <button class="dropbtn">Change your personal information</button>
->>>>>>> d4a0dbea107ccf38f024dc50bae58873e0bfc1e9
                 <div class="dropdown-content">
                     <a href="{{ url_for('changenamepass') }}">Change your username and password</a>
                     <a href="{{ url_for('changemail') }}">Change your email</a>
                     <a href="{{ url_for('changepref') }}">Change your preferences</a>
                 </div>
-<<<<<<< HEAD
+            </div>
             </div>
             <div class= "HeaderButtonFrame" id= "SearchBar" >
                     <form action="{{ url_for('search') }}" method="post">
@@ -74,9 +52,6 @@
             </div>
         </div>
         {% endif %}
-=======
-            </div>
->>>>>>> d4a0dbea107ccf38f024dc50bae58873e0bfc1e9
        {% for item in data %}
        <div class= "SearchedFrame">
         {{ item.name }}
