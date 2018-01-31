@@ -16,13 +16,12 @@
             <input autocomplete="off" class="SearchBarHeader" placeholder="Find a recipe" type="text"/>
             <button class="SearchBarButton" type="submit">Search</button>
             <h1> Favorites </h1>
+            <h3>  All favorite dishes added from the index-page. </h3>
         </form>
         </div>
     </div>
     <br/>
-    <h3>Add them at the index page</h3>
         {% for row in data %}
-            <fieldset>
                 <p>
                     {{ row.name }} <br>
                     <a href="{{ row.url }}" target= '_blank'>
@@ -30,7 +29,6 @@
                     </a>
                 </p>
                 <form action="{{ url_for('fave_remove') }}" method="post"><button name="submit" value="{{ row.name }}">Remove</button></form>
-            </fieldset>
         {% endfor %}
     </table>
     </div>
