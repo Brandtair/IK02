@@ -34,16 +34,19 @@
     </div>
     <div class="stylefavorites">
     <h3>Add them at the index page</h3>
+
+    <h1> Favorites </h1>
+    <h3>  All favorite dishes added from the index-page. </h3>
+    </div>
+    <br/>
         {% for row in data %}
-            <fieldset>
                 <p>
                     {{ row.name }} <br>
                     <a href="{{ row.url }}" target= '_blank'>
-                    <img src="{{ row.image }}" alt="W3Schools" border="0">
+                    <img src="{{ row.image }}" alt="Image not available" border="0">
                     </a>
                 </p>
                 <form action="{{ url_for('fave_remove') }}" method="post"><button name="submit" value="{{ row.name }}">Remove</button></form>
-            </fieldset>
         {% endfor %}
     </table>
     </div>
