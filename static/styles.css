@@ -16,7 +16,10 @@ body {
 h3 {
     font-size: 32px;
     text-shadow: 1px 1px 1px black;
+    color: white;
+    text-align: center;
 }
+
 h1 {
     font-size: 100px;
     text-shadow: 2px 2px 2px black;
@@ -123,11 +126,15 @@ h1 {
 .dropbtn {
     background-color: white;
     color: black;
-    height: 50%;
-    width: 100%;
-    font-size: 20px;
-    border: 2px black;
-
+    height: 18%;
+    width: auto;
+    border: 1px white ;
+    border-radius: 100px;
+    margin-top: 3%;
+    font-weight: bold;
+    font-size: 18px;
+    font-family: "Abril Fatface";
+    box-shadow: 1px 1px 1px black;
 }
 
 .dropdown {
@@ -146,7 +153,10 @@ h1 {
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-
+    margin-left: 35px;
+    font-size: 14px;
+    font-family: "Abril Fatface";
+    box-shadow: 1px 1px 1px black;
 }
 
 .dropdown-content a {
@@ -155,6 +165,7 @@ h1 {
     padding: 12px 16px;
     text-decoration: none;
     display: block;
+    cursor: pointer;
 }
 
 .dropdown-content a:hover {
