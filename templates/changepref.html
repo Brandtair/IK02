@@ -15,9 +15,11 @@
                 <button class="dropbtn">Change your personal information</button>
                 <div class="dropdown-content">
                     <a href="{{ url_for('changemail') }}">Change your email</a>
-                    <a href="{{ url_for('changepref') }}">Change your preferences</a>
+                    <a href="{{ url_for('changenamepass') }}">Change your username and password</a>
+                    <a href="{{ url_for('changediet') }}">Change your diet and allergies</a>
                 </div>
             </div>
+            <!--Search-->
             <div class= "HeaderButtonFrame" id= "SearchBar" >
                     <form action="{{ url_for('search') }}" method="post">
                         <input autocomplete="off" name = "ingredient" class= "RoundSideButton" placeholder="Find a recipe" type="text"/>
@@ -37,7 +39,7 @@
             </div>
             <!--Search by a filter-->
             <div class= "HeaderButtonFrame" id= "LeftPosition">
-                <form action="{{ url_for('filter_dish') }}"><button class="RoundSideButton">Recipe filters</button></form>
+                <form action="{{ url_for('index') }}"><button class="RoundSideButton">Homepage</button></form>
             </div>
             <div class= "HeaderButtonFrame" id= "LeftPosition">
                 <form action="{{ url_for('favorites') }}"><button class="RoundSideButton">Favorites</button></form>
@@ -48,7 +50,7 @@
                 <div class="dropdown-content">
                     <a href="{{ url_for('changenamepass') }}">Change your username and password</a>
                     <a href="{{ url_for('changemail') }}">Change your email</a>
-                    <a href="{{ url_for('changepref') }}">Change your preferences</a>
+                    <a href="{{ url_for('changediet') }}">Change your diet and allergies</a>
                 </div>
             </div>
             <div class= "HeaderButtonFrame" id= "SearchBar" >
@@ -58,7 +60,9 @@
                     </form>
             </div>
         </div>
-        <h1>Change your preferences</h1>
+        <!--Forum to change preferences-->
+        <h2>Change<br>preferences</h2>
+        <div class= ChangePR>
         <form action = "{{ url_for('changepref')}}", method = "post">
             <input autocomplete="off" autofocus name="pref1" placeholder="Preference 1" button class="RoundSideButton" type="text"/><br>
             <br>
@@ -66,7 +70,8 @@
             <br>
             <input autocomplete="off" autofocus name="pref3" placeholder="Preference 3" button class="RoundSideButton" type="text"/><br>
             <br>
-            <button class="btn btn-default" type="submit">Change</button>
+            <button type="submit" class = "RoundSideButton" id= "OrangeButton"> Change</button>
         </form>
+        </div>
     </body>
 </html>

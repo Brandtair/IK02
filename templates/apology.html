@@ -9,10 +9,11 @@
             <div class= "HeaderButtonFrame" id= "leftPosition">
                 <form action="{{ url_for('logout') }}"><button class= "RoundSideButton" id= "Logout">Logout</button></form>
             </div>
-            <!--Search by a filter-->
+            <!--Return to Homepage-->
             <div class= "HeaderButtonFrame" id= "LeftPosition">
-                <form action="{{ url_for('filter_dish') }}"><button class="RoundSideButton">Recipe filters</button></form>
+                <form action="{{ url_for('index') }}"><button class="RoundSideButton">Homepage</button></form>
             </div>
+            <!--Go to favorites-->
             <div class= "HeaderButtonFrame" id= "LeftPosition">
                 <form action="{{ url_for('favorites') }}"><button class="RoundSideButton">Favorites</button></form>
             </div>
@@ -23,8 +24,10 @@
                     <a href="{{ url_for('changenamepass') }}">Change your username and password</a>
                     <a href="{{ url_for('changemail') }}">Change your email</a>
                     <a href="{{ url_for('changepref') }}">Change your preferences</a>
+                    <a href="{{ url_for('changediet') }}">Change your diet</a>
                 </div>
             </div>
+            <!--Searchbar-->
             <div class= "HeaderButtonFrame" id= "SearchBar" >
                     <form action="{{ url_for('search') }}" method="post">
                         <input autocomplete="off" name = "ingredient" class= "RoundSideButton" placeholder="Find a recipe" type="text"/>
@@ -32,9 +35,8 @@
                     </form>
             </div>
         </div>
-        <div class= "Header"></div>
-        <div class = "list">
-            <!--Genereer excuses en laat knop zien om terug te gaan-->
+        <div class = "list" id= "BackgroundApology">
+            <!--Generate apology and show return buttons-->
             <h1>{{text}}</h1>
 
             <form action="{{ url_for('register') }}"><button class= "RoundSideButton">Back to register</button></form>

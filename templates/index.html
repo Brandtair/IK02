@@ -25,6 +25,7 @@
                     <a href="{{ url_for('changenamepass') }}">Change your username and password</a>
                     <a href="{{ url_for('changemail') }}">Change your email</a>
                     <a href="{{ url_for('changepref') }}">Change your preferences</a>
+                    <a href="{{ url_for('changediet') }}">Change your diet and allergies</a>
                 </div>
             </div>
             <div class= "HeaderButtonFrame" id= "SearchBar" >
@@ -35,28 +36,38 @@
             </div>
         </div>
         </div>
-        {% for item in recipes %}
-        <div class= "IndexFrame">
-        {{ item.label }}
-            <form action="{{ url_for('mail') }}" method="post">
-            <div class="form-group">
-                <input autocomplete="off" autofocus class="form-control" name="EMAILADDRESSTO" placeholder="EMAIL ADDRESS TO" type="text"/>
+        {% if recipes %}
+        <h3>Dishes based on your preferences:</h3>
+        <!--mail share function-->
+            {% for item in recipes %}
+            <div class= "IndexFrame">
+            {{ item.label }}
+                <form action="{{ url_for('mail') }}" method="post">
+                <div class="form-group">
+                    <input autocomplete="off" autofocus class="form-control" name="EMAILADDRESSTO" placeholder="EMAIL ADDRESS TO" type="text"/>
+                </div>
+                <div class="form-group">
+                    <input autocomplete="off" autofocus class="form-control" name="msg" value="{{ item.url }}" type="text"/>
+                </div>
+                <br/>
+                <div class="form-group">
+                    <button class="RoundSideButton" type="submit">Send</button>
+                </div>
+                </form>
+        <!--Loading recipe from preferences & diet-->
+            <p>
+                <a href="{{ item.url }}" target= '_blank'>
+                    <img src="{{ item.image }}" alt="Image not available" border="0">
+                </a>
+        <!--Adds recipe to favorites-->
+            </p>
+            <form action="{{ url_for('favorites') }}" method="post" ><button name="submit" value="{{ item.label }}">Add to favorites</button></form>
             </div>
-            <div class="form-group">
-                <input autocomplete="off" autofocus class="form-control" name="msg" value="{{ item.url }}" type="text"/>
-            </div>
-            <br/>
-            <div class="form-group">
-                <button class="RoundSideButton" type="submit">Send</button>
-            </div>
-        <p>
-            <a href="{{ item.url }}" target= '_blank'>
-                <img src="{{ item.image }}" alt="Image not available" border="0">
-            </a>
-        </p>
-        <form action="{{ url_for('favorites') }}" method="post" class= "RoundSideButton"><button name="submit" value="{{ item.label }}">Add to favorites</button></form>
-        </div>
-        {% endfor %}
+            {% endfor %}
+        {% else %}
+            <h1> There where no suggestions found for your preferences and your allergies/diet</h1>
+            <h3> Try changing them in the upper-right corner!</h3>
+        {% endif %}
     </body>
 {% endblock %}
 </html>

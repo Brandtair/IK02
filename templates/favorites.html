@@ -23,8 +23,10 @@
                 <a href="{{ url_for('changenamepass') }}">Change your username and password</a>
                 <a href="{{ url_for('changemail') }}">Change your email</a>
                 <a href="{{ url_for('changepref') }}">Change your preferences</a>
+                <a href="{{ url_for('changediet') }}">Change your diet and allergies</a>
             </div>
         </div>
+        <!--searchbar-->
         <div class= "HeaderButtonFrame" id= "SearchBar" >
                 <form action="{{ url_for('search') }}" method="post">
                     <input autocomplete="off" name = "ingredient" class= "RoundSideButton" placeholder="Find a recipe" type="text"/>
@@ -32,16 +34,17 @@
                 </form>
         </div>
     </div>
-    <h3>Add them at the index page</h3>
-
+    <!--titles and location of favorites-->
     <h1> Favorites </h1>
+    <h3>Add them at the index page</h3>
     <h3>  All favorite dishes added from the index-page. </h3>
-    </div>
-    <br/>
-    <div class="stylefavorites">
+    <div class="StyleFavorites">
         {% for row in data %}
                 <p>
-                    {{ row.name }} <br>
+                    <br>
+                    {{ row.name }}
+                    <br>
+                    <br>
                     <a href="{{ row.url }}" target= '_blank'>
                     <img src="{{ row.image }}" alt="Image not available" border="0">
                     </a>

@@ -77,11 +77,14 @@ def index():
             # get the preference out of the querylist
             limitations = [i for i in limitations if i != v]
 
-    # get three random recipes
+    # get three random recipes if the list is not empty
     randomrecipes = []
-    for i in range(3):
-        rand = random.choice(preflist)
-        randomrecipes.append(rand['recipe'])
+    if preflist != []:
+        for i in range(3):
+            rand = random.choice(preflist)
+            randomrecipes.append(rand['recipe'])
+    else:
+        pass
 
     return render_template("index.html", recipes = randomrecipes)
 
@@ -192,6 +195,41 @@ def changepref():
             return render_template("apology.html", text = "Please insert ingredients")
     else:
         return render_template("changepref.html")
+
+@app.route("/changediet", methods=["GET", "POST"])
+@login_required
+def changediet():
+    """change a users diet and allergies"""
+
+    if request.method == "POST":
+
+        # sort the diet
+        diets = ["vegetarian", "vegan", "paleo", "high_fiber", "high_protein", \
+                "low_carb", "low_fat", "low_sodium", "low_sugar", "alcohol_free", "balanced"]
+        Diet = {i: request.form.get(i) for i in diets}
+
+        # sort the allergies
+        allergies = ["gluten", "dairy", "eggs", "soy", "wheat", "treenuts", "peanuts"]
+        allergy = {i: request.form.get(i) for i in allergies}
+
+        db.execute("UPDATE users SET glutenfree = :gluten, dairyfree = :dairy, eggfree = :eggs, \
+                    soyfree = :soy, wheatfree = :wheat, treenutfree = :treenuts, peanutfree = :peanuts, \
+                    vegetarian = :vegetarian, vegan = :vegan, paleo = :paleo, \
+                    high_fiber = :high_fiber, high_protein = :high_protein, low_carb = :low_carb, low_fat = :low_fat, \
+                    low_sodium = :low_sodium, low_sugar = :low_sugar, \
+                    alcohol_free = :alcohol_free, balanced = :balanced WHERE user_id == :userid", \
+                    gluten = allergy['gluten'], dairy = allergy['dairy'], \
+                    eggs = allergy['eggs'], soy = allergy['soy'], wheat = allergy['wheat'], \
+                    treenuts = allergy['treenuts'], peanuts = allergy['peanuts'], \
+                    vegetarian = Diet['vegetarian'], vegan = Diet['vegan'], paleo = Diet['paleo'], \
+                    high_fiber = Diet['high_fiber'], high_protein = Diet['high_protein'], low_carb = Diet['low_carb'], \
+                    low_fat = Diet['low_fat'], low_sodium = Diet['low_sodium'], low_sugar = Diet['low_sugar'], \
+                    alcohol_free = Diet['alcohol_free'], balanced = Diet['balanced'], userid = session['user_id'])
+
+        return redirect(url_for("index"))
+
+    else:
+        return render_template("changediet.html")
 
 @app.route("/favorites", methods=["GET", "POST"])
 @login_required
@@ -387,19 +425,22 @@ def logout():
 @login_required
 def mail():
 
+    # place an address to deliver the mail
     if request.method == "POST":
+        if not request.form.get("EMAILADDRESSTO"):
+            return render_template('apology.html', text = 'Please insert an email to send to')
+
+    # login gmailaccount
         server = smtplib.SMTP('smtp.gmail.com', 587)
         server.starttls()
-        server.login("MakesRightDiner@gmail.com", "Phisingisstommm")
-
+        server.login("MakesRightDiner@gmail.com", "Phisingisstom")
+        # recieve a link with the right link to recipe
         msg = request.form.get("msg")
         msg = "".join(['<a href="', msg, '">You might like this reccipe, click here</a>'])
         msg = MIMEText(msg, 'html')
         server.sendmail("MakesRightDiner@gmail.com", request.form.get("EMAILADDRESSTO"), msg.as_string())
         server.quit()
-        return render_template("index.html")
-    else:
-        return render_template("mail.html")
+        return redirect(url_for("index"))
 
 @app.route("/search", methods=["POST"])
 def search():

@@ -13,13 +13,6 @@ body {
     background-color: black;
 }
 
-h3 {
-    font-size: 32px;
-    text-shadow: 1px 1px 1px black;
-    color: white;
-    text-align: center;
-}
-
 h1 {
     font-size: 100px;
     text-shadow: 2px 2px 2px black;
@@ -29,8 +22,38 @@ h1 {
     color: white;
 }
 
+h2 {
+    font-size: 48px;
+    text-shadow: 1px 1px 1px black;
+    color: white;
+    text-align: center;
+}
+
+h3 {
+    font-size: 32px;
+    text-shadow: 1px 1px 1px black;
+    color: white;
+    text-align: center;
+}
+
+table {
+    margin-right: 125px;
+    margin-left: auto;
+}
 
 /*ID-Tag*/
+#OrangeButton{
+    background: linear-gradient(to top, rgb(120, 0, 0), orange);
+    color: white;
+    margin: auto;
+    margin-top: 0%;
+    text-shadow: 2px 2px 3px black;
+    font-family: "Abril Fatface";
+    line-height: 20px;
+    text-align: center;
+    position : relative;
+}
+
 #Login{
     background: linear-gradient(to top, rgb(120, 0, 0), orange);
     color: white;
@@ -43,6 +66,7 @@ h1 {
     position : relative;
     left : 46.5%;
 }
+
 
 #Logout{
     color: white;
@@ -62,6 +86,10 @@ h1 {
     left: -20%;
     margin-top: 1%;
     height: 0%;
+}
+#BackgroundApology{
+    background-color: rgba(1,0,0,0.10);
+    margin-top: 10%;
 }
 
 /*Classes*/
@@ -121,7 +149,8 @@ h1 {
     width: 50%;
     color: black;
     text-shadow: 2px 2px 3px, orange;
-    background-color: white;
+    background-color: green;
+    border-radius: 20px;
 }
 
 /*Dropdown elements*/
@@ -130,25 +159,25 @@ h1 {
     background-color: darkorange;
     color: white;
 }
-.stylefavorites{
-    margin: 0%;
+.StyleFavorites{
+    margin: auto;
     text-align: center;
-    margin-top: 15%;
+    margin-top: 0%;
     height: auto;
-    width: 40%;
+    width: 20%;
     background-color: white;
+    border: 2px solid black;
 
     color: black;
     text-shadow: 2px 2px 3px, orange;
 }
-.stylefiltersearch{
-    margin: 30%;
+.StyleFilterSearch{
+    margin: auto;
     text-align: center;
     margin-top: 5%;
     height: auto;
     width: 50%;
     color: black;
-    height: 18%;
     border: 1px white ;
     border-radius: 100px;
     font-weight: bold;
@@ -158,10 +187,7 @@ h1 {
     text-shadow: 2px 2px 3px, orange;
     line-height: normal;
     background-color: #4CAF50;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
+
 }
 .dropbtn{
     background-color: darkorange;
@@ -276,11 +302,22 @@ h1 {
 
 .ChangePr{
     margin: auto;
+    margin-top: 5%;
     text-align: center;
     height: auto;
     width: 50%;
     color: black;
     text-shadow: 2px 2px 3px, orange;
-    margin-top: 30%;
     text-shadow: 2px 2px 3px black;
+}
+.ChangeDiet{
+    margin: auto;
+    text-align: center;
+    height: auto;
+    width: 50%;
+    color: white;
+    background-color: green;
+    border-radius: 20px;
+    text-shadow: 1px 1px 1px black;
+    text-size: 12px;
 }

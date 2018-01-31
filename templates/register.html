@@ -10,8 +10,11 @@
         <body>
         <title>Homepage</title>
         <div class= "Header">
-            <div class= "HeaderButtonFrame" id= "LeftPosition">
-                <form action="{{ url_for('login') }}"><button class="RoundSideButton">Back to login</button></form>
+            <!--Logout button-->
+            <div class= "HeaderButtonFrame" id= "leftPosition">
+                <form action="{{ url_for('login') }}"><button class= "RoundSideButton">Login</button></form>
+            </div>
+            <!--Searchbar for header-->
             <div class= "HeaderButtonFrame" id= "SearchBar" >
                     <form action="{{ url_for('search') }}" method="post">
                         <input autocomplete="off" name = "ingredient" class= "RoundSideButton" placeholder="Find a recipe" type="text"/>
@@ -23,16 +26,20 @@
     </head>
 
     <body>
+        <!--request users data-->
         <form action="{{ url_for('register') }}" method="post">
         <div class = "list">
                 <br>
                 <h2>Register:</h2>
                 <br>
                 <br>
-                <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"/><br>
-                <input class="form-control" name="password" placeholder="Password" type="password"/><br>
-                <input class="form-control" name="repeat" placeholder="Repeat password" type="password"/><br>
-                <input class="form-control" name="email" placeholder="E-mail" type="text"/>
+                <input autocomplete="off"  button class= "RoundSideButton" autofocus class="form-control" name="username" placeholder="Username" type="text"/><br>
+                <br>
+                <input autocomplete="off" button class= "RoundSideButton" input class="form-control" button class= "RoundSideButton" name="password" placeholder="Password" type="password"/><br>
+                <br>
+                <input autocomplete="off" button class= "RoundSideButton" input class="form-control"  name="repeat" placeholder="Repeat password" type="password"/><br>
+                <br>
+                <input autocomplete="off" button class= "RoundSideButton" input class="form-control"  name="email" placeholder="E-mail" type="text"/>
                  <br>
                  <br>
                   <br>
@@ -89,12 +96,14 @@
                 <h9>Type your preferences in the boxes.</h9>  <br>
                 <br>
                 <br>
-                <input autocomplete="off" autofocus name="pref1" placeholder="Preference 1" type="text"/><br>
-                <input autocomplete="off" autofocus name="pref2" placeholder="Preference 2" type="text"/><br>
-                <input autocomplete="off" autofocus name="pref3" placeholder="Preference 3" type="text"/><br>
+                <input autocomplete="off" button class= "RoundSideButton" autofocus name="pref1" placeholder="Preference 1" type="text"/><br>
+                <br>
+                <input autocomplete="off" button class= "RoundSideButton" name="pref2" placeholder="Preference 2" type="text"/><br>
+                <br>
+                <input autocomplete="off" button class= "RoundSideButton" autofocus name="pref3" placeholder="Preference 3" type="text"/><br>
                 <br>
                 <br>
-            <button class="btn btn-default" type="submit">Register</button>
+            <button class= "RoundSideButton" type="submit">Register</button>
             <br>
             <br>
             <br>

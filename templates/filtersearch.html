@@ -26,6 +26,7 @@
                     <a href="{{ url_for('changepref') }}">Change your preferences</a>
                 </div>
             </div>
+            <!--Searchbar-->
             <div class= "HeaderButtonFrame" id= "SearchBar" >
                     <form action="{{ url_for('search') }}" method="post">
                         <input autocomplete="off" name = "ingredient" class= "RoundSideButton" placeholder="Find a recipe" type="text"/>
@@ -33,10 +34,12 @@
                     </form>
             </div>
         </div>
-        <div class="stylefiltersearch">
+        <!--list with search options-->
+        <div class="StyleFilterSearch">
+        <br>
         <h3> Search for a recipe with filters!<br>(results not guaranteed)</h3>
         <br>
-        <h2>______________ Search for a recipe with filters! ______________</h2><br>
+        <h2>Search for a recipe with filters!</h2><br>
         <br>
         <br>
         <h3.5> We will automaticly merge your diet and allergies into the results,<br> so no need to fill those in!</h3.5> <br>
@@ -45,7 +48,7 @@
         <ul>
             <li>
                 <br>
-                <h2>______________ Maindish ______________</h2>
+                <h2>______ Maindish ______</h2>
                 <br>
                     <form action="{{ url_for('filter_dish') }}" method="post">
                         <h4>What meat do you want?</h4> <br>
@@ -86,7 +89,7 @@
 
             </li>
             <li>
-                <h2>______________ Dessert ______________</h2>
+                <h2> ______ Dessert ______ </h2>
                     <br>
                     <form action = "{{ url_for('filter_dessert') }}" method = "post">
                         <h4>What flavours do you want?</h4><br>

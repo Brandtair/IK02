@@ -3,7 +3,7 @@
         <link href="{{url_for('static',filename='styles.css')}}" rel="stylesheet"/>
     </head>
         <body>
-        <title>Homepage</title>
+        <title>Settings</title>
         <div class= "Header">
             <!--Logout button-->
             <div class= "HeaderButtonFrame" id= "leftPosition">
@@ -11,16 +11,22 @@
             </div>
             <!--Search by a filter-->
             <div class= "HeaderButtonFrame" id= "LeftPosition">
-                <form action="{{ url_for('index') }}"><button class="RoundSideButton">Back to index</button></form>
+                <form action="{{ url_for('index') }}"><button class="RoundSideButton">Homepage</button></form>
+            </div>
+            <!--Favorite page-->
+            <div class= "HeaderButtonFrame" id= "LeftPosition">
+                <form action="{{ url_for('favorites') }}"><button class="RoundSideButton">Favorites</button></form>
             </div>
             <!--Dropdown voor gegevens wijzigen-->
             <div class="dropdown">
-                <button class="dropbtn">Change your personal information</button>
+                <button class="dropbtn">Settings</button>
                 <div class="dropdown-content">
                     <a href="{{ url_for('changenamepass') }}">Change your username and password</a>
                     <a href="{{ url_for('changepref') }}">Change your preferences</a>
+                    <a href="{{ url_for('changediet') }}">Change your diet and allergies</a>
                 </div>
             </div>
+            <!--Searchbar-->
             <div class= "HeaderButtonFrame" id= "SearchBar" >
                     <form action="{{ url_for('search') }}" method="post">
                         <input autocomplete="off" name = "ingredient" class= "RoundSideButton" placeholder="Find a recipe" type="text"/>
@@ -31,48 +37,20 @@
         </div>
 
     <body>
+        <!--forum to change email registered-->
         <div class = "ChangeMail">
-        <h1> Change E-mail</h1>
+        <h2> Change E-mail</h2>
         <br>
         <br>
         <br>
         <br>
-        <div class= "Header">
-            <!--Logout button-->
-            <div class= "HeaderButtonFrame" id= "leftPosition">
-                <form action="{{ url_for('logout') }}"><button class= "RoundSideButton" id= "Logout">Logout</button></form>
-            </div>
-            <!--Search by a filter-->
-            <div class= "HeaderButtonFrame" id= "LeftPosition">
-                <form action="{{ url_for('filter_dish') }}"><button class="RoundSideButton">Recipe filters</button></form>
-            </div>
-            <div class= "HeaderButtonFrame" id= "LeftPosition">
-                <form action="{{ url_for('favorites') }}"><button class="RoundSideButton">Favorites</button></form>
-            </div>
-            <!--Dropdown voor gegevens wijzigen-->
-            <div class="dropdown">
-                <button class="dropbtn">Settings</button>
-                <div class="dropdown-content">
-                    <a href="{{ url_for('changenamepass') }}">Change your username and password</a>
-                    <a href="{{ url_for('changemail') }}">Change your email</a>
-                    <a href="{{ url_for('changepref') }}">Change your preferences</a>
-                </div>
-            </div>
-            <div class= "HeaderButtonFrame" id= "SearchBar" >
-                    <form action="{{ url_for('search') }}" method="post">
-                        <input autocomplete="off" name = "ingredient" class= "RoundSideButton" placeholder="Find a recipe" type="text"/>
-                        <button class="RoundSideButton" type="submit">Search</button>
-                    </form>
-            </div>
-        </div>
-
         <h3> Change your mail</h3>
         <form action = "{{ url_for('changemail')}}" method = "post">
             <div class = LoginFrame>
             <input class="RoundSideButton" name="email" placeholder="E-mail" type="text"/>
             </div>
             <br>
-            <button class = "RoundSideButton" id="Login" type="submit">Change</button>
+            <button class = "RoundSideButton" id="OrangeButton" type="submit">Change</button>
         </form>
     </body>
 </html>
