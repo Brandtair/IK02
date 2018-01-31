@@ -1,25 +1,38 @@
-{% block title %}
-    Favorites
-{% endblock %}
-
 {% block main %}
 <head>
     <link href="{{url_for('static',filename='styles.css')}}" rel="stylesheet"/>
 </head>
 <body>
-    <div class="stylefavorites">
+    <title>Favorites</title>
     <div class= "Header">
-        <h1>Favorites</h1>
-        <form action="{{ url_for('favorites') }}"><button class="RoundSideButton" id= "FavoritesButton">Favorites</button></form>
-        <div class="SearchBarHeader">
-        <form action="{{ url_for('search') }}" method="post">
-            <input autocomplete="off" class="SearchBarHeader" placeholder="Find a recipe" type="text"/>
-            <button class="SearchBarButton" type="submit">Search</button>
-        </form>
+        <!--Logout button-->
+        <div class= "HeaderButtonFrame" id= "leftPosition">
+            <form action="{{ url_for('logout') }}"><button class= "RoundSideButton" id= "Logout">Logout</button></form>
+        </div>
+        <!--Search by a filter-->
+        <div class= "HeaderButtonFrame" id= "LeftPosition">
+            <form action="{{ url_for('filter_dish') }}"><button class="RoundSideButton">Recipe filters</button></form>
+        </div>
+        <div class= "HeaderButtonFrame" id= "LeftPosition">
+            <form action="{{ url_for('index') }}"><button class="RoundSideButton">Homepage</button></form>
+        </div>
+        <!--Dropdown voor gegevens wijzigen-->
+        <div class="dropdown">
+            <button class="dropbtn">Settings</button>
+            <div class="dropdown-content">
+                <a href="{{ url_for('changenamepass') }}">Change your username and password</a>
+                <a href="{{ url_for('changemail') }}">Change your email</a>
+                <a href="{{ url_for('changepref') }}">Change your preferences</a>
+            </div>
+        </div>
+        <div class= "HeaderButtonFrame" id= "SearchBar" >
+                <form action="{{ url_for('search') }}" method="post">
+                    <input autocomplete="off" name = "ingredient" class= "RoundSideButton" placeholder="Find a recipe" type="text"/>
+                    <button class="RoundSideButton" type="submit">Search</button>
+                </form>
         </div>
     </div>
-    <form action="{{ url_for('logout') }}"><button class= "RoundSideButton" id= "logout">Logout</button></form>
-    <br/>
+    <div class="stylefavorites">
     <h3>Add them at the index page</h3>
         {% for row in data %}
             <fieldset>
