@@ -39,7 +39,7 @@ db = SQL("sqlite:///project.db")
 @app.route("/")
 @login_required
 def index():
-    """Show the users personal homepage"""
+    """Show the users personal homepage
 
     # get the preferences from the database
     prefs = db.execute("SELECT pref1, pref2, pref3 FROM users WHERE user_id == :userid", \
@@ -81,9 +81,9 @@ def index():
     randomrecipes = []
     for i in range(3):
         rand = random.choice(preflist)
-        randomrecipes.append(rand['recipe'])
+        randomrecipes.append(rand['recipe'])"""
 
-    return render_template("index.html", recipes = randomrecipes)
+    return render_template("index.html")
 
 @app.route("/changenamepass", methods=["GET", "POST"])
 @login_required
