@@ -54,6 +54,11 @@ h1 {
 }
 #SearchBar{
     text-align: center;
+    position : relative;
+    margin: auto;
+    left: -20%;
+    margin-top: 1%;
+    height: 0%;
 }
 
 /*Classes*/
