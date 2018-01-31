@@ -7,6 +7,7 @@
     <body>
         <title>Homepage</title>
         <div class= "Header">
+<<<<<<< HEAD
         <!--Uitloggen-->
         <form action="{{ url_for('logout') }}"><button class= "RoundSideButton">Logout</button></form>
         <form action="{{ url_for('favorites') }}"><button class="RoundSideButton" id= "FavoritesButton">Favorites</button></form>
@@ -16,6 +17,15 @@
                     <input autocomplete="off" class="SearchBarHeader" name = "ingredient" placeholder="Find a recipe" type="text"/>
                     <button class="SearchBarButton" type="submit">Search</button>
                 </form>
+=======
+            <!--Logout button-->
+            <div class= "HeaderButtonFrame" id= "leftPosition">
+                <form action="{{ url_for('logout') }}"><button class= "RoundSideButton" id= "Logout">Logout</button></form>
+            </div>
+            <!--Search by a filter-->
+            <div class= "HeaderButtonFrame" id= "LeftPosition">
+                <form action="{{ url_for('filter_dish') }}"><button class="RoundSideButton">Recipe filters</button></form>
+>>>>>>> a2c9e01e73977466b1a28163f9ba1ea86389047a
             </div>
             <!--Dropdown voor gegevens wijzigen-->
             <div class="dropdown">
@@ -26,33 +36,35 @@
                     <a href="{{ url_for('changepref') }}">Change your preferences</a>
                 </div>
             </div>
-        </div>
-        <div class="List">
-
-        </div>
-
-        <!--Zoekbalk voor homepage
-        <form action="{{ url_for('search') }}" method="post">
-            <div class= "form-group">
-                <input autocomplete="off" autofocus class="form-control" name="ingredient" placeholder="Find a recipe" type="text"/>
+            <div class= "HeaderButtonFrame" id= "SearchBar" >
+                    <form action="{{ url_for('search') }}" method="post">
+                        <input autocomplete="off" name = "ingredient" class= "RoundSideButton" placeholder="Find a recipe" type="text"/>
+                        <button class="RoundSideButton" type="submit">Search</button>
+                    </form>
             </div>
-            <br/>
-            <div class="form-group">
-                <button class="RoundSideButton" type="submit">search</button>
-            </div>
-        </form>-->
         </div>
         {% for item in recipes %}
 
         <div class= "IndexFrame">
-            {{ item.label }} <br>
+            {{ item.label }}
+            <form action="{{ url_for('mail') }}" method="post">
+            <div class="form-group">
+                <input autocomplete="off" autofocus class="form-control" name="EMAILADDRESSTO" placeholder="EMAIL ADDRESS TO" type="text"/>
+            </div>
+            <div class="form-group">
+                <input autocomplete="off" autofocus class="form-control" name="msg" value="{{ item.url }}" type="text"/>
+            </div>
+            <br/>
+            <div class="form-group">
+                <button class="RoundSideButton" type="submit">Send</button>
+            </div>
             <a href="{{ item.url }}" target= '_blank'>
-            <img src="{{ item.image }}" alt="W3Schools" border="0">
+            <img src="{{ item.image }}" alt="Image not available" border="0">
             </a>
-        <form action="{{ url_for('favorites') }}" method="post"><button name="submit" value="{{ item.label }}">Add</button></form>
+        <form action="{{ url_for('favorites') }}" method="post" class= "RoundSideButton"><button name="submit" value="{{ item.label }}">Add to favorites</button></form>
+        </div>
 
         {% endfor %}
-        </div>
     </body>
         {% endblock %}
 </html>

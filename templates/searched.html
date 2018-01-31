@@ -1,17 +1,45 @@
+<html>
 {% block title %}
-    Searching for a recipe?
+    Recipe
 {% endblock %}
 
 {% block main %}
-    <form action="{{ url_for('searched') }}" method="post">
-        <fieldset>
+    <head>
+        <link href="{{url_for('static',filename='styles.css')}}" rel="stylesheet"/>
+    </head>
+    <body>
+        <title>Searched</title>
+        <div class= "Header">
+            <form action="{{ url_for('favorites') }}"><button class="RoundSideButton" id= "FavoritesButton">Favorites</button></form>
+            <div class="SearchBarHeader">
+                <form action="{{ url_for('search') }}" method="post">
+                    <input autocomplete="off" class="SearchBarHeader" placeholder="Find a recipe" type="text"/>
+                    <button class="SearchBarButton" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+       {% for item in data %}
+       <div class= "SearchedFrame">
+        {{ item.name }}
+          <form action="{{ url_for('mail') }}" method="post">
             <div class="form-group">
-                <input autocomplete="off" autofocus class="form-control" name="symbol" placeholder="Find a recipe, dieet, ingredient" type="text"/>
+                <input autocomplete="off" autofocus class="form-control" name="EMAILADDRESSTO" placeholder="EMAIL ADDRESS TO" type="text"/>
             </div>
             <div class="form-group">
-                <button class="btn btn-default" type="submit">Search</button>
+                <input autocomplete="off" autofocus class="form-control" name="msg" value="{{ item.url }}" type="text"/>
             </div>
-        </fieldset>
-    </form>
-
+            <br/>
+            <div class="form-group">
+                <button class="RoundSideButton" type="submit">Send</button>
+            </div>
+        <p>
+            <a href="{{ item.url }}">
+                <img src="{{ item.img }}" alt="Image not available" border="0">
+            </a>
+        </p>
+        <form action="{{ url_for('favorites') }}" method="post"><button name="submit" value="{{ item.label }}">Add</button></form>
+        </div>
+        {% endfor %}
+    </body>
 {% endblock %}
+</html>

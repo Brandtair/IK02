@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 
 {% block main %}
-
-{% for item in data %}
-<a href="{{ item.url }}">
-<img src="{{ item.img }}" alt="Image not available" border="0">
-{% endfor %}
     <head>
     <link href="{{url_for('static',filename='styles.css')}}" rel="stylesheet"/>
     </head>
@@ -32,9 +27,7 @@
                     <input class= "RoundSideButton" name="password" placeholder="Password" type="password"/>
                     </div>
                     <br/>
-                    <div class="LoginFrame">
-                    <button class="RoundSideButton" id= "Login">Log In</button>
-                    </div>
+                    <button class="RoundSideButton" id = "Login">Log In</button>
             </form>
         <div class="LoginFrame">
         <form action="{{ url_for('register') }}"><button class="RoundSideButton">Register</button></form>

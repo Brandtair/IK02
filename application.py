@@ -39,7 +39,7 @@ db = SQL("sqlite:///project.db")
 @app.route("/")
 @login_required
 def index():
-    """Show the users personal homepage"""
+    """Show the users personal homepage
 
     # get the preferences from the database
     prefs = db.execute("SELECT pref1, pref2, pref3 FROM users WHERE user_id == :userid", \
@@ -81,9 +81,9 @@ def index():
     randomrecipes = []
     for i in range(3):
         rand = random.choice(preflist)
-        randomrecipes.append(rand['recipe'])
+        randomrecipes.append(rand['recipe'])"""
 
-    return render_template("index.html", recipes = randomrecipes)
+    return render_template("index.html")
 
 @app.route("/changenamepass", methods=["GET", "POST"])
 @login_required
@@ -94,25 +94,25 @@ def changenamepass():
 
         # ensure username was submitted
         if not request.form.get("username"):
-            return rendertemplate("apology.html", text = "must provide username")
+            return render_template("apology.html", text = "must provide username")
 
         # ensure password was submitted
         elif not request.form.get("password"):
-            return rendertemplate("apology.html", text = "must provide password")
+            return render_template("apology.html", text = "must provide password")
 
         # ensure password was repeated
         elif not request.form.get("repeat"):
-            return rendertemplate("apology.html", text = "must repeat password")
+            return render_template("apology.html", text = "must repeat password")
 
         # check if passwords are equal
         elif request.form.get("password") != request.form.get("repeat"):
-            return rendertemplate("apology.html", text = "passwords must be equal")
+            return render_template("apology.html", text = "passwords must be equal")
 
         # check if the username is unique
         exist = db.execute("SELECT username FROM users")
         for name in exist:
             if name['username'] == request.form.get("username"):
-                return rendertemplate("apology.html", text = "That username is already taken")
+                return render_template("apology.html", text = "That username is already taken")
 
         # encrypt the password
         encryptedpassword = pwd_context.hash(request.form.get("password"))
@@ -297,7 +297,7 @@ def filter_dish():
         # get the recipes from the searchfunction
         recipes = searchfunction(results)
 
-        return render_template("gezocht.html", data = recipes)
+        return render_template("searched.html", data = recipes)
 
     else:
         return render_template("filtersearch.html")
@@ -333,7 +333,7 @@ def filter_dessert():
     # get the recipes from the searchfunction
     recipes = searchfunction(results)
 
-    return render_template("gezocht.html", data = recipes)
+    return render_template("searched.html", data = recipes)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -438,7 +438,7 @@ def search():
         # get the recipes
         recipes = searchfunction(results)
 
-        return render_template("gezocht.html", data = recipes)
+        return render_template("searched.html", data = recipes)
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -447,25 +447,25 @@ def register():
 
         # ensure username was submitted
         if not request.form.get("username"):
-            return rendertemplate("apology.html", text = "must provide username")
+            return render_template("apology.html", text = "must provide username")
 
         # ensure password was submitted
         elif not request.form.get("password"):
-            return rendertemplate("apology.html", text = "must provide password")
+            return render_template("apology.html", text = "must provide password")
 
         # ensure password was repeated
         elif not request.form.get("repeat"):
-            return rendertemplate("apology.html", text = "must repeat password")
+            return render_template("apology.html", text = "must repeat password")
 
         # check if passwords are equal
         elif request.form.get("password") != request.form.get("repeat"):
-            return rendertemplate("apology.html", text = "passwords must be equal")
+            return render_template("apology.html", text = "passwords must be equal")
 
         # check if the username is unique
         exist = db.execute("SELECT username FROM users")
         for name in exist:
             if name['username'] == request.form.get("username"):
-                return rendertemplate("apology.html", text = "That username is already taken")
+                return render_template("apology.html", text = "That username is already taken")
 
         # encrypt the password
         encryptedpassword = pwd_context.hash(request.form.get("password"))
