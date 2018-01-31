@@ -4,6 +4,9 @@
 #### Screenshot van login-pagina
 (screenshot van site)
 
+#### Video van website
+(videolink)
+
 #### Functionaliteit
 In de webapplicatie kunnen gebruikers hun persoonlijke voorkeuren, maar ook eventueel dieet en allergieën aangeven. Op de persoonlijke pagina van de gebruiker ziet de gebruiker steeds 3 willekeurige gerechten die voldoen aan minimaal 1 van de opgegeven voorkeuren, maar ook aan de opgegeven dieetwensen en allergieën. Er is ook de mogelijkheid om naar recepten te zoeken op basis van naam of ingrediënt. Dit kan zowel ingelogd als niet ingelogd. Als er wel is ingelogd, houdt de applicatie rekening met de opgegeven dieetwensen en allergieën. Als er niet is ingelogd laat de applicatie alle gevonden recepten zien. Recepten kunnen worden opgeslagen als favoriet en worden bekeken op een speciale pagina. Alle gevonden recepten kunnen worden gedeeld met iedereen met een mailaccount doormiddel van een ingebouwde mailfunctie. 
  
