@@ -1,16 +1,48 @@
 <hmtl>
+    <form action="{{ url_for('index') }}"><button class= "RoundSideButton">Back to index</button></form>
     <link href="{{url_for('static',filename='styles.css')}}" rel="stylesheet"/>
-     <div class="stylefiltersearch">
+
     <head>
-        <title> Search for a recipe with filters! (results not guaranteed)</title><br>
+
+    </head>
+    <body>
+        <div class= "Header">
+            <!--Logout button-->
+            <div class= "HeaderButtonFrame" id= "leftPosition">
+                <form action="{{ url_for('logout') }}"><button class= "RoundSideButton" id= "Logout">Logout</button></form>
+            </div>
+            <!--Search by a filter-->
+            <div class= "HeaderButtonFrame" id= "LeftPosition">
+                <form action="{{ url_for('index') }}"><button class="RoundSideButton">Homepage</button></form>
+            </div>
+            <div class= "HeaderButtonFrame" id= "LeftPosition">
+                <form action="{{ url_for('favorites') }}"><button class="RoundSideButton">Favorites</button></form>
+            </div>
+            <!--Dropdown voor gegevens wijzigen-->
+            <div class="dropdown">
+                <button class="dropbtn">Change your personal information</button>
+                <div class="dropdown-content">
+                    <a href="{{ url_for('changenamepass') }}">Change your username and password</a>
+                    <a href="{{ url_for('changemail') }}">Change your email</a>
+                    <a href="{{ url_for('changepref') }}">Change your preferences</a>
+                </div>
+            </div>
+            <div class= "HeaderButtonFrame" id= "SearchBar" >
+                    <form action="{{ url_for('search') }}" method="post">
+                        <input autocomplete="off" name = "ingredient" class= "RoundSideButton" placeholder="Find a recipe" type="text"/>
+                        <button class="RoundSideButton" type="submit">Search</button>
+                    </form>
+            </div>
+        </div>
+        <div class="stylefiltersearch">
+        <h1> Search for a recipe with filters! (results not guaranteed)</h1>
+        <br>
         <h2>______________ Search for a recipe with filters! ______________</h2><br>
         <br>
         <br>
         <h3.5> We will automaticly merge your diet and allergies into the results,<br> so no need to fill those in!</h3.5> <br>
                          <br>
                          <br>
-    </head>
-    <body>
         <ul>
             <li>
                 <br>
