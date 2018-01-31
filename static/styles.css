@@ -236,3 +236,36 @@ h1 {
     float: right;
 
 }
+
+.ChangeMail{
+    margin: auto;
+    text-align: center;
+    height: auto;
+    width: 50%;
+    color: black;
+    text-shadow: 2px 2px 3px, orange;
+    margin-top: 15%;
+    text-shadow: 2px 2px 3px black;
+}
+
+.ChangeNP{
+    margin: auto;
+    text-align: center;
+    height: auto;
+    width: 50%;
+    color: black;
+    text-shadow: 2px 2px 3px, orange;
+    margin-top: 20%;
+    text-shadow: 2px 2px 3px black;
+}
+
+.ChangePr{
+    margin: auto;
+    text-align: center;
+    height: auto;
+    width: 50%;
+    color: black;
+    text-shadow: 2px 2px 3px, orange;
+    margin-top: 30%;
+    text-shadow: 2px 2px 3px black;
+}
