@@ -9,16 +9,16 @@
 <body>
     <div class="stylefavorites">
     <div class= "Header">
-        <h1>Favorites</h1>
-        <form action="{{ url_for('favorites') }}"><button class="RoundSideButton" id= "FavoritesButton">Favorites</button></form>
+        <form action="{{ url_for('logout') }}"><button class= "RoundSideButton">Logout</button></form>
+        <form action="{{ url_for('index') }}"><button class= "RoundSideButton">Back to index</button></form>
         <div class="SearchBarHeader">
         <form action="{{ url_for('search') }}" method="post">
             <input autocomplete="off" class="SearchBarHeader" placeholder="Find a recipe" type="text"/>
             <button class="SearchBarButton" type="submit">Search</button>
+            <h1> Favorites </h1>
         </form>
         </div>
     </div>
-    <form action="{{ url_for('logout') }}"><button class= "RoundSideButton" id= "logout">Logout</button></form>
     <br/>
     <h3>Add them at the index page</h3>
         {% for row in data %}

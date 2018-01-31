@@ -100,7 +100,6 @@ h1 {
     text-shadow: 2px 2px 3px, orange;
 }
 
-<<<<<<< HEAD
 .stylefavorites{
     margin: 0%;
     text-align: center;
@@ -108,13 +107,10 @@ h1 {
     height: auto;
     width: 40%;
     background-color: white;
-=======
->>>>>>> a66b34aadac1ed9a9886152eb51814744fa35d97
+
     color: black;
     text-shadow: 2px 2px 3px, orange;
 }
-
-<<<<<<< HEAD
 .stylefiltersearch{
     margin: 30%;
     text-align: center;
@@ -126,9 +122,6 @@ h1 {
     text-shadow: 2px 2px 3px, orange;
     line-height: normal;
     border: darkorange ;
-
-=======
-.dropbtn {
     background-color: #4CAF50;
     color: white;
     padding: 16px;
@@ -165,7 +158,7 @@ h1 {
 
 .dropdown:hover .dropbtn {
     background-color: #3e8e41;
-
+}
 .IndexFrame{
     margin-top: 15%;
     color: white;
@@ -176,5 +169,4 @@ h1 {
     display: block;
     margin-left: auto;
     margin-right: auto;
->>>>>>> a66b34aadac1ed9a9886152eb51814744fa35d97
 }
