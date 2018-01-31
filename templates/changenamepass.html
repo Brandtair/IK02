@@ -3,6 +3,7 @@
         <link href="{{url_for('static',filename='styles.css')}}" rel="stylesheet"/>
     </head>
     <body>
+        <title>Homepage</title>
         <div class= "Header">
             <!--Logout button-->
             <div class= "HeaderButtonFrame" id= "leftPosition">
@@ -31,37 +32,47 @@
                     </form>
             </div>
         </div>
-        <title>Change name and password</title>
+        <h1>Change name and password</h1>
         <div class= "Header">
-        <!--Uitloggen-->
-        <form action="{{ url_for('logout') }}"><button class= "RoundSideButton">Logout</button></form>
-
-        <form action="{{ url_for('filter_dish') }}"><button class="RoundSideButton">Search recipe through filter</button></form>
-            <div class="SearchBarHeader">
-                <form action="{{ url_for('search') }}" method="post">
-                    <input autocomplete="off" class="SearchBarHeader" name = "ingredient" placeholder="Find a recipe" type="text"/>
-                    <button class="SearchBarButton" type="submit">Search</button>
-                </form>
+            <!--Logout button-->
+            <div class= "HeaderButtonFrame" id= "leftPosition">
+                <form action="{{ url_for('logout') }}"><button class= "RoundSideButton" id= "Logout">Logout</button></form>
+            </div>
+            <!--Search by a filter-->
+            <div class= "HeaderButtonFrame" id= "LeftPosition">
+                <form action="{{ url_for('index') }}"><button class="RoundSideButton">Back to index</button></form>
             </div>
             <!--Dropdown voor gegevens wijzigen-->
             <div class="dropdown">
                 <button class="dropbtn">Change your personal information</button>
                 <div class="dropdown-content">
-                    <a href="{{ url_for('changenamepass') }}">Change your username and password</a>
                     <a href="{{ url_for('changemail') }}">Change your email</a>
                     <a href="{{ url_for('changepref') }}">Change your preferences</a>
                 </div>
             </div>
+            <div class= "HeaderButtonFrame" id= "SearchBar" >
+                    <form action="{{ url_for('search') }}" method="post">
+                        <input autocomplete="off" name = "ingredient" class= "RoundSideButton" placeholder="Find a recipe" type="text"/>
+                        <button class="RoundSideButton" type="submit">Search</button>
+                    </form>
+            </div>
         </div>
-
-        <h3>Change your name and password</h3>
+        </div>
+        </div>
+        <div class = "ChangeNP">
+        <h1>Change your name and password</h1>
         <form action="{{ url_for('changenamepass') }}" method="post">
             <div class = "list">
-            <input autocomplete="off" autofocus name="username" placeholder="Username" type="text"/><br>
-            <input name="password" placeholder="Password" type="password"/><br>
-            <input name="repeat" placeholder="Repeat password" type="password"/><br>
-            <button type="submit">Change</button>
+            <input autocomplete="off" autofocus name="username" placeholder="Username"button class="RoundSideButton" type= "text"><br>
+            <br>
+            <input name="password" placeholder="Password" button class="RoundSideButton" type="password"/><br>
+            <br>
+            <input name="repeat" placeholder="Repeat password" button class="RoundSideButton" type="password"/><br>
+            <br>
+            <button class="RoundSideButton" button type="submit">Change</button>
+            <br>
             </div>
         </form>
     </body>
+    </div>
 </html>
