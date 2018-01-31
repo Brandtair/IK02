@@ -65,10 +65,14 @@
                     </form>
             </div>
         </div>
-        <h1> Change your mail</h1>
+
+        <h3> Change your mail</h3>
         <form action = "{{ url_for('changemail')}}" method = "post">
-            <input class="RoundSideButton" name="email" placeholder="Change your E-mail" type="text"/>
-           <button class= "RoundSideButton" type="submit">change</button>
+            <div class = LoginFrame>
+            <input class="RoundSideButton" name="email" placeholder="E-mail" type="text"/>
+            </div>
+            <br>
+            <button class = "RoundSideButton" id="Login" type="submit">Change</button>
         </form>
     </body>
 </html>

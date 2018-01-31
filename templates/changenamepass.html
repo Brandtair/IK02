@@ -31,7 +31,7 @@
                         <button class="RoundSideButton" type="submit">Search</button>
                     </form>
             </div>
-        </div>
+            </div>
         <h1>Change name and password</h1>
         <div class= "Header">
             <!--Logout button-->
@@ -62,6 +62,16 @@
         <div class = "ChangeNP">
         <h1>Change your name and password</h1>
         <form action="{{ url_for('changenamepass') }}" method="post">
+            <div class = "LoginFrame">
+                <input class= "RoundSideButton" autocomplete="off" autofocus name="username" placeholder="Username" type="text"/><br>
+            </div>
+            <br>
+            <div class = "LoginFrame">
+                <input class= "RoundSideButton" name="password" placeholder="Password" type="password"/><br>
+            </div>
+            <br>
+            <div class = "LoginFrame">
+                <input class= "RoundSideButton" name="repeat" placeholder="Repeat password" type="password"/><br>
             <div class = "list">
             <input autocomplete="off" autofocus name="username" placeholder="Username"button class="RoundSideButton" type= "text"><br>
             <br>
@@ -72,6 +82,8 @@
             <button class="RoundSideButton" button type="submit">Change</button>
             <br>
             </div>
+            <br>
+            <button class= "RoundSideButton" id = "Login" type="submit">Change</button>
         </form>
     </body>
     </div>
