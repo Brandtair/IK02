@@ -2,7 +2,7 @@
 ### Daan Brandt, 11865970, Roos Dessing, 11796847, Milan Doodeman, 11784210
 
 #### Screenshot van login-pagina
-(screenshot van site)
+<img src="https://preview.ibb.co/dfJ6M6/a863e882_cbe0_4161_bb59_34f9777185ca.jpg" />
 
 #### Video van website
 (videolink)
